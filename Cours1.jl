@@ -87,7 +87,7 @@ int main() {
 """)
 
 # ╔═╡ db4b4612-5c48-492d-a8ef-ec397e63c65d
-section("Utils")
+endofslides()
 
 # ╔═╡ fd1f7fd9-f6ed-4ee0-a4eb-50254b7d07e7
 TableOfContents()

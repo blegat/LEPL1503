@@ -35,6 +35,8 @@ section(t) = md"# $t"
 # with `##`, it's not centered but it works better with TableOfContents
 frametitle(t) = md"## $t"
 
+endofslides() = html"<p align=center style=\"font-size: 20px; margin-bottom: 5cm; margin-top: 5cm;\">The End</p>"
+
 struct Join
     list
     Join(a) = new(a)
