@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.46
+# v0.20.4
 
 using Markdown
 using InteractiveUtils
@@ -8,6 +8,7 @@ using InteractiveUtils
 import Pkg
 
 # ╔═╡ 678cc353-0b54-4b92-9f08-71556177a038
+# ╠═╡ show_logs = false
 Pkg.activate(".")
 
 # ╔═╡ 90a4fe3c-02c7-46e6-b2fb-526e73508101
@@ -86,9 +87,6 @@ int main() {
 }
 """)
 
-# ╔═╡ db4b4612-5c48-492d-a8ef-ec397e63c65d
-endofslides()
-
 # ╔═╡ fd1f7fd9-f6ed-4ee0-a4eb-50254b7d07e7
 TableOfContents()
 
@@ -103,8 +101,7 @@ TableOfContents()
 # ╟─006c5d72-29b4-41fe-9d1d-aff8c89d3b83
 # ╟─2c6dccc9-2a8f-4830-b626-c4243890e61c
 # ╟─5a03027c-37ef-45f5-b89c-36d2d8bbf2dd
-# ╟─db4b4612-5c48-492d-a8ef-ec397e63c65d
-# ╠═fd1f7fd9-f6ed-4ee0-a4eb-50254b7d07e7
-# ╠═d2952bc0-5506-49c4-b7e5-95e319700cf2
-# ╠═678cc353-0b54-4b92-9f08-71556177a038
-# ╠═90a4fe3c-02c7-46e6-b2fb-526e73508101
+# ╟─fd1f7fd9-f6ed-4ee0-a4eb-50254b7d07e7
+# ╟─d2952bc0-5506-49c4-b7e5-95e319700cf2
+# ╟─678cc353-0b54-4b92-9f08-71556177a038
+# ╟─90a4fe3c-02c7-46e6-b2fb-526e73508101
