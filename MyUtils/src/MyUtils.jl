@@ -2,8 +2,9 @@ module MyUtils
 
 using Markdown
 
-include("html.jl")
 include("biblio.jl")
+include("clang.jl")
+include("html.jl")
 include("luxor.jl")
 include("tutor.jl")
 

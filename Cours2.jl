@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.20.4
+# v0.19.46
 
 using Markdown
 using InteractiveUtils
@@ -38,6 +38,25 @@ int main(int argc, char **argv) {
 }
 """)
 
+# ╔═╡ cd3cce7d-b149-4ee1-8b6e-ff213a48ce7d
+frametitle("Arguments de main")
+
+# ╔═╡ 5bd30ea4-3193-4fb4-9bf8-369fcfa6547b
+md"""
+* `int argc` : Le nombre d'arguments (incluant le nom de l'exécutable)
+* `char **argv` : la liste des arguments
+"""
+
+# ╔═╡ 6d3d7f63-766b-4a1f-91c3-46b401c4c280
+compile_and_run("""
+#include <stdio.h>
+int main(int argc, char **argv) {
+  for(int i=0; i<argc; i++) {
+    printf("arg[%d]: %s\\n", i, argv[i]);
+  }
+}
+""", ["ab", "cd", "ef"]);
+
 # ╔═╡ 791a21da-a883-45bc-a1fe-d12aef9c169b
 frametitle("Projet sur Gitlab")
 
@@ -48,6 +67,9 @@ TableOfContents()
 # ╟─68b3f601-8cc3-45b2-93f6-8fdbc9cd3411
 # ╟─3ddd22b2-7d1b-4b3a-8737-09552b51726d
 # ╟─a8783da7-4e44-4012-be6e-88705697b0c5
+# ╟─cd3cce7d-b149-4ee1-8b6e-ff213a48ce7d
+# ╟─5bd30ea4-3193-4fb4-9bf8-369fcfa6547b
+# ╠═6d3d7f63-766b-4a1f-91c3-46b401c4c280
 # ╟─791a21da-a883-45bc-a1fe-d12aef9c169b
 # ╟─fd1f7fd9-f6ed-4ee0-a4eb-50254b7d07e7
 # ╟─d2952bc0-5506-49c4-b7e5-95e319700cf2
