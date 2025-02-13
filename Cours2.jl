@@ -44,7 +44,7 @@ frametitle("Arguments de main")
 # ╔═╡ 5bd30ea4-3193-4fb4-9bf8-369fcfa6547b
 md"""
 * `int argc` : Le nombre d'arguments (incluant le nom de l'exécutable)
-* `char **argv` : la liste des arguments
+* `char **argv` : liste des arguments initialisée par le système d’exploitation au lancement du programme
 """
 
 # ╔═╡ 6d3d7f63-766b-4a1f-91c3-46b401c4c280
@@ -55,7 +55,22 @@ int main(int argc, char **argv) {
     printf("arg[%d]: %s\\n", i, argv[i]);
   }
 }
-""", ["ab", "cd", "ef"]);
+""", args = ["ab", "cd", "ef"])
+
+# ╔═╡ acfa3f43-215e-4c97-bf2a-0069e78f95b4
+frametitle("Matrices en C")
+
+# ╔═╡ 47279972-433b-46be-b511-170698ff8753
+md"""
+* Comment construire une matrice ?
+```c
+float A[2][2]={ {1,0}, {2,3} };
+```
+* Une telle matrice sera stockée sur le stack (variable locale) ou dans la zone données (variable globale)
+"""
+
+# ╔═╡ 14a56b43-789a-42f0-9228-0c6a660629c9
+frametitle("Pointeur de fonction")
 
 # ╔═╡ 791a21da-a883-45bc-a1fe-d12aef9c169b
 frametitle("Projet sur Gitlab")
@@ -69,7 +84,10 @@ TableOfContents()
 # ╟─a8783da7-4e44-4012-be6e-88705697b0c5
 # ╟─cd3cce7d-b149-4ee1-8b6e-ff213a48ce7d
 # ╟─5bd30ea4-3193-4fb4-9bf8-369fcfa6547b
-# ╠═6d3d7f63-766b-4a1f-91c3-46b401c4c280
+# ╟─6d3d7f63-766b-4a1f-91c3-46b401c4c280
+# ╟─acfa3f43-215e-4c97-bf2a-0069e78f95b4
+# ╟─47279972-433b-46be-b511-170698ff8753
+# ╟─14a56b43-789a-42f0-9228-0c6a660629c9
 # ╟─791a21da-a883-45bc-a1fe-d12aef9c169b
 # ╟─fd1f7fd9-f6ed-4ee0-a4eb-50254b7d07e7
 # ╟─d2952bc0-5506-49c4-b7e5-95e319700cf2
