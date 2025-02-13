@@ -544,8 +544,13 @@ git-tree-sha1 = "f5db02ae992c260e4826fe78c942954b48e1d9c2"
 uuid = "99f44e22-a591-53d1-9472-aa23ef4bd671"
 version = "1.2.1"
 
+[[deps.MultilineStrings]]
+git-tree-sha1 = "3214216b069fb1bc329f55094681e06b64a51022"
+uuid = "1e8d2bf6-9821-4900-9a2f-4d87552df2bd"
+version = "0.1.1"
+
 [[deps.MyUtils]]
-deps = ["Clang_jll", "DocumenterCitations", "HTTP", "Luxor", "Markdown"]
+deps = ["Clang_jll", "DocumenterCitations", "HTTP", "Luxor", "Markdown", "MultilineStrings"]
 path = "MyUtils"
 uuid = "5f08ea77-7f1f-482c-9564-31d94ae91ab8"
 version = "0.1.0"

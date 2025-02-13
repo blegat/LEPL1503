@@ -1,3 +1,16 @@
+function reset_width(width)
+    return HTML("""
+<style>
+    main {
+        margin: 0 auto;
+        max-width: $(width)px;
+        padding-left: max(160px, 10%);
+        padding-right: max(160px, 10%);
+    }
+</style>
+""")
+end
+
 # `Cols` conflict with `DataFrames`
 struct HAlign{T<:Tuple}
     cols::T
