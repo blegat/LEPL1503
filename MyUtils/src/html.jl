@@ -75,9 +75,17 @@ function qa(question, answer)
     return HTMLTag("details", Join(HTMLTag("summary", question), answer))
 end
 
+function _inline_html(m::Markdown.Paragraph)
+    return HTML(sprint(Markdown.htmlinline, m.content))
+end
+
+_inline_html(m) = html(m)
+
 function qa(question::Markdown.MD, answer)
-    # `html(question)` will create `<p>` because `question.content[]` is `Markdown.Paragraph`
+    # `html(question)` will create `<p>` if `question.content[]` is `Markdown.Paragraph`
     # This will print the question on a new line and we don't want that:
-    h = HTML(sprint(Markdown.htmlinline, question.content[].content))
+    @show typeof(question)
+    @show typeof(question.content[])
+    h = _inline_html(question.content[])
     return qa(h, answer)
 end
