@@ -539,7 +539,7 @@ uuid = "99f44e22-a591-53d1-9472-aa23ef4bd671"
 version = "1.2.1"
 
 [[deps.MyUtils]]
-deps = ["Colors", "DocumenterCitations", "HTTP", "Luxor", "Markdown"]
+deps = ["DocumenterCitations", "HTTP", "Luxor", "Markdown"]
 path = "MyUtils"
 uuid = "5f08ea77-7f1f-482c-9564-31d94ae91ab8"
 version = "0.1.0"
