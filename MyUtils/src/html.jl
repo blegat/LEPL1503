@@ -76,16 +76,23 @@ function qa(question, answer)
 end
 
 function _inline_html(m::Markdown.Paragraph)
-    return HTML(sprint(Markdown.htmlinline, m.content))
+    return sprint(Markdown.htmlinline, m.content)
 end
 
-_inline_html(m) = html(m)
+function _inline_html(code::Markdown.Code)
+    # `html(m)` adds an annoying `<pre>` so this is taken from the implementation of
+    # `html(::IO, ::Markdown.Code)` where `withtag(io, :pre)` is removed
+    maybe_lang = !isempty(code.language) ? Any[:class=>"language-$(code.language)"] : []
+    return sprint(code) do io, code
+        Markdown.withtag(io, :code, maybe_lang...) do
+            Markdown.htmlesc(io, code.code)
+        end
+    end
+end
 
 function qa(question::Markdown.MD, answer)
     # `html(question)` will create `<p>` if `question.content[]` is `Markdown.Paragraph`
     # This will print the question on a new line and we don't want that:
-    @show typeof(question)
-    @show typeof(question.content[])
-    h = _inline_html(question.content[])
+    h = HTML(_inline_html(question.content[]))
     return qa(h, answer)
 end

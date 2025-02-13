@@ -203,11 +203,7 @@ struct vector_t {
 """)
 
 # ╔═╡ 488d8bed-855f-470a-a2fa-68c13fd08739
-qa(md"""
-```c
-struct vector_t * init(int size, float val) {
-```
-""", markdown_c("""
+qa(markdown_c("struct vector_t * init(int size, float val) {"), markdown_c("""
   // manque tests erreur malloc
   struct vector_t *t=(struct vector_t *)
           malloc(sizeof(struct vector_t));
@@ -220,36 +216,261 @@ struct vector_t * init(int size, float val) {
 }
 """))
 
-# ╔═╡ d1a1a920-a23a-43e6-a254-6c2fe3affb10
-qa(md"""
-```c
-a
-```
-""", md"a")
-
-# ╔═╡ a094b96f-6a42-48be-b313-0453b1d24df1
-frametitle("Fonction init")
-
 # ╔═╡ 419f48c0-8377-4a67-a801-e87d2a61c17a
-
+qa(markdown_c("float get(struct vector_t *t, int i) {"), markdown_c("""
+  return *(t->v+i);
+}"""))
 
 # ╔═╡ cfc54158-a170-4f1d-b1dd-ab8e0f1a172e
-
+qa(markdown_c("void set(struct vector_t *t, int i, float val) {"), markdown_c("""
+  if((i<t->size)&&(i>0))
+    *(t->v+i)=val;
+}"""))
 
 # ╔═╡ 4dad1e1b-2288-49b9-8190-f2f374ca353c
+qa(markdown_c("void destroy(struct vector_t *vect) {"), markdown_c("""
+  free(vect->v);
+  free(vect);
+}"""))
 
+# ╔═╡ f386a8d4-35be-4612-91c7-31ff0f004e2d
+frametitle("Une autre implémentation …")
+
+# ╔═╡ 87877209-958b-4635-bdbc-97548acdfb3f
+md"""
+Toutes les fonctions doivent vérifier leurs arguments et retourner
+* -1 en cas d'erreur
+* 0 en cas de succès
+"""
+
+# ╔═╡ f3dd8bf7-03c4-4069-8d1c-ece484de5ef1
+markdown_c("""struct vector_t {
+  int length; // nombre d'élements
+  float *tab; // tableau avec les réels
+};""")
+
+# ╔═╡ 6cc7a1d4-df02-494f-bf18-0652d49280e5
+frametitle("Initialisation")
+
+# ╔═╡ facc8d63-d620-40ff-939a-78ff58fff04f
+markdown_c("""struct vector_t {
+  int length; // nombre d'élements
+  float *tab; // tableau avec les réels
+};""")
+
+# ╔═╡ b66c9e2f-17b3-44dc-83e4-cb3a9329039b
+md"Quels arguments ?"
+
+# ╔═╡ c2928a50-8f63-477e-ada3-1352d5c72712
+markdown_c("""
+/*
+ * @pre
+ * alloue la mémoire pour un vecteur de size éléments
+ * initialisés à la valeur val
+ * @return -1 si erreur, 0 sinon
+ */
+
+int init(int size, float val,
+  struct vector_t  v,     // 1
+  struct vector_t ** v,   // 2
+  struct vector_t * v,    // 3
+)
+""")
+
+# ╔═╡ 0e0ddf7c-a34b-447a-8142-334d14f96ae1
+frametitle("Allocation de la mémoire")
+
+# ╔═╡ 1ca8b74a-ce74-44a3-9e74-1447eb5141a7
+markdown_c("""struct vector_t {
+  int length; // nombre d'élements
+  float *tab; // tableau avec les réels
+};""")
+
+# ╔═╡ dd7f51b5-ca6a-4eb4-802d-9514861ae6a4
+markdown_c("""
+int init(int size, float val, struct vector_t ** v) {
+  if ((size<0) || v==NULL)
+    return -1;
+  *v=(struct vector_t *)
+     malloc(sizeof(struct vector_t));
+  if (*v == NULL) {
+    return -1;
+  }
+  (*v)->tab=(float *)malloc(size*sizeof(float));
+  if ((*v)->tab == NULL) {
+     return -1;
+  }
+  (*v)->length = size;
+  for (int i = 0; i<size; i++) {
+""")
+
+# ╔═╡ e5e45ef0-32ac-403c-a05e-de267209fb8b
+qa(md"Comment assigner la valeur `val` au `i`ième élément ?", md"""
+```c
+float *t = (*v)->tab;
+t[i] = val;
+```
+ou
+```c
+*((*v)->tab+i)=val;
+```
+""")
+
+# ╔═╡ b58ba8eb-0661-4eac-8ead-2daff4126d57
+markdown_c("""
+  }
+  return 0;
+}
+""")
+
+# ╔═╡ 2e1fc3ec-c1ca-43b8-893c-bda691635475
+frametitle("Visualization de init")
+
+# ╔═╡ 85e1517c-f7d9-4df5-acde-00657cdf3dbe
+tutor("""
+#include <stdlib.h>
+
+struct vector_t {
+  int length; // nombre d'élements
+  float *tab; // tableau avec les réels
+};
+
+int init(int size, float val, struct vector_t ** v) {
+  if( (size<0)|| v==NULL)
+    return -1;
+  *v=(struct vector_t *)
+     malloc(sizeof(struct vector_t));
+  if(*v==NULL) {
+    return -1;
+  }
+  (*v)->tab=(float *)malloc(size*sizeof(float));
+  if((*v)->tab==NULL) {
+     return -1;
+  }
+  (*v)->length = size;
+  for (int i = 0;i<size;i++) {
+    float *t = (*v)->tab;
+    t[i] = val;
+    // ou *((*v)->tab+i)=val;
+  }
+  return 0;
+}
+int main () {
+  struct vector_t **ptr = (struct vector_t **) malloc(sizeof(struct vector_t *));
+  int err = init(4, 1.23, ptr);
+}
+""")
+
+# ╔═╡ 4b009812-191d-4969-bf32-5941ca707f37
+frametitle("Récupération d'un élément")
+
+# ╔═╡ 4072072d-c543-43bf-87ad-1f201bd21c59
+markdown_c("""struct vector_t {
+  int length; // nombre d'élements
+  float *tab; // tableau avec les réels
+};""")
+
+# ╔═╡ 5b8e5130-bf78-4529-b3be-02a0ba093f12
+markdown_c("""
+/*
+ * @pre
+ * @post retourne le ième élément du tableau dans val
+ *       -1 en cas d'erreur, 0 sinon
+ */
+
+int get(struct vector_t *v, int i,
+  float val   // 1
+  float **val // 2
+  float *val  // 3
+) {
+""")
+
+# ╔═╡ 7f150e04-b56b-499f-ad50-4f586e76a0ab
+qa(md"Comment implémter cette function ?", markdown_c("""
+  if (i < 0 || i >= v->length)
+    return -1;
+  *val = *(v->tab+i);
+  return 0;
+}
+"""))
+
+# ╔═╡ 44c8617f-ba56-40fe-80b4-963cf6e6f4b5
+frametitle("Modification d'un élément")
+
+# ╔═╡ c306afc9-f86e-4407-8757-272561980a72
+markdown_c("""/*
+ * @pre
+ * @post place val comme ième élément
+ *             du tableau
+ *       -1 en cas d'erreur, 0 sinon
+ */
+
+int set(struct vector_t *v, int i,
+struct vector_t  v     // 1
+struct vector_t ** v   // 2
+struct vector_t * v    // 3
+) {""")
+
+# ╔═╡ d85db8cc-56b6-42e5-8175-3c53d345282e
+qa(md"Comment implémter cette function ?", markdown_c("""
+  if (i < 0 || i >= v->length)
+    return -1;
+  *(v->tab+i) = val;
+  return 0;
+}
+"""))
+
+# ╔═╡ 03847d85-c675-4b4a-9331-fd7a32b26938
+frametitle("Libération de la mémoire")
+
+# ╔═╡ 406d30a9-f477-4898-9caf-770fcc25b2a9
+md"Comment libérer la mémoire quand le vecteur est devenu inutile ?"
+
+# ╔═╡ cb9c27b9-ce7d-4bdf-af7d-c88883a210bc
+markdown_c("""
+/*
+ * libère la mémoire utilisée pour le vecteur
+ * -1 en cas d'erreur, 0 sinon
+ */
+""")
+
+# ╔═╡ e1b6f1d3-9d06-4ee4-854d-8ede288f369c
+qa(markdown_c("int destroy(struct vector_t *v) {"), markdown_c("""
+  free(v->tab);
+  free(v);
+  return 0;
+}"""))
 
 # ╔═╡ 14a56b43-789a-42f0-9228-0c6a660629c9
 frametitle("Pointeur de fonction")
 
-# ╔═╡ 791a21da-a883-45bc-a1fe-d12aef9c169b
-frametitle("Projet sur Gitlab")
+# ╔═╡ 3cc18d67-b0d7-4b4b-afb6-5b48eddd89d2
+tutor("""
+#include <stdlib.h>
+#include <stdio.h>
+
+int square(int a) {
+  return a * a;
+}
+int plus(int a, int b) {
+  return a + b;
+}
+
+int mapreduce(int (*f)(int), int (*op)(int, int), int *vec, int len, int init) {
+  for (int i = 0; i < len; i++) {
+    init = op(init, f(vec[i]));
+  }
+  return init;
+}
+
+int main () {
+  int vec[] = {1, 2, 3, 4};
+  printf("%d\\n", mapreduce(square, plus, vec, 4, 0));
+}
+""")
 
 # ╔═╡ fd1f7fd9-f6ed-4ee0-a4eb-50254b7d07e7
 TableOfContents()
-
-# ╔═╡ b99d3c28-3433-420d-a343-db26a12022d5
-reset_width(1500)
 
 # ╔═╡ Cell order:
 # ╟─68b3f601-8cc3-45b2-93f6-8fdbc9cd3411
@@ -282,16 +503,38 @@ reset_width(1500)
 # ╟─2d35189b-46aa-4922-ad4f-432533da2a80
 # ╟─49f0db66-da21-42b0-91d5-db04075e559a
 # ╟─b66272c8-02b0-4d22-84d6-7274efe11e2a
-# ╠═488d8bed-855f-470a-a2fa-68c13fd08739
-# ╠═d1a1a920-a23a-43e6-a254-6c2fe3affb10
-# ╟─a094b96f-6a42-48be-b313-0453b1d24df1
-# ╠═419f48c0-8377-4a67-a801-e87d2a61c17a
-# ╠═cfc54158-a170-4f1d-b1dd-ab8e0f1a172e
-# ╠═4dad1e1b-2288-49b9-8190-f2f374ca353c
+# ╟─488d8bed-855f-470a-a2fa-68c13fd08739
+# ╟─419f48c0-8377-4a67-a801-e87d2a61c17a
+# ╟─cfc54158-a170-4f1d-b1dd-ab8e0f1a172e
+# ╟─4dad1e1b-2288-49b9-8190-f2f374ca353c
+# ╟─f386a8d4-35be-4612-91c7-31ff0f004e2d
+# ╟─87877209-958b-4635-bdbc-97548acdfb3f
+# ╟─f3dd8bf7-03c4-4069-8d1c-ece484de5ef1
+# ╟─6cc7a1d4-df02-494f-bf18-0652d49280e5
+# ╟─facc8d63-d620-40ff-939a-78ff58fff04f
+# ╟─b66c9e2f-17b3-44dc-83e4-cb3a9329039b
+# ╟─c2928a50-8f63-477e-ada3-1352d5c72712
+# ╟─0e0ddf7c-a34b-447a-8142-334d14f96ae1
+# ╟─1ca8b74a-ce74-44a3-9e74-1447eb5141a7
+# ╟─dd7f51b5-ca6a-4eb4-802d-9514861ae6a4
+# ╟─e5e45ef0-32ac-403c-a05e-de267209fb8b
+# ╟─b58ba8eb-0661-4eac-8ead-2daff4126d57
+# ╟─2e1fc3ec-c1ca-43b8-893c-bda691635475
+# ╟─85e1517c-f7d9-4df5-acde-00657cdf3dbe
+# ╟─4b009812-191d-4969-bf32-5941ca707f37
+# ╟─4072072d-c543-43bf-87ad-1f201bd21c59
+# ╟─5b8e5130-bf78-4529-b3be-02a0ba093f12
+# ╟─7f150e04-b56b-499f-ad50-4f586e76a0ab
+# ╟─44c8617f-ba56-40fe-80b4-963cf6e6f4b5
+# ╟─c306afc9-f86e-4407-8757-272561980a72
+# ╟─d85db8cc-56b6-42e5-8175-3c53d345282e
+# ╟─03847d85-c675-4b4a-9331-fd7a32b26938
+# ╟─406d30a9-f477-4898-9caf-770fcc25b2a9
+# ╟─cb9c27b9-ce7d-4bdf-af7d-c88883a210bc
+# ╟─e1b6f1d3-9d06-4ee4-854d-8ede288f369c
 # ╟─14a56b43-789a-42f0-9228-0c6a660629c9
-# ╟─791a21da-a883-45bc-a1fe-d12aef9c169b
+# ╟─3cc18d67-b0d7-4b4b-afb6-5b48eddd89d2
 # ╟─fd1f7fd9-f6ed-4ee0-a4eb-50254b7d07e7
 # ╟─d2952bc0-5506-49c4-b7e5-95e319700cf2
 # ╟─678cc353-0b54-4b92-9f08-71556177a038
 # ╟─90a4fe3c-02c7-46e6-b2fb-526e73508101
-# ╠═b99d3c28-3433-420d-a343-db26a12022d5

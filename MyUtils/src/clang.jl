@@ -1,7 +1,13 @@
 import Clang_jll
 import MultilineStrings
 
-markdown_c(code) = Markdown.parse("```c\n" * code * "```")
+function markdown_c(code)
+    code = "```c\n" * code
+    if code[end] != '\n'
+        code *= '\n'
+    end
+    return Markdown.parse(code * "```")
+end
 
 function compile_and_run(code; args = String[])
     path = mktempdir()
@@ -20,7 +26,6 @@ function compile_and_run(code; args = String[])
         end
     end
     cmd = Cmd([bin_file; args])
-    # Ça serait pas mal d'aussi afficher le code C avec syntax highlighting. Est-ce que c'est possible facilement avec Clang ?
     if !isempty(args)
         println("\$ $(string(cmd)[2:end-1])") # `2:end-1` to remove the backsticks
     end
