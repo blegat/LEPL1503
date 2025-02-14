@@ -18,7 +18,10 @@ using PlutoUI, MyUtils
 header("LEPL1503/LSINC1503 - Cours 2", "O. Bonaventure, B. Legat, L. Metongnon")
 
 # ╔═╡ 3ddd22b2-7d1b-4b3a-8737-09552b51726d
-frametitle("Variables, pointeurs et doubles pointeurs")
+section("Variables, pointeurs et doubles pointeurs")
+
+# ╔═╡ fc027d24-619e-4f6f-95ed-3dd12f61b60c
+frametitle("Visualisation")
 
 # ╔═╡ a8783da7-4e44-4012-be6e-88705697b0c5
 tutor(wrap_in_main("""
@@ -164,8 +167,11 @@ matrice[1] = ligne1;
 # ╔═╡ 6531f0d6-cf62-46ca-8dd2-befda43806d7
 wooclap("JAPRXX")
 
+# ╔═╡ c81abb3d-7192-499e-a47a-c0b960aa49cd
+section("Libération de la mémoire")
+
 # ╔═╡ 92428490-6d76-44a7-9d5b-a9e988f5ff25
-frametitle("Libération de la mémoire")
+frametitle("L'importance de l'ordre de désallocation")
 
 # ╔═╡ 1a82ab2b-dd7c-4b48-b263-e71b13ba0fb2
 md"""
@@ -205,6 +211,9 @@ free(matrice[1]);
 
 # ╔═╡ 49f0db66-da21-42b0-91d5-db04075e559a
 section("Un vecteur \"Java\" en C")
+
+# ╔═╡ 7838b43b-428d-4045-8cfe-17c9a824ac65
+frametitle("Première implémentation")
 
 # ╔═╡ b66272c8-02b0-4d22-84d6-7274efe11e2a
 markdown_c("""
@@ -471,8 +480,11 @@ qa(markdown_c("int destroy(struct vector_t *v) {"), markdown_c("""
 # ╔═╡ 986cdd2f-c22a-497b-8ce4-d6755a871c15
 wooclap("JAPRXX")
 
+# ╔═╡ 6f257725-72c3-404c-bb35-079265058a43
+section("Pointeur de fonction")
+
 # ╔═╡ 14a56b43-789a-42f0-9228-0c6a660629c9
-frametitle("Pointeur de fonction")
+frametitle("Fonction d'ordre supérieur en C")
 
 # ╔═╡ 3cc18d67-b0d7-4b4b-afb6-5b48eddd89d2
 tutor("""
@@ -499,8 +511,11 @@ int main () {
 }
 """)
 
-# ╔═╡ 813830a0-a6d4-4fe7-8440-df328a3f041b
-frametitle("Comment retourner un tableau ?")
+# ╔═╡ 4e5e1340-c2e6-4b4a-bfb9-e1096d179040
+section("Retourner un tableau")
+
+# ╔═╡ 8283cc88-a3c8-4bb2-af31-0b72f2eb2c4a
+frametitle("Heap ou stack ?")
 
 # ╔═╡ b8392f14-05d4-43e4-bd2a-3d4ba6ced65b
 md"Laquelle de ces deux fonctions présente une façon correcte de retourner un tableau ?"
@@ -522,7 +537,7 @@ int heap() {
 wooclap("JAPRXX")
 
 # ╔═╡ 4643cd02-67f4-40cd-aa7d-cfdb83fc62be
-section("Retourner un tableau : visualization")
+frametitle("Retourner un tableau : visualization")
 
 # ╔═╡ accfaade-96ce-4869-83ce-9dd5489b65a2
 tutor("""
@@ -550,13 +565,13 @@ int main () {
 """)
 
 # ╔═╡ 319bc8b4-7139-43b0-a57b-66c6a9da7cb9
-frametitle("Structure différente du stack et heap")
+section("Structure différente du stack et heap")
 
 # ╔═╡ 132663c2-dfdd-4426-991a-bc9c95bbdad1
 HAlign((
 	md"""
 * Stack : Pile de mémoire locale des functions, structure connue à la **compilation**
-* Heap : Alloué et désalloué avec des tailles connues à l'**exécution**. L'OS est responsable de faire de son mieux pour organiser cette mémoire qui se fragmente à suite à désallocations
+* Heap : Alloué et désalloué avec des tailles connues à l'**exécution**. L'OS fait de son mieux pour organiser cette mémoire et réassigner les fragments formés suite aux désallocations
 
 [Image source](https://learn.adafruit.com/memories-of-an-arduino)
 """,
@@ -566,7 +581,7 @@ HAlign((
 )
 
 # ╔═╡ 72370890-1eed-4567-afa6-b492d7d3c898
-frametitle("Projet")
+section("Projet")
 
 # ╔═╡ 70172d7b-db88-40dd-9e1b-dcd1e00f2d62
 md"""
@@ -574,11 +589,12 @@ md"""
 """
 
 # ╔═╡ fd1f7fd9-f6ed-4ee0-a4eb-50254b7d07e7
-TableOfContents()
+TableOfContents(depth=1)
 
 # ╔═╡ Cell order:
 # ╟─68b3f601-8cc3-45b2-93f6-8fdbc9cd3411
 # ╟─3ddd22b2-7d1b-4b3a-8737-09552b51726d
+# ╟─fc027d24-619e-4f6f-95ed-3dd12f61b60c
 # ╟─a8783da7-4e44-4012-be6e-88705697b0c5
 # ╟─cd3cce7d-b149-4ee1-8b6e-ff213a48ce7d
 # ╟─5bd30ea4-3193-4fb4-9bf8-369fcfa6547b
@@ -603,6 +619,7 @@ TableOfContents()
 # ╟─67cf8ac0-5b91-4d19-aca4-4309f3109a0c
 # ╟─9160427d-4db7-4a97-9dde-14d19d59b1ef
 # ╟─6531f0d6-cf62-46ca-8dd2-befda43806d7
+# ╟─c81abb3d-7192-499e-a47a-c0b960aa49cd
 # ╟─92428490-6d76-44a7-9d5b-a9e988f5ff25
 # ╟─1a82ab2b-dd7c-4b48-b263-e71b13ba0fb2
 # ╟─62198fa2-4e96-4950-a99e-a3808bbf811a
@@ -610,6 +627,7 @@ TableOfContents()
 # ╟─90532252-a756-40a1-8867-76041f5545a0
 # ╟─2d35189b-46aa-4922-ad4f-432533da2a80
 # ╟─49f0db66-da21-42b0-91d5-db04075e559a
+# ╟─7838b43b-428d-4045-8cfe-17c9a824ac65
 # ╟─b66272c8-02b0-4d22-84d6-7274efe11e2a
 # ╟─488d8bed-855f-470a-a2fa-68c13fd08739
 # ╟─419f48c0-8377-4a67-a801-e87d2a61c17a
@@ -646,9 +664,11 @@ TableOfContents()
 # ╟─cb9c27b9-ce7d-4bdf-af7d-c88883a210bc
 # ╟─e1b6f1d3-9d06-4ee4-854d-8ede288f369c
 # ╟─986cdd2f-c22a-497b-8ce4-d6755a871c15
+# ╟─6f257725-72c3-404c-bb35-079265058a43
 # ╟─14a56b43-789a-42f0-9228-0c6a660629c9
 # ╟─3cc18d67-b0d7-4b4b-afb6-5b48eddd89d2
-# ╟─813830a0-a6d4-4fe7-8440-df328a3f041b
+# ╟─4e5e1340-c2e6-4b4a-bfb9-e1096d179040
+# ╟─8283cc88-a3c8-4bb2-af31-0b72f2eb2c4a
 # ╟─b8392f14-05d4-43e4-bd2a-3d4ba6ced65b
 # ╟─27b6779a-5624-4e8e-ae32-8a8971923d01
 # ╟─a13bf677-9c63-4f8e-b3dd-27b3aad7f956
