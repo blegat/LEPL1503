@@ -484,7 +484,7 @@ wooclap("JAPRXX")
 section("Pointeur de fonction")
 
 # ╔═╡ 14a56b43-789a-42f0-9228-0c6a660629c9
-frametitle("Fonction d'ordre supérieur en C")
+md"`mapreduce` donne un exemple de fonction d'ordre supérieur en C"
 
 # ╔═╡ 3cc18d67-b0d7-4b4b-afb6-5b48eddd89d2
 tutor("""
