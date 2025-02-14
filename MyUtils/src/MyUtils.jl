@@ -7,6 +7,7 @@ include("clang.jl")
 include("html.jl")
 include("luxor.jl")
 include("tutor.jl")
+include("colors.jl")
 
 # Taken from `JuMP/src/JuMP.jl`
 const _EXCLUDE_SYMBOLS = [Symbol(@__MODULE__), :eval, :include]
