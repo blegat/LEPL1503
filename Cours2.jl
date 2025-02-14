@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.46
+# v0.20.4
 
 using Markdown
 using InteractiveUtils
@@ -15,7 +15,7 @@ Pkg.activate(".")
 using PlutoUI, MyUtils
 
 # ╔═╡ 68b3f601-8cc3-45b2-93f6-8fdbc9cd3411
-header("LEPL1503 - Cours 2", "B. Legat, O. Bonaventure")
+header("LEPL1503/LSINC1503 - Cours 2", "O. Bonaventure, B. Legat, L. Metognon")
 
 # ╔═╡ 3ddd22b2-7d1b-4b3a-8737-09552b51726d
 frametitle("Variables, pointeurs et doubles pointeurs")
