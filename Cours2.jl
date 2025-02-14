@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.46
+# v0.20.4
 
 using Markdown
 using InteractiveUtils
@@ -386,8 +386,8 @@ int init(int size, float val, struct vector_t ** v) {
   return 0;
 }
 int main () {
-  struct vector_t **ptr = (struct vector_t **) malloc(sizeof(struct vector_t *));
-  int err = init(4, 1.23, ptr);
+  struct vector_t *ptr = NULL;
+  int err = init(4, 1.23, &ptr);
 }
 """)
 
@@ -522,12 +522,12 @@ md"Laquelle de ces deux fonctions présente une façon correcte de retourner un 
 
 # ╔═╡ 27b6779a-5624-4e8e-ae32-8a8971923d01
 markdown_c("""
-int stack() {
+int *stack() {
   int v[] = {1, 2, 3};
   return v;
 }
 
-int heap() {
+int *heap() {
   int *v = (int *) malloc(3 * sizeof(int));
   v[0] = 1; v[1] = 2; v[2] = 3;
   return v;
@@ -543,12 +543,12 @@ frametitle("Retourner un tableau : visualization")
 tutor("""
 #include <stdlib.h>
 
-int stack() {
+int *stack() {
   int v[] = {1, 2, 3};
   return v;
 }
 
-int heap() {
+int *heap() {
   int *v = (int *) malloc(3 * sizeof(int));
   v[0] = 1; v[1] = 2; v[2] = 3;
   return v;
