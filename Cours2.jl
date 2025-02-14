@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.20.4
+# v0.19.46
 
 using Markdown
 using InteractiveUtils
@@ -125,6 +125,9 @@ matrice[0][0] = 1; // 1
 *(matrice) = 1;    // 3
 """)
 
+# ╔═╡ a07e8aea-790b-4307-9de1-e45c6a3f7cf4
+wooclap("JAPRXX")
+
 # ╔═╡ c73a9ebe-9597-4c49-8493-aec1d71a281a
 frametitle("Comment faire matrice[0][1] = 2 ?")
 
@@ -140,6 +143,9 @@ matrice[1] = ligne1;
 *(matrice[0]+1)=0; // 3
 """)
 
+# ╔═╡ 38e67b29-707f-4718-b9cc-2a1a62f32143
+wooclap("JAPRXX")
+
 # ╔═╡ 67cf8ac0-5b91-4d19-aca4-4309f3109a0c
 frametitle("Comment faire matrice[1][0] = 2 ?")
 
@@ -154,6 +160,9 @@ matrice[1] = ligne1;
 *(*(matrice+1))=2; // 2
 *(*matrice+1)=2;   // 3
 """)
+
+# ╔═╡ 6531f0d6-cf62-46ca-8dd2-befda43806d7
+wooclap("JAPRXX")
 
 # ╔═╡ 92428490-6d76-44a7-9d5b-a9e988f5ff25
 frametitle("Libération de la mémoire")
@@ -177,6 +186,9 @@ free(ligne0);
 free(ligne1);
 free(matrice);
 """))
+
+# ╔═╡ ec120913-bafb-4abb-8ebd-a0e3b72578f6
+wooclap("JAPRXX")
 
 # ╔═╡ 90532252-a756-40a1-8867-76041f5545a0
 frametitle("Toujours free dans le sens inverse de malloc")
@@ -233,6 +245,9 @@ qa(markdown_c("void destroy(struct vector_t *vect) {"), markdown_c("""
   free(vect);
 }"""))
 
+# ╔═╡ 9cb862ff-275e-4f1d-8104-c1b8350725da
+wooclap("JAPRXX")
+
 # ╔═╡ f386a8d4-35be-4612-91c7-31ff0f004e2d
 frametitle("Une autre implémentation …")
 
@@ -276,6 +291,9 @@ int init(int size, float val,
   struct vector_t * v,    // 3
 )
 """)
+
+# ╔═╡ a6ca2092-6435-4081-a407-c3d0286efb62
+wooclap("JAPRXX")
 
 # ╔═╡ 0e0ddf7c-a34b-447a-8142-334d14f96ae1
 frametitle("Allocation de la mémoire")
@@ -322,6 +340,9 @@ markdown_c("""
   return 0;
 }
 """)
+
+# ╔═╡ dd918d12-bde4-4a1d-88c2-a9a643f39b2e
+wooclap("JAPRXX")
 
 # ╔═╡ 2e1fc3ec-c1ca-43b8-893c-bda691635475
 frametitle("Visualization de init")
@@ -394,6 +415,9 @@ qa(md"Comment implémter cette function ?", markdown_c("""
 }
 """))
 
+# ╔═╡ 7808e8d0-597c-422a-95eb-cc581fb65d87
+wooclap("JAPRXX")
+
 # ╔═╡ 44c8617f-ba56-40fe-80b4-963cf6e6f4b5
 frametitle("Modification d'un élément")
 
@@ -420,6 +444,9 @@ qa(md"Comment implémter cette function ?", markdown_c("""
 }
 """))
 
+# ╔═╡ 594773b5-7e89-41a1-a873-387a096ee3b5
+wooclap("JAPRXX")
+
 # ╔═╡ 03847d85-c675-4b4a-9331-fd7a32b26938
 frametitle("Libération de la mémoire")
 
@@ -440,6 +467,9 @@ qa(markdown_c("int destroy(struct vector_t *v) {"), markdown_c("""
   free(v);
   return 0;
 }"""))
+
+# ╔═╡ 986cdd2f-c22a-497b-8ce4-d6755a871c15
+wooclap("JAPRXX")
 
 # ╔═╡ 14a56b43-789a-42f0-9228-0c6a660629c9
 frametitle("Pointeur de fonction")
@@ -469,6 +499,76 @@ int main () {
 }
 """)
 
+# ╔═╡ 813830a0-a6d4-4fe7-8440-df328a3f041b
+frametitle("Comment retourner un tableau ?")
+
+# ╔═╡ 27b6779a-5624-4e8e-ae32-8a8971923d01
+markdown_c("""
+int stack() {
+  int v[] = {1, 2, 3};
+  return v;
+}
+
+int heap() {
+  int *v = (int *) malloc(3 * sizeof(int));
+  v[0] = 1; v[1] = 2; v[2] = 3;
+  return v;
+}""")
+
+# ╔═╡ a13bf677-9c63-4f8e-b3dd-27b3aad7f956
+wooclap("JAPRXX")
+
+# ╔═╡ 4643cd02-67f4-40cd-aa7d-cfdb83fc62be
+section("Retourner un tableau : visualization")
+
+# ╔═╡ accfaade-96ce-4869-83ce-9dd5489b65a2
+tutor("""
+#include <stdlib.h>
+
+int stack() {
+  int v[] = {1, 2, 3};
+  return v;
+}
+
+int heap() {
+  int *v = (int *) malloc(3 * sizeof(int));
+  v[0] = 1; v[1] = 2; v[2] = 3;
+  return v;
+}
+
+int main () {
+  int *v = heap();
+  printf("%d %d %d\\n", v[0], v[1], v[2]);
+  v = stack();
+  printf("%d %d %d\\n", v[0], v[1], v[2]);
+  return 0;
+}
+""")
+
+# ╔═╡ 319bc8b4-7139-43b0-a57b-66c6a9da7cb9
+frametitle("Structure différente du stack et heap")
+
+# ╔═╡ 132663c2-dfdd-4426-991a-bc9c95bbdad1
+HAlign((
+	md"""
+* Stack : Pile de mémoire locale des functions, structure connue à la **compilation**
+* Heap : Alloué et désalloué avec des tailles connues à l'**exécution**. L'OS est responsable de faire de son mieux pour organiser cette mémoire qui se fragmente à suite à désallocations
+
+[Image source](https://learn.adafruit.com/memories-of-an-arduino)
+""",
+	img("heapstack", :width => "350px")
+),
+	[40, 55],
+)
+
+# ╔═╡ 72370890-1eed-4567-afa6-b492d7d3c898
+frametitle("Projet")
+
+# ╔═╡ 70172d7b-db88-40dd-9e1b-dcd1e00f2d62
+md"""
+* Si vous avez une question sur le projet, ouvrez une issue [ici](https://forge.uclouvain.be/lepl15031/students/project-matrix/projet-matrix)
+"""
+
 # ╔═╡ fd1f7fd9-f6ed-4ee0-a4eb-50254b7d07e7
 TableOfContents()
 
@@ -492,13 +592,17 @@ TableOfContents()
 # ╟─336f53c9-5982-4694-8bd4-92c2a1d1b5cc
 # ╟─37f6e305-fb5c-4215-b8a1-564a7632a377
 # ╟─0b41747b-fe00-49a0-9ed9-99f0b2046b2e
+# ╟─a07e8aea-790b-4307-9de1-e45c6a3f7cf4
 # ╟─c73a9ebe-9597-4c49-8493-aec1d71a281a
 # ╟─b5388c3e-bcaf-43b6-b9d9-c9979f2afce2
+# ╟─38e67b29-707f-4718-b9cc-2a1a62f32143
 # ╟─67cf8ac0-5b91-4d19-aca4-4309f3109a0c
 # ╟─9160427d-4db7-4a97-9dde-14d19d59b1ef
+# ╟─6531f0d6-cf62-46ca-8dd2-befda43806d7
 # ╟─92428490-6d76-44a7-9d5b-a9e988f5ff25
 # ╟─1a82ab2b-dd7c-4b48-b263-e71b13ba0fb2
 # ╟─62198fa2-4e96-4950-a99e-a3808bbf811a
+# ╟─ec120913-bafb-4abb-8ebd-a0e3b72578f6
 # ╟─90532252-a756-40a1-8867-76041f5545a0
 # ╟─2d35189b-46aa-4922-ad4f-432533da2a80
 # ╟─49f0db66-da21-42b0-91d5-db04075e559a
@@ -507,6 +611,7 @@ TableOfContents()
 # ╟─419f48c0-8377-4a67-a801-e87d2a61c17a
 # ╟─cfc54158-a170-4f1d-b1dd-ab8e0f1a172e
 # ╟─4dad1e1b-2288-49b9-8190-f2f374ca353c
+# ╟─9cb862ff-275e-4f1d-8104-c1b8350725da
 # ╟─f386a8d4-35be-4612-91c7-31ff0f004e2d
 # ╟─87877209-958b-4635-bdbc-97548acdfb3f
 # ╟─f3dd8bf7-03c4-4069-8d1c-ece484de5ef1
@@ -514,26 +619,40 @@ TableOfContents()
 # ╟─facc8d63-d620-40ff-939a-78ff58fff04f
 # ╟─b66c9e2f-17b3-44dc-83e4-cb3a9329039b
 # ╟─c2928a50-8f63-477e-ada3-1352d5c72712
+# ╟─a6ca2092-6435-4081-a407-c3d0286efb62
 # ╟─0e0ddf7c-a34b-447a-8142-334d14f96ae1
 # ╟─1ca8b74a-ce74-44a3-9e74-1447eb5141a7
 # ╟─dd7f51b5-ca6a-4eb4-802d-9514861ae6a4
 # ╟─e5e45ef0-32ac-403c-a05e-de267209fb8b
 # ╟─b58ba8eb-0661-4eac-8ead-2daff4126d57
+# ╟─dd918d12-bde4-4a1d-88c2-a9a643f39b2e
 # ╟─2e1fc3ec-c1ca-43b8-893c-bda691635475
 # ╟─85e1517c-f7d9-4df5-acde-00657cdf3dbe
 # ╟─4b009812-191d-4969-bf32-5941ca707f37
 # ╟─4072072d-c543-43bf-87ad-1f201bd21c59
 # ╟─5b8e5130-bf78-4529-b3be-02a0ba093f12
 # ╟─7f150e04-b56b-499f-ad50-4f586e76a0ab
+# ╟─7808e8d0-597c-422a-95eb-cc581fb65d87
 # ╟─44c8617f-ba56-40fe-80b4-963cf6e6f4b5
 # ╟─c306afc9-f86e-4407-8757-272561980a72
 # ╟─d85db8cc-56b6-42e5-8175-3c53d345282e
+# ╟─594773b5-7e89-41a1-a873-387a096ee3b5
 # ╟─03847d85-c675-4b4a-9331-fd7a32b26938
 # ╟─406d30a9-f477-4898-9caf-770fcc25b2a9
 # ╟─cb9c27b9-ce7d-4bdf-af7d-c88883a210bc
 # ╟─e1b6f1d3-9d06-4ee4-854d-8ede288f369c
+# ╟─986cdd2f-c22a-497b-8ce4-d6755a871c15
 # ╟─14a56b43-789a-42f0-9228-0c6a660629c9
 # ╟─3cc18d67-b0d7-4b4b-afb6-5b48eddd89d2
+# ╟─813830a0-a6d4-4fe7-8440-df328a3f041b
+# ╟─27b6779a-5624-4e8e-ae32-8a8971923d01
+# ╟─a13bf677-9c63-4f8e-b3dd-27b3aad7f956
+# ╟─4643cd02-67f4-40cd-aa7d-cfdb83fc62be
+# ╟─accfaade-96ce-4869-83ce-9dd5489b65a2
+# ╟─319bc8b4-7139-43b0-a57b-66c6a9da7cb9
+# ╟─132663c2-dfdd-4426-991a-bc9c95bbdad1
+# ╟─72370890-1eed-4567-afa6-b492d7d3c898
+# ╟─70172d7b-db88-40dd-9e1b-dcd1e00f2d62
 # ╟─fd1f7fd9-f6ed-4ee0-a4eb-50254b7d07e7
 # ╟─d2952bc0-5506-49c4-b7e5-95e319700cf2
 # ╟─678cc353-0b54-4b92-9f08-71556177a038

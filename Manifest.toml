@@ -550,7 +550,7 @@ uuid = "1e8d2bf6-9821-4900-9a2f-4d87552df2bd"
 version = "0.1.1"
 
 [[deps.MyUtils]]
-deps = ["Clang_jll", "Colors", "DocumenterCitations", "HTTP", "Luxor", "Markdown", "MultilineStrings"]
+deps = ["Clang_jll", "Colors", "DocumenterCitations", "HTTP", "Luxor", "Markdown", "MultilineStrings", "PlutoUI"]
 path = "MyUtils"
 uuid = "5f08ea77-7f1f-482c-9564-31d94ae91ab8"
 version = "0.1.0"

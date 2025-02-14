@@ -1,3 +1,5 @@
+import PlutoUI
+
 function reset_width(width)
     return HTML("""
 <style>
@@ -36,10 +38,10 @@ function imgpath(file)
     if !('.' in file)
         file = file * ".png"
     end
-    return joinpath(joinpath(@__DIR__, "images", file))
+    return joinpath(joinpath(dirname(dirname(@__DIR__)), "images", file))
 end
 function img(file, args...)
-    LocalResource(imgpath(file), args...)
+    PlutoUI.LocalResource(imgpath(file), args...)
 end
 function header(title, authors)
     return HTML("<p align=center style=\"font-size: 40px;\">$title</p><p align=right><i>$authors<i></p>")
@@ -95,4 +97,8 @@ function qa(question::Markdown.MD, answer)
     # This will print the question on a new line and we don't want that:
     h = HTML(_inline_html(question.content[]))
     return qa(h, answer)
+end
+
+function wooclap(link)
+    return HTML("""<img alt="Wooclap Logo" src="https://www.wooclap.com/images/wooclap-logo.svg"> <a style="margin-left: 80px;" href="https://app.wooclap.com/$link"><tt>https://app.wooclap.com/JAPRXX</tt></a>""")
 end
