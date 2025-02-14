@@ -5,6 +5,9 @@
 [<img src="https://upload.wikimedia.org/wikipedia/commons/c/c6/Moodle-logo.svg" height="16"/>](https://moodle.uclouvain.be/course/view.php?id=3842)
 
 This repository contains the sources of the [slides](https://blegat.github.io/LEPL1503/) of some of the classes of the LEPL1503 course given at UCLouvain.
+You can visualize the slide through [this link](https://blegat.github.io/LEPL1503/). In order to turn on the presentation mode, enter `present()` in the JavaScript console of your browser (e.g. open it with <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>I</kbd> on Firefox).
+
+## Run the slides locally
 
 In order to run the notebooks locally, launch Julia an do
 ```julia
