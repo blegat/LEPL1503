@@ -15,7 +15,7 @@ Pkg.activate(".")
 using PlutoUI, MyUtils
 
 # ╔═╡ 68b3f601-8cc3-45b2-93f6-8fdbc9cd3411
-header("LEPL1503/LSINC1503 - Cours 2", "O. Bonaventure, B. Legat, L. Metognon")
+header("LEPL1503/LSINC1503 - Cours 2", "O. Bonaventure, B. Legat, L. Metongnon")
 
 # ╔═╡ 3ddd22b2-7d1b-4b3a-8737-09552b51726d
 frametitle("Variables, pointeurs et doubles pointeurs")
@@ -129,7 +129,7 @@ matrice[0][0] = 1; // 1
 wooclap("JAPRXX")
 
 # ╔═╡ c73a9ebe-9597-4c49-8493-aec1d71a281a
-frametitle("Comment faire matrice[0][1] = 2 ?")
+frametitle("Comment faire matrice[0][1] = 0 ?")
 
 # ╔═╡ b5388c3e-bcaf-43b6-b9d9-c9979f2afce2
 markdown_c("""
@@ -407,7 +407,7 @@ int get(struct vector_t *v, int i,
 """)
 
 # ╔═╡ 7f150e04-b56b-499f-ad50-4f586e76a0ab
-qa(md"Comment implémter cette function ?", markdown_c("""
+qa(md"Comment implémenter `get` ?", markdown_c("""
   if (i < 0 || i >= v->length)
     return -1;
   *val = *(v->tab+i);
@@ -436,7 +436,7 @@ struct vector_t * v    // 3
 ) {""")
 
 # ╔═╡ d85db8cc-56b6-42e5-8175-3c53d345282e
-qa(md"Comment implémter cette function ?", markdown_c("""
+qa(md"Comment implémenter `set` ?", markdown_c("""
   if (i < 0 || i >= v->length)
     return -1;
   *(v->tab+i) = val;
@@ -502,6 +502,9 @@ int main () {
 # ╔═╡ 813830a0-a6d4-4fe7-8440-df328a3f041b
 frametitle("Comment retourner un tableau ?")
 
+# ╔═╡ b8392f14-05d4-43e4-bd2a-3d4ba6ced65b
+md"Laquelle de ces deux fonctions présente une façon correcte de retourner un tableau ?"
+
 # ╔═╡ 27b6779a-5624-4e8e-ae32-8a8971923d01
 markdown_c("""
 int stack() {
@@ -537,10 +540,11 @@ int heap() {
 }
 
 int main () {
-  int *v = heap();
-  printf("%d %d %d\\n", v[0], v[1], v[2]);
-  v = stack();
-  printf("%d %d %d\\n", v[0], v[1], v[2]);
+  int *v1 = heap();
+  printf("%d %d %d\\n", v1[0], v1[1], v1[2]);
+  free(v1); // don't forget!
+  int *v2 = stack();
+  printf("%d %d %d\\n", v2[0], v2[1], v2[2]);
   return 0;
 }
 """)
@@ -645,6 +649,7 @@ TableOfContents()
 # ╟─14a56b43-789a-42f0-9228-0c6a660629c9
 # ╟─3cc18d67-b0d7-4b4b-afb6-5b48eddd89d2
 # ╟─813830a0-a6d4-4fe7-8440-df328a3f041b
+# ╟─b8392f14-05d4-43e4-bd2a-3d4ba6ced65b
 # ╟─27b6779a-5624-4e8e-ae32-8a8971923d01
 # ╟─a13bf677-9c63-4f8e-b3dd-27b3aad7f956
 # ╟─4643cd02-67f4-40cd-aa7d-cfdb83fc62be
