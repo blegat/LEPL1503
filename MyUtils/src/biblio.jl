@@ -2,7 +2,7 @@ import DocumenterCitations
 
 # /!\ Important: use this Zotero config with Better BibTeX:
 # https://github.com/JuliaDocs/DocumenterCitations.jl/issues/85#issuecomment-2479025454
-function load_biblio!(file = joinpath(@__DIR__, "biblio.bib"); style = DocumenterCitations.AlphaStyle())
+function load_biblio!(file = joinpath(dirname(dirname(@__DIR__)), "references.bib"); style = DocumenterCitations.AlphaStyle())
     @info("Loading bibliography from `$file`...")
     biblio = DocumenterCitations.CitationBibliography(file; style)
     DocumenterCitations.init_bibliography!(style, biblio)
