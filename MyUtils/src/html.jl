@@ -1,4 +1,5 @@
 import PlutoUI
+using HypertextLiteral # for @htl
 
 function reset_width(width)
     return HTML("""
@@ -13,27 +14,6 @@ function reset_width(width)
 """)
 end
 
-# `Cols` conflict with `DataFrames`
-struct HAlign{T<:Tuple}
-    cols::T
-    dims::Vector{Int}
-end
-function HAlign(a::Tuple)
-    n = length(a)
-    return HAlign(a, div(100, n) * ones(Int, n))
-end
-HAlign(a, b, args...) = HAlign(tuple(a, b, args...))
-
-function Base.show(io, mime::MIME"text/html", c::HAlign)
-    x = div(100, length(c.cols))
-    write(io, """<div style="display: flex; justify-content: center; align-items: center;">""")
-    for (col, p) in zip(c.cols, c.dims)
-        write(io, """<div style="flex: $p%;">""")
-        show(io, mime, col)
-        write(io, """</div>""")
-    end
-    write(io, """</div>""")
-end
 function imgpath(file)
     if !('.' in file)
         file = file * ".png"
@@ -43,8 +23,13 @@ end
 function img(file, args...)
     PlutoUI.LocalResource(imgpath(file), args...)
 end
+
 function header(title, authors)
-    return HTML("<p align=center style=\"font-size: 40px;\">$title</p><p align=right><i>$authors<i></p>")
+    return @htl("""
+<p align=center style=\"font-size: 40px;\">$title</p><p align=right><i>$authors</i></p>
+$(PlutoTeachingTools.ChooseDisplayMode())
+$(PlutoUI.TableOfContents(depth=1))
+""")
 end
 section(t) = md"# $t"
 # with `##`, it's not centered but it works better with TableOfContents
@@ -101,4 +86,8 @@ end
 
 function wooclap(link)
     return HTML("""<img alt="Wooclap Logo" src="https://www.wooclap.com/images/wooclap-logo.svg"> <a style="margin-left: 80px;" href="https://app.wooclap.com/$link"><tt>https://app.wooclap.com/JAPRXX</tt></a>""")
+end
+
+function definition(name, content)
+    return Markdown.MD(Markdown.Admonition("key-concept", "Def: $name", [content]))
 end

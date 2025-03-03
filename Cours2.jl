@@ -12,7 +12,7 @@ import Pkg
 Pkg.activate(".")
 
 # ╔═╡ 90a4fe3c-02c7-46e6-b2fb-526e73508101
-using PlutoUI, MyUtils
+using PlutoUI, PlutoUI.ExperimentalLayout, MyUtils, PlutoTeachingTools
 
 # ╔═╡ 68b3f601-8cc3-45b2-93f6-8fdbc9cd3411
 header("LEPL1503/LSINC1503 - Cours 2", "O. Bonaventure, B. Legat, L. Metongnon")
@@ -117,7 +117,7 @@ section("Initialisation d'une valeur")
 frametitle("Comment initialiser la première valeur ?")
 
 # ╔═╡ 0b41747b-fe00-49a0-9ed9-99f0b2046b2e
-markdown_c("""
+md_c("""
 float **matrice = (float **) malloc(2 * sizeof(float *));
 float *ligne0 = (float *) malloc(2 * sizeof(float));
 float *ligne1 = (float *) malloc(2 * sizeof(float));
@@ -135,7 +135,7 @@ wooclap("JAPRXX")
 frametitle("Comment faire matrice[0][1] = 0 ?")
 
 # ╔═╡ b5388c3e-bcaf-43b6-b9d9-c9979f2afce2
-markdown_c("""
+md_c("""
 float **matrice = (float **) malloc(2 * sizeof(float *));
 float *ligne0 = (float *) malloc(2 * sizeof(float));
 float *ligne1 = (float *) malloc(2 * sizeof(float));
@@ -153,7 +153,7 @@ wooclap("JAPRXX")
 frametitle("Comment faire matrice[1][0] = 2 ?")
 
 # ╔═╡ 9160427d-4db7-4a97-9dde-14d19d59b1ef
-markdown_c("""
+md_c("""
 float **matrice = (float **) malloc(2 * sizeof(float *));
 float *ligne0 = (float *) malloc(2 * sizeof(float));
 float *ligne1 = (float *) malloc(2 * sizeof(float));
@@ -187,7 +187,7 @@ matrice[1] = ligne1;
 
 # ╔═╡ 62198fa2-4e96-4950-a99e-a3808bbf811a
 qa(md"Comment libérer la mémoire avec `free` ?",
-markdown_c("""
+md_c("""
 free(ligne0);
 free(ligne1);
 free(matrice);
@@ -216,7 +216,7 @@ section("Un vecteur \"Java\" en C")
 frametitle("Première implémentation")
 
 # ╔═╡ b66272c8-02b0-4d22-84d6-7274efe11e2a
-markdown_c("""
+md_c("""
 struct vector_t {
   int size;
   float *v;
@@ -224,7 +224,7 @@ struct vector_t {
 """)
 
 # ╔═╡ 488d8bed-855f-470a-a2fa-68c13fd08739
-qa(markdown_c("struct vector_t * init(int size, float val) {"), markdown_c("""
+qa(md_c("struct vector_t * init(int size, float val) {"), md_c("""
   // manque tests erreur malloc
   struct vector_t *t=(struct vector_t *)
           malloc(sizeof(struct vector_t));
@@ -238,18 +238,18 @@ qa(markdown_c("struct vector_t * init(int size, float val) {"), markdown_c("""
 """))
 
 # ╔═╡ 419f48c0-8377-4a67-a801-e87d2a61c17a
-qa(markdown_c("float get(struct vector_t *t, int i) {"), markdown_c("""
+qa(md_c("float get(struct vector_t *t, int i) {"), md_c("""
   return *(t->v+i);
 }"""))
 
 # ╔═╡ cfc54158-a170-4f1d-b1dd-ab8e0f1a172e
-qa(markdown_c("void set(struct vector_t *t, int i, float val) {"), markdown_c("""
+qa(md_c("void set(struct vector_t *t, int i, float val) {"), md_c("""
   if((i<t->size)&&(i>0))
     *(t->v+i)=val;
 }"""))
 
 # ╔═╡ 4dad1e1b-2288-49b9-8190-f2f374ca353c
-qa(markdown_c("void destroy(struct vector_t *vect) {"), markdown_c("""
+qa(md_c("void destroy(struct vector_t *vect) {"), md_c("""
   free(vect->v);
   free(vect);
 }"""))
@@ -268,7 +268,7 @@ Toutes les fonctions doivent vérifier leurs arguments et retourner
 """
 
 # ╔═╡ f3dd8bf7-03c4-4069-8d1c-ece484de5ef1
-markdown_c("""struct vector_t {
+md_c("""struct vector_t {
   int length; // nombre d'élements
   float *tab; // tableau avec les réels
 };""")
@@ -277,7 +277,7 @@ markdown_c("""struct vector_t {
 frametitle("Initialisation")
 
 # ╔═╡ facc8d63-d620-40ff-939a-78ff58fff04f
-markdown_c("""struct vector_t {
+md_c("""struct vector_t {
   int length; // nombre d'élements
   float *tab; // tableau avec les réels
 };""")
@@ -286,7 +286,7 @@ markdown_c("""struct vector_t {
 md"Quels arguments ?"
 
 # ╔═╡ c2928a50-8f63-477e-ada3-1352d5c72712
-markdown_c("""
+md_c("""
 /*
  * @pre
  * alloue la mémoire pour un vecteur de size éléments
@@ -308,13 +308,13 @@ wooclap("JAPRXX")
 frametitle("Allocation de la mémoire")
 
 # ╔═╡ 1ca8b74a-ce74-44a3-9e74-1447eb5141a7
-markdown_c("""struct vector_t {
+md_c("""struct vector_t {
   int length; // nombre d'élements
   float *tab; // tableau avec les réels
 };""")
 
 # ╔═╡ dd7f51b5-ca6a-4eb4-802d-9514861ae6a4
-markdown_c("""
+md_c("""
 int init(int size, float val, struct vector_t ** v) {
   if ((size<0) || v==NULL)
     return -1;
@@ -344,7 +344,7 @@ ou
 """)
 
 # ╔═╡ b58ba8eb-0661-4eac-8ead-2daff4126d57
-markdown_c("""
+md_c("""
   }
   return 0;
 }
@@ -395,13 +395,13 @@ int main () {
 frametitle("Récupération d'un élément")
 
 # ╔═╡ 4072072d-c543-43bf-87ad-1f201bd21c59
-markdown_c("""struct vector_t {
+md_c("""struct vector_t {
   int length; // nombre d'élements
   float *tab; // tableau avec les réels
 };""")
 
 # ╔═╡ 5b8e5130-bf78-4529-b3be-02a0ba093f12
-markdown_c("""
+md_c("""
 /*
  * @pre
  * @post retourne le ième élément du tableau dans val
@@ -416,7 +416,7 @@ int get(struct vector_t *v, int i,
 """)
 
 # ╔═╡ 7f150e04-b56b-499f-ad50-4f586e76a0ab
-qa(md"Comment implémenter `get` ?", markdown_c("""
+qa(md"Comment implémenter `get` ?", md_c("""
   if (i < 0 || i >= v->length)
     return -1;
   *val = *(v->tab+i);
@@ -431,7 +431,7 @@ wooclap("JAPRXX")
 frametitle("Modification d'un élément")
 
 # ╔═╡ c306afc9-f86e-4407-8757-272561980a72
-markdown_c("""/*
+md_c("""/*
  * @pre
  * @post place val comme ième élément
  *             du tableau
@@ -445,7 +445,7 @@ struct vector_t * v    // 3
 ) {""")
 
 # ╔═╡ d85db8cc-56b6-42e5-8175-3c53d345282e
-qa(md"Comment implémenter `set` ?", markdown_c("""
+qa(md"Comment implémenter `set` ?", md_c("""
   if (i < 0 || i >= v->length)
     return -1;
   *(v->tab+i) = val;
@@ -463,7 +463,7 @@ frametitle("Libération de la mémoire")
 md"Comment libérer la mémoire quand le vecteur est devenu inutile ?"
 
 # ╔═╡ cb9c27b9-ce7d-4bdf-af7d-c88883a210bc
-markdown_c("""
+md_c("""
 /*
  * libère la mémoire utilisée pour le vecteur
  * -1 en cas d'erreur, 0 sinon
@@ -471,7 +471,7 @@ markdown_c("""
 """)
 
 # ╔═╡ e1b6f1d3-9d06-4ee4-854d-8ede288f369c
-qa(markdown_c("int destroy(struct vector_t *v) {"), markdown_c("""
+qa(md_c("int destroy(struct vector_t *v) {"), md_c("""
   free(v->tab);
   free(v);
   return 0;
@@ -521,7 +521,7 @@ frametitle("Heap ou stack ?")
 md"Laquelle de ces deux fonctions présente une façon correcte de retourner un tableau ?"
 
 # ╔═╡ 27b6779a-5624-4e8e-ae32-8a8971923d01
-markdown_c("""
+md_c("""
 int *stack() {
   int v[] = {1, 2, 3};
   return v;
@@ -568,17 +568,18 @@ int main () {
 section("Structure différente du stack et heap")
 
 # ╔═╡ 132663c2-dfdd-4426-991a-bc9c95bbdad1
-HAlign((
+hbox([
 	md"""
 * Stack : Pile de mémoire locale des functions, structure connue à la **compilation**
 * Heap : Alloué et désalloué avec des tailles connues à l'**exécution**. L'OS fait de son mieux pour organiser cette mémoire et réassigner les fragments formés suite aux désallocations
 
-[Image source](https://learn.adafruit.com/memories-of-an-arduino)
+
 """,
-	img("heapstack", :width => "350px")
-),
-	[40, 55],
-)
+	img("heapstack", :width => "350px"),
+])
+
+# ╔═╡ 20d23ab4-ae24-4169-92be-ed9ec77c5518
+aside(md"[Source](https://learn.adafruit.com/memories-of-an-arduino/measuring-free-memory)", v_offset = -200)
 
 # ╔═╡ 72370890-1eed-4567-afa6-b492d7d3c898
 section("Projet")
@@ -588,8 +589,8 @@ md"""
 * Si vous avez une question sur le projet, ouvrez une issue [ici](https://forge.uclouvain.be/lepl15031/students/project-matrix/projet-matrix)
 """
 
-# ╔═╡ fd1f7fd9-f6ed-4ee0-a4eb-50254b7d07e7
-TableOfContents(depth=1)
+# ╔═╡ 661121be-c888-4b91-acd6-ba1f7c665ae8
+Pkg.instantiate()
 
 # ╔═╡ Cell order:
 # ╟─68b3f601-8cc3-45b2-93f6-8fdbc9cd3411
@@ -675,10 +676,11 @@ TableOfContents(depth=1)
 # ╟─4643cd02-67f4-40cd-aa7d-cfdb83fc62be
 # ╟─accfaade-96ce-4869-83ce-9dd5489b65a2
 # ╟─319bc8b4-7139-43b0-a57b-66c6a9da7cb9
-# ╟─132663c2-dfdd-4426-991a-bc9c95bbdad1
+# ╠═132663c2-dfdd-4426-991a-bc9c95bbdad1
+# ╠═20d23ab4-ae24-4169-92be-ed9ec77c5518
 # ╟─72370890-1eed-4567-afa6-b492d7d3c898
 # ╟─70172d7b-db88-40dd-9e1b-dcd1e00f2d62
-# ╟─fd1f7fd9-f6ed-4ee0-a4eb-50254b7d07e7
 # ╟─d2952bc0-5506-49c4-b7e5-95e319700cf2
 # ╟─678cc353-0b54-4b92-9f08-71556177a038
+# ╟─661121be-c888-4b91-acd6-ba1f7c665ae8
 # ╟─90a4fe3c-02c7-46e6-b2fb-526e73508101
