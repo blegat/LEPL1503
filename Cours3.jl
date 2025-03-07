@@ -161,9 +161,6 @@ md"[Source des images](https://git-scm.com/book/en/v2/Git-Branching-Basic-Branch
 # ╔═╡ a0adfd7c-52eb-437f-b9af-9323fc374c1a
 frametitle("Deux branches en cours...")
 
-# ╔═╡ 0746db48-8e50-4050-8f88-c7a90fcd8b55
-img("https://git-scm.com/book/en/v2/images/basic-branching-4.png")
-
 # ╔═╡ e4fa4941-25bb-4191-a7df-700852e7b5bc
 frametitle("Une des deux est mergée en premier")
 
@@ -191,9 +188,6 @@ $ git merge --no-ff a
 
 # ╔═╡ ac0487f3-d9ae-45a4-b4ff-81f0fb1553a5
 md"**Important** Comme on était sur la branche `main`, on ne modifie **que** `main`. Remarquez que `a` n'a pas bougé! Ceci est toujours vrai sur `git`, vous ne modifiez que la branche sur laquelle vous êtes `checkout`."
-
-# ╔═╡ 566046e2-c690-4955-ae63-44a83cfe3234
-img("https://git-scm.com/book/en/v2/images/basic-branching-5.png")
 
 # ╔═╡ 373dc385-d77e-495a-9f1f-f9424a8f27bb
 frametitle("Si l'autre branche est prête, on la merge")
@@ -276,6 +270,7 @@ function tree(t; s = 80)
 			branch("b", t >= 4 ? (t >= 6 ? 3.2 : 2.2) : 1.2, 1)
 		end
 		if t == 1
+			a(-1, 0, 2, 0)
 			ac(1, -1, 2, 0, "M")
 		elseif t == 3
 			a(1, 1, 2, 0)
@@ -315,6 +310,29 @@ frametitle("Bouton merge sur GitHub/GitLab")
 # ╔═╡ 4be20622-1534-4bd1-9653-66527226e670
 md"La branche `main` du slides précédente contient des détails internes aux branches `a` et `b`. On aimerait plutôt avoir un commit par branche avec un lien vers le merge request correspondant pour voir plus de détails le cas échéant."
 
+# ╔═╡ 18283586-52e0-477c-a926-e6c2e5cdbb6e
+function squash(; s = 80)
+	off(a, b) = a + sign(b - a) * 0.1
+	c(m, i, j) = boxed(m, Point(i * s, j * s))
+	a(i1, j1, i2, j2) = arrow(Point(off(i1, i2) * s, off(j1, j2) * s), Point(off(i2, i1) * s, off(j2, j1) * s))
+	branch(m, i, j) = text(m, Point(i * s, j * s), halign=:left, valign=:middle)
+	function ac(i1, j1, i2, j2, m)
+		a(i1, j1, i2, j2)
+		c(m, i2, j2)
+	end
+	@draw begin
+		c("C0", -3, 0)
+		ac(-3, 0, -2, 0, "C1")
+		ac(-2, 0, -1, 0, "C2")
+		ac(-1, 0, 0, 0, "A")
+		ac(0, 0, 1, 0, "B")
+		branch("main", 1.2, 0)
+	end 7.5s 1.7s
+end;
+
+# ╔═╡ f1696330-2317-4cb4-989c-8e7395b47384
+squash()
+
 # ╔═╡ 5febbc94-db91-4c60-acae-9888fef74d63
 frametitle("Squash commits")
 
@@ -335,29 +353,6 @@ $(img("https://docs.github.com/assets/cb-5742/mw-1440/images/help/pull_requests/
 
 # ╔═╡ ae673c76-0bda-41bd-b218-be3f358a97a2
 md"[Source des images](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/about-pull-request-merges)"
-
-# ╔═╡ 9cc57c91-c6a6-42df-b95a-5d95495e9909
-function squash(; s = 80)
-	off(a, b) = a + sign(b - a) * 0.1
-	c(m, i, j) = boxed(m, Point(i * s, j * s))
-	a(i1, j1, i2, j2) = arrow(Point(off(i1, i2) * s, off(j1, j2) * s), Point(off(i2, i1) * s, off(j2, j1) * s))
-	branch(m, i, j) = text(m, Point(i * s, j * s), halign=:left, valign=:middle)
-	function ac(i1, j1, i2, j2, m)
-		a(i1, j1, i2, j2)
-		c(m, i2, j2)
-	end
-	@draw begin
-		c("C0", -3, 0)
-		ac(-3, 0, -2, 0, "C1")
-		ac(-2, 0, -1, 0, "C2")
-		ac(-1, 0, 0, 0, "A")
-		ac(0, 0, 1, 0, "B")
-		branch("main", 1.2, 0)
-	end 7.5s 1.7s
-end;
-
-# ╔═╡ 18283586-52e0-477c-a926-e6c2e5cdbb6e
-squash()
 
 # ╔═╡ b379b723-d3e4-45d3-b5e8-9958c6f5dd9b
 frametitle("Reset")
@@ -406,39 +401,6 @@ $ git checkout main
 $ git stash apply
 ```
 """
-
-# ╔═╡ c7fd84df-fd14-41dc-86c4-a2b205d9be56
-img("https://git-scm.com/book/en/v2/images/basic-branching-6.png")
-
-# ╔═╡ b05cbd8f-8e3e-4627-872b-dc6c53bb7014
-Foldable(md"Vaut-il mieux continuer à commit sur l'autre branche comme si de rien n'était ?", md"Non, Il vaut mieux se synchroniser avec master le plus vite possible car tout nos nouveaux commits sont des sources additionnelles de conflits")
-
-# ╔═╡ 84b048b6-6b9e-40e6-8865-9999d6000a8a
-frametitle("Merge de deux branches")
-
-# ╔═╡ 8edebbe3-0640-42db-a3c7-b29c8eb81dfc
-img("https://git-scm.com/book/en/v2/images/basic-merging-1.png")
-
-# ╔═╡ 82544684-0c33-4eb9-bbae-8e0398b951e7
-frametitle("Si iss53 est finie, on merge dans master")
-
-# ╔═╡ 4edef8de-5ac2-42ab-b478-8167f269d5f7
-md"```sh
-$ git checkout master
-$ git merge iss53
-```"
-
-# ╔═╡ 95424c24-0f7d-4a72-9270-2c70575436a1
-img("https://git-scm.com/book/en/v2/images/basic-merging-2.png")
-
-# ╔═╡ 1f90facc-e2e3-4c19-8975-4a825a920e86
-frametitle("Si iss53 n'est pas finie, on merge master dans iss53")
-
-# ╔═╡ d6259127-0f8f-4da5-bed4-c3e8f6e99e54
-md"```sh
-$ git checkout iss53
-$ git merge master
-```"
 
 # ╔═╡ 27e4de24-a81c-4437-a566-05da736f6e9d
 section("Markdown")
@@ -519,8 +481,7 @@ Pkg.instantiate()
 # ╟─15953e07-0d3a-462a-8f4d-8c1609d37b50
 # ╟─0b248037-782c-4f57-ad2c-c20d2940f3db
 # ╟─a0adfd7c-52eb-437f-b9af-9323fc374c1a
-# ╠═f62f605f-56f1-4fed-bde5-a2d16310bfd9
-# ╟─0746db48-8e50-4050-8f88-c7a90fcd8b55
+# ╟─f62f605f-56f1-4fed-bde5-a2d16310bfd9
 # ╟─e4fa4941-25bb-4191-a7df-700852e7b5bc
 # ╟─96e9ced9-9f89-4053-90b9-679447316ca6
 # ╟─24eb8253-8718-4a11-930a-82ef5743cc75
@@ -529,7 +490,6 @@ Pkg.instantiate()
 # ╟─32b000ef-39a2-4682-b45a-d9cfd2e33f81
 # ╟─ec4a0cad-f3ca-4f12-aab2-1df86e1e236d
 # ╟─ac0487f3-d9ae-45a4-b4ff-81f0fb1553a5
-# ╟─566046e2-c690-4955-ae63-44a83cfe3234
 # ╟─373dc385-d77e-495a-9f1f-f9424a8f27bb
 # ╟─b9746823-8c9b-462d-875a-250b882efcad
 # ╟─739a3253-91d9-4776-a130-d8c5bb2397e2
@@ -547,27 +507,18 @@ Pkg.instantiate()
 # ╟─7b512972-17ee-452b-b62c-c63f9f1ea9f1
 # ╟─d863aac9-b9f7-480e-892d-1d510f34dfa7
 # ╟─4be20622-1534-4bd1-9653-66527226e670
+# ╟─f1696330-2317-4cb4-989c-8e7395b47384
 # ╟─18283586-52e0-477c-a926-e6c2e5cdbb6e
 # ╟─5febbc94-db91-4c60-acae-9888fef74d63
 # ╟─109a217e-bc88-46f9-b7f5-6a6993fc9918
 # ╟─48d34efa-e884-41e2-84ee-9b418b063041
 # ╟─ae673c76-0bda-41bd-b218-be3f358a97a2
-# ╟─9cc57c91-c6a6-42df-b95a-5d95495e9909
 # ╟─b379b723-d3e4-45d3-b5e8-9958c6f5dd9b
 # ╟─d55c4b86-88f9-423c-8def-3c4de83ad3bb
 # ╟─23067943-d07f-4f2a-a3f1-e49f2e2fc21e
 # ╟─296818cf-7598-46d8-8c7d-c91fd41fa9d0
 # ╟─b58456cf-b417-4f40-a854-c04b6db744db
 # ╟─00837930-704a-44eb-84c2-bece8894ef0f
-# ╟─c7fd84df-fd14-41dc-86c4-a2b205d9be56
-# ╟─b05cbd8f-8e3e-4627-872b-dc6c53bb7014
-# ╟─84b048b6-6b9e-40e6-8865-9999d6000a8a
-# ╟─8edebbe3-0640-42db-a3c7-b29c8eb81dfc
-# ╟─82544684-0c33-4eb9-bbae-8e0398b951e7
-# ╟─4edef8de-5ac2-42ab-b478-8167f269d5f7
-# ╟─95424c24-0f7d-4a72-9270-2c70575436a1
-# ╟─1f90facc-e2e3-4c19-8975-4a825a920e86
-# ╟─d6259127-0f8f-4da5-bed4-c3e8f6e99e54
 # ╟─27e4de24-a81c-4437-a566-05da736f6e9d
 # ╠═50acf567-a72a-4ada-af79-876b782e85c4
 # ╟─006977f7-c420-4562-b193-7fa7053c3397
