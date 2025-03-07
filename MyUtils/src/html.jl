@@ -14,14 +14,42 @@ function reset_width(width)
 """)
 end
 
-function imgpath(file)
+struct Path
+    path::String
+end
+
+function imgpath(path::Path)
+    file = path.path
     if !('.' in file)
         file = file * ".png"
     end
     return joinpath(joinpath(dirname(dirname(@__DIR__)), "images", file))
 end
-function img(file, args...)
-    PlutoUI.LocalResource(imgpath(file), args...)
+
+function img(path::Path, args...; kws...)
+    return PlutoUI.LocalResource(imgpath(path), args...)
+end
+
+struct URL
+    url::String
+end
+
+function save_image(url::URL, html_attributes...; name = split(url.url, '/')[end], kws...)
+    path = joinpath("cache", name)
+    return PlutoTeachingTools.RobustLocalResource(url.url, path, html_attributes...), path
+end
+
+function img(url::URL, args...; kws...)
+    r, _ = save_image(url, args...; kws...)
+    return r
+end
+
+function img(file::String, args...; kws...)
+    if startswith(file, "http")
+        img(URL(file), args...; kws...)
+    else
+        img(Path(file), args...; kws...)
+    end
 end
 
 function header(title, authors)

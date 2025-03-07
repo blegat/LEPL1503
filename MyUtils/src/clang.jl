@@ -2,36 +2,64 @@ import Clang_jll
 import MultilineStrings
 import InteractiveUtils
 
-abstract type Language end
-struct CLanguage <: Language end
-struct CppLanguage <: Language end
+abstract type Code end
 
-source_extension(::CLanguage) = "c"
-source_extension(::CppLanguage) = "cpp"
+struct CCode <: Code
+    code::String
+end
 
-inline_code(code, ext::String) = HTML("""<code class="language-$ext">$code</code>""")
-inline_code(code, l::Language) = inline_code(code, source_extension(l))
+macro c_str(s)
+    return :($CCode($(esc(s))))
+end
 
-inline_c(code) = include_code(code, CLanguage())
+struct CppCode <: Code
+    code::String
+end
 
-function md_code(code, ext::String)
+macro cpp_str(s)
+    return :($CppCode($(esc(s))))
+end
+
+source_extension(::CCode) = "c"
+source_extension(::CppCode) = "cpp"
+
+compiler(::CCode, mpi::Bool) = mpi ? "mpicc" : "clang"
+function compiler(::CppCode, mpi::Bool)
+    @assert !mpi
+    return "clang++"
+end
+
+inline_code(code::AbstractString, ext::String) = HTML("""<code class="language-$ext">$code</code>""")
+inline_code(code::Code) = inline_code(code.code, source_extension(code))
+
+function md_code(code::AbstractString, ext::String)
     code = "```" * ext * '\n' * code
     if code[end] != '\n'
         code *= '\n'
     end
     return Markdown.parse(code * "```")
 end
-md_code(code, l::Language) = md_code(code, source_extension(l))
+md_code(code::Code) = md_code(code.code, source_extension(code))
+function Base.show(io::IO, m::MIME"text/html", code::Code)
+    return show(io, m, md_code(code))
+end
 
-md_c(code) = md_code(code, "c")
-
-function compile(code; lib, emit_llvm = false, cflags = ["-O3"], language::Language = CLanguage(), verbose = 0)
+function compile(
+    code::Code;
+    lib,
+    emit_llvm = false,
+    cflags = ["-O3"],
+    mpi::Bool = false,
+    use_system::Bool = mpi || "-fopenmp" in cflags, # `-fopenmp` will not work with pure Clang_jll, it needs openmp installed as well
+    verbose = 0,
+)
     path = mktempdir()
-    main_file = joinpath(path, "main.c")
+    main_file = joinpath(path, "main." * source_extension(code))
     bin_file = joinpath(path, ifelse(emit_llvm, "main.llvm", ifelse(lib, "lib.so", "bin")))
-    write(main_file, code)
+    write(main_file, code.code)
     args = String[]
-    if language isa CppLanguage
+    if !use_system && code isa CppCode
+        # `clang++` is not part of `Clang_jll`
         push!(args, "-x")
         push!(args, "c++")
     end
@@ -48,12 +76,20 @@ function compile(code; lib, emit_llvm = false, cflags = ["-O3"], language::Langu
     push!(args, "-o")
     push!(args, bin_file)
     try
-        Clang_jll.clang() do exe
-            cmd = Cmd([exe; args])
+        if use_system
+            cmd = Cmd([compiler(code, mpi); args])
             if verbose >= 1
                 @info("Compiling : $cmd")
             end
             run(cmd)
+        else
+            Clang_jll.clang() do exe
+                cmd = Cmd([exe; args])
+                if verbose >= 1
+                    @info("Compiling : $cmd")
+                end
+                run(cmd)
+            end
         end
     catch err
         if err isa ProcessFailedException
@@ -68,39 +104,82 @@ end
 function emit_llvm(code; kws...)
     llvm = compile(code; lib = false, emit_llvm = true, kws...)
     InteractiveUtils.print_llvm(stdout, read(llvm, String))
-    return md_c(code)
+    return code
 end
 
-function compile_lib(code; kws...)
-    return md_c(code), compile(code; lib = true, kws...)
+function compile_lib(code::Code; kws...)
+    return codesnippet(code), compile(code; lib = true, kws...)
 end
 
-function compile_and_run(code; args = String[], kws...)
-    bin_file = compile(code; lib = false, kws...)
+function compile_and_run(code::Code; verbose = 0, args = String[], mpi::Bool = false, num_processes = nothing, show_run_command = !isempty(args) || verbose >= 1, kws...)
+    bin_file = compile(code; lib = false, mpi, verbose, kws...)
     if !isnothing(bin_file)
-        cmd = Cmd([bin_file; args])
-        if !isempty(args)
-            println("\$ $(string(cmd)[2:end-1])") # `2:end-1` to remove the backsticks
+        cmd_vec = [bin_file; args]
+        if mpi
+            if !isnothing(num_processes)
+                cmd_vec = [["-n", string(num_processes)]; cmd_vec]
+            end
+            cmd_vec = ["mpiexec"; cmd_vec]
+        end
+        cmd = Cmd(cmd_vec)
+        if show_run_command
+            @info("Running : $cmd") # `2:end-1` to remove the backsticks
         end
         run(cmd)
     end
-    return md_c(code)
+    return codesnippet(code)
 end
 
-function wrap_in_main(code)
+function wrap_in_main(content)
+    code = content.code
     if code[end] == '\n'
         code = code[1:end-1]
     end
-    return """
+    return typeof(content)("""
 #include <stdlib.h>
 
 int main(int argc, char **argv) {
 $(MultilineStrings.indent(code, 2))
 }
-"""
+""")
 end
 
 function wrap_compile_and_run(code; kws...)
     compile_and_run(wrap_in_main(code); kws...)
-    return md_c(code)
+    return code
+end
+
+# TODO It would be nice if the user could select a dropdown or hover with the mouse and see the full code
+function codesnippet(code::Code)
+    lines = readlines(IOBuffer(code.code))
+    i = findfirst(line -> contains(line, "codesnippet"), lines)
+    if isnothing(i)
+        return code
+    end
+    j = findlast(line -> contains(line, "codesnippet"), lines)
+    return typeof(code)(join(lines[i+1:j-1], '\n'))
+end
+
+struct Example
+    name::String
+end
+
+function code(example::Example)
+    code = read(joinpath(dirname(dirname(dirname(@__DIR__))), "examples", example.name), String)
+    ext = split(example.name, '.')[end]
+    if ext == "c"
+        return CCode(code)
+    elseif ext == "cpp" || ext == "cc"
+        return CppCode(code)
+    else
+        error("Unrecognized extension `$ext`.")
+    end
+end
+
+function compile_and_run(example::Example; kws...)
+    return compile_and_run(code(example); kws...)
+end
+
+function compile_lib(example::Example; kws...)
+    return compile_lib(code(example); kws...)
 end
