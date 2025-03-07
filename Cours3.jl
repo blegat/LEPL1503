@@ -11,7 +11,7 @@ import Pkg
 Pkg.activate(".")
 
 # ╔═╡ 62ea7632-cfe1-4d0a-90db-d7d3eee27763
-using PlutoUI, PlutoUI.ExperimentalLayout, MyUtils, PlutoTeachingTools, CommonMark
+using Luxor, PlutoUI, PlutoUI.ExperimentalLayout, MyUtils, PlutoTeachingTools, CommonMark
 
 # ╔═╡ d9b5ce6e-f80d-11ef-26cd-f5e2c18c51bb
 header("LEPL1503/LSINC1503 - Cours 3", "O. Bonaventure, B. Legat, L. Metongnon")
@@ -27,6 +27,49 @@ Rappel slides du premier cours
 
 Le tuteur n'a pas le temps de résoudre les problèmes d'installation en séance
 """
+
+# ╔═╡ 93efbc2f-e078-46aa-b33d-03b30ee629ab
+section("Stack overflow 💥")
+
+# ╔═╡ 2dc74f5c-a40e-4a3f-964d-d77e46684592
+frametitle("Factorial")
+
+# ╔═╡ 2dc7800b-f584-4ddc-9f19-486ca0ce21f5
+tutor("""
+int factorial(int n) {
+  if (n <= 1)
+    return 1;
+  else
+    return n * factorial(n - 1);
+}
+
+int main () {
+  factorial(10);
+}
+""")
+
+# ╔═╡ 0c516dcd-ae8b-4ad5-834d-2964d1c6738b
+Foldable(md"Que se passe-t-il si on oublie `if (n <= 1)` ?", md"On pourrait croire que le programme ne s'arrête jamais. Seulement, la taille de la stack va grandir progressivement jusqu'à atteindre la limite mémoire. Ceci provoquera une *stack overflow*.")
+
+# ╔═╡ 0bcea29e-a529-4a34-98b3-f7708ae0c164
+frametitle("Fibonacci")
+
+# ╔═╡ f8650fa0-02be-4117-9f70-e2d71a6dcc68
+md"Cette implémentation de Fibonacci a une très mauvaise complexité mais elle illustre bien la dynamique de la stack qui grandit et rapetissit rapetissit au rythme des appels de fonctions."
+
+# ╔═╡ 90ca03b6-331f-401b-bacc-2999e184055b
+tutor("""
+int fibonacci(int n) {
+  if (n <= 2)
+    return 1;
+  else
+    return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+int main () {
+  fibonacci(6);
+}
+""")
 
 # ╔═╡ 226a5f51-738e-4abf-9cbe-f131dae2ea55
 section("Git")
@@ -124,11 +167,77 @@ img("https://git-scm.com/book/en/v2/images/basic-branching-4.png")
 # ╔═╡ e4fa4941-25bb-4191-a7df-700852e7b5bc
 frametitle("Une des deux est mergée en premier")
 
+# ╔═╡ 96e9ced9-9f89-4053-90b9-679447316ca6
+md"```sh
+$ git checkout main
+$ git merge a
+```"
+
+# ╔═╡ 61ff6065-3bfe-432e-ba07-87b9ef7c72f1
+md"Comme `main` était un ancètre de `a`, c'est un *fast forward* merge. On aurait pu faire
+```sh
+$ git merge --ff-only a
+```
+pour qu'il envoie une erreur si ce n'est pas fast forward."
+
+# ╔═╡ 6050693f-ac64-4537-a561-93688ab94b85
+frametitle("Un merge explicite")
+
+# ╔═╡ 32b000ef-39a2-4682-b45a-d9cfd2e33f81
+md"```sh
+$ git checkout main
+$ git merge --no-ff a
+```"
+
 # ╔═╡ 566046e2-c690-4955-ae63-44a83cfe3234
 img("https://git-scm.com/book/en/v2/images/basic-branching-5.png")
 
 # ╔═╡ 373dc385-d77e-495a-9f1f-f9424a8f27bb
 frametitle("On pourrait continue à commit sur iss53")
+
+# ╔═╡ 7b512972-17ee-452b-b62c-c63f9f1ea9f1
+function tree(t; s = 80)
+	off(a, b) = a + sign(b - a) * 0.1
+	c(m, i, j) = boxed(m, Point(i * s, j * s))
+	a(i1, j1, i2, j2) = arrow(Point(off(i1, i2) * s, off(j1, j2) * s), Point(off(i2, i1) * s, off(j2, j1) * s))
+	branch(m, i, j) = text(m, Point(i * s, j * s), halign=:left, valign=:middle)
+	function ac(i1, j1, i2, j2, m)
+		a(i1, j1, i2, j2)
+		c(m, i2, j2)
+	end
+	@draw begin
+		c("C0", -3, 0)
+		ac(-3, 0, -2, 0, "C1")
+		ac(-2, 0, -1, 0, "C2")
+		aj = t <= 1 ? -1 : 0
+		ac(-1, 0, 0, aj, "A1")
+		ac(0, aj, 1, aj, "A2")
+		ac(-1, 0, 0, 1, "B1")
+		ac(0, 1, 1, 1, "B2")
+		if t <= 1
+			branch("a", 1.2, -1)
+		end
+		branch("b", 1.2, 1)
+		if t == 1
+			ac(1, -1, 2, 0, "M")
+		elseif t == 3
+			ac(1, 0, 2, 0, "M")
+		end
+		branch("main", (t == 0) ? -0.8 : ((t == 1 || t == 3) ? 2.2 : 1.2), 0)
+	end 6.5s 2.7s
+end
+
+# ╔═╡ f62f605f-56f1-4fed-bde5-a2d16310bfd9
+tree(0)
+
+# ╔═╡ 24eb8253-8718-4a11-930a-82ef5743cc75
+tree(2)
+
+# ╔═╡ ec4a0cad-f3ca-4f12-aab2-1df86e1e236d
+tree(1)
+
+# ╔═╡ 739a3253-91d9-4776-a130-d8c5bb2397e2
+tree(3)
 
 # ╔═╡ 11177e51-65d5-4450-93d8-1c90e4e4c40c
 md"""```sh
@@ -228,6 +337,13 @@ Pkg.instantiate()
 # ╟─d9b5ce6e-f80d-11ef-26cd-f5e2c18c51bb
 # ╟─cbab5d55-63e2-46a4-b86f-d00eb0f1c507
 # ╟─28ad2f17-89d5-44b4-87c3-d385d874ed87
+# ╟─93efbc2f-e078-46aa-b33d-03b30ee629ab
+# ╟─2dc74f5c-a40e-4a3f-964d-d77e46684592
+# ╟─2dc7800b-f584-4ddc-9f19-486ca0ce21f5
+# ╟─0c516dcd-ae8b-4ad5-834d-2964d1c6738b
+# ╟─0bcea29e-a529-4a34-98b3-f7708ae0c164
+# ╟─f8650fa0-02be-4117-9f70-e2d71a6dcc68
+# ╟─90ca03b6-331f-401b-bacc-2999e184055b
 # ╟─226a5f51-738e-4abf-9cbe-f131dae2ea55
 # ╟─0a31d929-9d65-417b-b6b2-e432a1f01ffe
 # ╟─88674bd2-66b1-4c49-a7dd-071b93188d1f
@@ -241,10 +357,19 @@ Pkg.instantiate()
 # ╟─15953e07-0d3a-462a-8f4d-8c1609d37b50
 # ╟─0b248037-782c-4f57-ad2c-c20d2940f3db
 # ╟─a0adfd7c-52eb-437f-b9af-9323fc374c1a
+# ╠═f62f605f-56f1-4fed-bde5-a2d16310bfd9
 # ╟─0746db48-8e50-4050-8f88-c7a90fcd8b55
 # ╟─e4fa4941-25bb-4191-a7df-700852e7b5bc
+# ╟─96e9ced9-9f89-4053-90b9-679447316ca6
+# ╟─24eb8253-8718-4a11-930a-82ef5743cc75
+# ╟─61ff6065-3bfe-432e-ba07-87b9ef7c72f1
+# ╟─6050693f-ac64-4537-a561-93688ab94b85
+# ╟─32b000ef-39a2-4682-b45a-d9cfd2e33f81
+# ╟─ec4a0cad-f3ca-4f12-aab2-1df86e1e236d
 # ╟─566046e2-c690-4955-ae63-44a83cfe3234
 # ╟─373dc385-d77e-495a-9f1f-f9424a8f27bb
+# ╠═739a3253-91d9-4776-a130-d8c5bb2397e2
+# ╠═7b512972-17ee-452b-b62c-c63f9f1ea9f1
 # ╟─11177e51-65d5-4450-93d8-1c90e4e4c40c
 # ╟─c7fd84df-fd14-41dc-86c4-a2b205d9be56
 # ╟─b05cbd8f-8e3e-4627-872b-dc6c53bb7014
