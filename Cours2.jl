@@ -24,7 +24,7 @@ section("Variables, pointeurs et doubles pointeurs")
 frametitle("Visualisation")
 
 # ╔═╡ a8783da7-4e44-4012-be6e-88705697b0c5
-tutor(wrap_in_main("""
+tutor(wrap_in_main(c"""
 int x;
 int *px;
 int **ppx;
@@ -46,7 +46,7 @@ md"""
 """
 
 # ╔═╡ 6d3d7f63-766b-4a1f-91c3-46b401c4c280
-compile_and_run("""
+compile_and_run(c"""
 #include <stdio.h>
 int main(int argc, char **argv) {
   for(int i=0; i<argc; i++) {
@@ -74,13 +74,13 @@ section("Matrices sur le heap")
 frametitle("Comment mettre une matrice 2x2 sur le heap ?")
 
 # ╔═╡ 26eea9a8-71ba-4d18-8170-731906e68d05
-wrap_compile_and_run("""
+wrap_compile_and_run(c"""
 float *matrice0 = (float *) malloc(4 * sizeof(float *));
 matrice0[1][1] = 4;
 """)
 
 # ╔═╡ 8f156e1d-5816-4c56-9aec-ad665d2bc782
-wrap_compile_and_run("""
+wrap_compile_and_run(c"""
 float *matrice1=(float *) malloc(4 * sizeof(float));
 matrice1[1][1] = 4;
 """)
@@ -89,7 +89,7 @@ matrice1[1][1] = 4;
 frametitle("Première approche, un malloc par ligne")
 
 # ╔═╡ 324b41a3-4b01-4589-8ca5-28ec148cdeb1
-tutor(wrap_in_main("""
+tutor(wrap_in_main(c"""
 float **matrice2 = (float **) malloc(2 * sizeof(float *));
 float *ligne0 = (float *) malloc(2 * sizeof(float));
 float *ligne1 = (float *) malloc(2 * sizeof(float));
@@ -102,7 +102,7 @@ matrice2[1][1] = 4;
 frametitle("Deuxième approche, un malloc pour toutes les valeurs")
 
 # ╔═╡ 654184b1-4b5e-4c90-800e-b413a04eeea1
-tutor(wrap_in_main("""
+tutor(wrap_in_main(c"""
 float **matrice3 = (float **) malloc(2 * sizeof(float *));
 float *valeurs = (float *) malloc(4 * sizeof(float));
 matrice3[0] = valeurs;
@@ -117,7 +117,7 @@ section("Initialisation d'une valeur")
 frametitle("Comment initialiser la première valeur ?")
 
 # ╔═╡ 0b41747b-fe00-49a0-9ed9-99f0b2046b2e
-md_c("""
+c"""
 float **matrice = (float **) malloc(2 * sizeof(float *));
 float *ligne0 = (float *) malloc(2 * sizeof(float));
 float *ligne1 = (float *) malloc(2 * sizeof(float));
@@ -126,7 +126,7 @@ matrice[1] = ligne1;
 matrice[0][0] = 1; // 1
 *(matrice[0]) = 1; // 2
 *(matrice) = 1;    // 3
-""")
+"""
 
 # ╔═╡ a07e8aea-790b-4307-9de1-e45c6a3f7cf4
 wooclap("JAPRXX")
@@ -135,7 +135,7 @@ wooclap("JAPRXX")
 frametitle("Comment faire matrice[0][1] = 0 ?")
 
 # ╔═╡ b5388c3e-bcaf-43b6-b9d9-c9979f2afce2
-md_c("""
+c"""
 float **matrice = (float **) malloc(2 * sizeof(float *));
 float *ligne0 = (float *) malloc(2 * sizeof(float));
 float *ligne1 = (float *) malloc(2 * sizeof(float));
@@ -144,7 +144,7 @@ matrice[1] = ligne1;
 *(*matrice+1)=0;   // 1
 *(matrice++)=0;    // 2
 *(matrice[0]+1)=0; // 3
-""")
+"""
 
 # ╔═╡ 38e67b29-707f-4718-b9cc-2a1a62f32143
 wooclap("JAPRXX")
@@ -153,7 +153,7 @@ wooclap("JAPRXX")
 frametitle("Comment faire matrice[1][0] = 2 ?")
 
 # ╔═╡ 9160427d-4db7-4a97-9dde-14d19d59b1ef
-md_c("""
+c"""
 float **matrice = (float **) malloc(2 * sizeof(float *));
 float *ligne0 = (float *) malloc(2 * sizeof(float));
 float *ligne1 = (float *) malloc(2 * sizeof(float));
@@ -162,7 +162,7 @@ matrice[1] = ligne1;
 *(*(++matrice))=2; // 1
 *(*(matrice+1))=2; // 2
 *(*matrice+1)=2;   // 3
-""")
+"""
 
 # ╔═╡ 6531f0d6-cf62-46ca-8dd2-befda43806d7
 wooclap("JAPRXX")
@@ -187,11 +187,11 @@ matrice[1] = ligne1;
 
 # ╔═╡ 62198fa2-4e96-4950-a99e-a3808bbf811a
 qa(md"Comment libérer la mémoire avec `free` ?",
-md_c("""
+c"""
 free(ligne0);
 free(ligne1);
 free(matrice);
-"""))
+""")
 
 # ╔═╡ ec120913-bafb-4abb-8ebd-a0e3b72578f6
 wooclap("JAPRXX")
@@ -200,7 +200,7 @@ wooclap("JAPRXX")
 frametitle("Toujours free dans le sens inverse de malloc")
 
 # ╔═╡ 2d35189b-46aa-4922-ad4f-432533da2a80
-tutor(wrap_in_main("""
+tutor(wrap_in_main(c"""
 float **matrice = (float **) malloc(2 * sizeof(float *));
 matrice[0] = (float *) malloc(2 * sizeof(float));
 matrice[1] = (float *) malloc(2 * sizeof(float));
@@ -216,15 +216,15 @@ section("Un vecteur \"Java\" en C")
 frametitle("Première implémentation")
 
 # ╔═╡ b66272c8-02b0-4d22-84d6-7274efe11e2a
-md_c("""
+c"""
 struct vector_t {
   int size;
   float *v;
 };
-""")
+"""
 
 # ╔═╡ 488d8bed-855f-470a-a2fa-68c13fd08739
-qa(md_c("struct vector_t * init(int size, float val) {"), md_c("""
+qa(c"struct vector_t * init(int size, float val) {", c"""
   // manque tests erreur malloc
   struct vector_t *t=(struct vector_t *)
           malloc(sizeof(struct vector_t));
@@ -235,24 +235,24 @@ qa(md_c("struct vector_t * init(int size, float val) {"), md_c("""
   }
   return t;
 }
-"""))
+""")
 
 # ╔═╡ 419f48c0-8377-4a67-a801-e87d2a61c17a
-qa(md_c("float get(struct vector_t *t, int i) {"), md_c("""
+qa(c"float get(struct vector_t *t, int i) {", c"""
   return *(t->v+i);
-}"""))
+}""")
 
 # ╔═╡ cfc54158-a170-4f1d-b1dd-ab8e0f1a172e
-qa(md_c("void set(struct vector_t *t, int i, float val) {"), md_c("""
+qa(c"void set(struct vector_t *t, int i, float val) {", c"""
   if((i<t->size)&&(i>0))
     *(t->v+i)=val;
-}"""))
+}""")
 
 # ╔═╡ 4dad1e1b-2288-49b9-8190-f2f374ca353c
-qa(md_c("void destroy(struct vector_t *vect) {"), md_c("""
+qa(c"void destroy(struct vector_t *vect) {", c"""
   free(vect->v);
   free(vect);
-}"""))
+}""")
 
 # ╔═╡ 9cb862ff-275e-4f1d-8104-c1b8350725da
 wooclap("JAPRXX")
@@ -268,25 +268,25 @@ Toutes les fonctions doivent vérifier leurs arguments et retourner
 """
 
 # ╔═╡ f3dd8bf7-03c4-4069-8d1c-ece484de5ef1
-md_c("""struct vector_t {
+c"""struct vector_t {
   int length; // nombre d'élements
   float *tab; // tableau avec les réels
-};""")
+};"""
 
 # ╔═╡ 6cc7a1d4-df02-494f-bf18-0652d49280e5
 frametitle("Initialisation")
 
 # ╔═╡ facc8d63-d620-40ff-939a-78ff58fff04f
-md_c("""struct vector_t {
+c"""struct vector_t {
   int length; // nombre d'élements
   float *tab; // tableau avec les réels
-};""")
+};"""
 
 # ╔═╡ b66c9e2f-17b3-44dc-83e4-cb3a9329039b
 md"Quels arguments ?"
 
 # ╔═╡ c2928a50-8f63-477e-ada3-1352d5c72712
-md_c("""
+c"""
 /*
  * @pre
  * alloue la mémoire pour un vecteur de size éléments
@@ -299,7 +299,7 @@ int init(int size, float val,
   struct vector_t ** v,   // 2
   struct vector_t * v,    // 3
 )
-""")
+"""
 
 # ╔═╡ a6ca2092-6435-4081-a407-c3d0286efb62
 wooclap("JAPRXX")
@@ -308,13 +308,13 @@ wooclap("JAPRXX")
 frametitle("Allocation de la mémoire")
 
 # ╔═╡ 1ca8b74a-ce74-44a3-9e74-1447eb5141a7
-md_c("""struct vector_t {
+c"""struct vector_t {
   int length; // nombre d'élements
   float *tab; // tableau avec les réels
-};""")
+};"""
 
 # ╔═╡ dd7f51b5-ca6a-4eb4-802d-9514861ae6a4
-md_c("""
+c"""
 int init(int size, float val, struct vector_t ** v) {
   if ((size<0) || v==NULL)
     return -1;
@@ -329,7 +329,7 @@ int init(int size, float val, struct vector_t ** v) {
   }
   (*v)->length = size;
   for (int i = 0; i<size; i++) {
-""")
+"""
 
 # ╔═╡ e5e45ef0-32ac-403c-a05e-de267209fb8b
 qa(md"Comment assigner la valeur `val` au `i`ième élément ?", md"""
@@ -344,11 +344,11 @@ ou
 """)
 
 # ╔═╡ b58ba8eb-0661-4eac-8ead-2daff4126d57
-md_c("""
+c"""
   }
   return 0;
 }
-""")
+"""
 
 # ╔═╡ dd918d12-bde4-4a1d-88c2-a9a643f39b2e
 wooclap("JAPRXX")
@@ -357,7 +357,7 @@ wooclap("JAPRXX")
 frametitle("Visualization de init")
 
 # ╔═╡ 85e1517c-f7d9-4df5-acde-00657cdf3dbe
-tutor("""
+tutor(c"""
 #include <stdlib.h>
 
 struct vector_t {
@@ -395,13 +395,13 @@ int main () {
 frametitle("Récupération d'un élément")
 
 # ╔═╡ 4072072d-c543-43bf-87ad-1f201bd21c59
-md_c("""struct vector_t {
+c"""struct vector_t {
   int length; // nombre d'élements
   float *tab; // tableau avec les réels
-};""")
+};"""
 
 # ╔═╡ 5b8e5130-bf78-4529-b3be-02a0ba093f12
-md_c("""
+c"""
 /*
  * @pre
  * @post retourne le ième élément du tableau dans val
@@ -413,16 +413,16 @@ int get(struct vector_t *v, int i,
   float **val // 2
   float *val  // 3
 ) {
-""")
+"""
 
 # ╔═╡ 7f150e04-b56b-499f-ad50-4f586e76a0ab
-qa(md"Comment implémenter `get` ?", md_c("""
+qa(md"Comment implémenter `get` ?", c"""
   if (i < 0 || i >= v->length)
     return -1;
   *val = *(v->tab+i);
   return 0;
 }
-"""))
+""")
 
 # ╔═╡ 7808e8d0-597c-422a-95eb-cc581fb65d87
 wooclap("JAPRXX")
@@ -431,7 +431,7 @@ wooclap("JAPRXX")
 frametitle("Modification d'un élément")
 
 # ╔═╡ c306afc9-f86e-4407-8757-272561980a72
-md_c("""/*
+c"""/*
  * @pre
  * @post place val comme ième élément
  *             du tableau
@@ -442,16 +442,16 @@ int set(struct vector_t *v, int i,
 struct vector_t  v     // 1
 struct vector_t ** v   // 2
 struct vector_t * v    // 3
-) {""")
+) {"""
 
 # ╔═╡ d85db8cc-56b6-42e5-8175-3c53d345282e
-qa(md"Comment implémenter `set` ?", md_c("""
+qa(md"Comment implémenter `set` ?", c"""
   if (i < 0 || i >= v->length)
     return -1;
   *(v->tab+i) = val;
   return 0;
 }
-"""))
+""")
 
 # ╔═╡ 594773b5-7e89-41a1-a873-387a096ee3b5
 wooclap("JAPRXX")
@@ -463,19 +463,19 @@ frametitle("Libération de la mémoire")
 md"Comment libérer la mémoire quand le vecteur est devenu inutile ?"
 
 # ╔═╡ cb9c27b9-ce7d-4bdf-af7d-c88883a210bc
-md_c("""
+c"""
 /*
  * libère la mémoire utilisée pour le vecteur
  * -1 en cas d'erreur, 0 sinon
  */
-""")
+"""
 
 # ╔═╡ e1b6f1d3-9d06-4ee4-854d-8ede288f369c
-qa(md_c("int destroy(struct vector_t *v) {"), md_c("""
+qa(c"int destroy(struct vector_t *v) {", c"""
   free(v->tab);
   free(v);
   return 0;
-}"""))
+}""")
 
 # ╔═╡ 986cdd2f-c22a-497b-8ce4-d6755a871c15
 wooclap("JAPRXX")
@@ -487,7 +487,7 @@ section("Pointeur de fonction")
 md"`mapreduce` donne un exemple de fonction d'ordre supérieur en C"
 
 # ╔═╡ 3cc18d67-b0d7-4b4b-afb6-5b48eddd89d2
-tutor("""
+tutor(c"""
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -521,7 +521,7 @@ frametitle("Heap ou stack ?")
 md"Laquelle de ces deux fonctions présente une façon correcte de retourner un tableau ?"
 
 # ╔═╡ 27b6779a-5624-4e8e-ae32-8a8971923d01
-md_c("""
+c"""
 int *stack() {
   int v[] = {1, 2, 3};
   return v;
@@ -531,7 +531,7 @@ int *heap() {
   int *v = (int *) malloc(3 * sizeof(int));
   v[0] = 1; v[1] = 2; v[2] = 3;
   return v;
-}""")
+}"""
 
 # ╔═╡ a13bf677-9c63-4f8e-b3dd-27b3aad7f956
 wooclap("JAPRXX")
@@ -540,7 +540,7 @@ wooclap("JAPRXX")
 frametitle("Retourner un tableau : visualization")
 
 # ╔═╡ accfaade-96ce-4869-83ce-9dd5489b65a2
-tutor("""
+tutor(c"""
 #include <stdlib.h>
 
 int *stack() {
@@ -676,8 +676,8 @@ Pkg.instantiate()
 # ╟─4643cd02-67f4-40cd-aa7d-cfdb83fc62be
 # ╟─accfaade-96ce-4869-83ce-9dd5489b65a2
 # ╟─319bc8b4-7139-43b0-a57b-66c6a9da7cb9
-# ╠═132663c2-dfdd-4426-991a-bc9c95bbdad1
-# ╠═20d23ab4-ae24-4169-92be-ed9ec77c5518
+# ╟─132663c2-dfdd-4426-991a-bc9c95bbdad1
+# ╟─20d23ab4-ae24-4169-92be-ed9ec77c5518
 # ╟─72370890-1eed-4567-afa6-b492d7d3c898
 # ╟─70172d7b-db88-40dd-9e1b-dcd1e00f2d62
 # ╟─d2952bc0-5506-49c4-b7e5-95e319700cf2

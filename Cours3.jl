@@ -35,7 +35,7 @@ section("Stack overflow 💥")
 frametitle("Factorial")
 
 # ╔═╡ 2dc7800b-f584-4ddc-9f19-486ca0ce21f5
-tutor("""
+tutor(c"""
 int factorial(int n) {
   if (n <= 1)
     return 1;
@@ -58,7 +58,7 @@ frametitle("Fibonacci")
 md"Cette implémentation de Fibonacci a une très mauvaise complexité mais elle illustre bien la dynamique de la stack qui grandit et rapetissit rapetissit au rythme des appels de fonctions."
 
 # ╔═╡ 90ca03b6-331f-401b-bacc-2999e184055b
-tutor("""
+tutor(c"""
 int fibonacci(int n) {
   if (n <= 2)
     return 1;
@@ -520,9 +520,9 @@ Pkg.instantiate()
 # ╟─b58456cf-b417-4f40-a854-c04b6db744db
 # ╟─00837930-704a-44eb-84c2-bece8894ef0f
 # ╟─27e4de24-a81c-4437-a566-05da736f6e9d
-# ╠═50acf567-a72a-4ada-af79-876b782e85c4
+# ╟─50acf567-a72a-4ada-af79-876b782e85c4
 # ╟─006977f7-c420-4562-b193-7fa7053c3397
-# ╠═93b2e538-939a-4ed6-a039-cd749110987e
+# ╟─93b2e538-939a-4ed6-a039-cd749110987e
 # ╟─1b304f84-b649-45a0-860f-eb6a573df510
 # ╠═04b7e3c9-0962-4146-bcc3-0274efc33644
 # ╠═33967cf6-dc82-4bf5-9239-e0d5a12b1397
@@ -532,4 +532,4 @@ Pkg.instantiate()
 # ╟─3467ae64-1162-40c3-ae82-fa605e1325df
 # ╟─76aa8111-1ecd-44c8-8ee2-6d74d82d38c5
 # ╟─e6b0b664-bf8e-419a-8c10-ac59fc1ae647
-# ╠═62ea7632-cfe1-4d0a-90db-d7d3eee27763
+# ╟─62ea7632-cfe1-4d0a-90db-d7d3eee27763
