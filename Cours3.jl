@@ -189,11 +189,56 @@ $ git checkout main
 $ git merge --no-ff a
 ```"
 
+# ╔═╡ ac0487f3-d9ae-45a4-b4ff-81f0fb1553a5
+md"**Important** Comme on était sur la branche `main`, on ne modifie **que** `main`. Remarquez que `a` n'a pas bougé! Ceci est toujours vrai sur `git`, vous ne modifiez que la branche sur laquelle vous êtes `checkout`."
+
 # ╔═╡ 566046e2-c690-4955-ae63-44a83cfe3234
 img("https://git-scm.com/book/en/v2/images/basic-branching-5.png")
 
 # ╔═╡ 373dc385-d77e-495a-9f1f-f9424a8f27bb
-frametitle("On pourrait continue à commit sur iss53")
+frametitle("Si l'autre branche est prête, on la merge")
+
+# ╔═╡ b9746823-8c9b-462d-875a-250b882efcad
+md"""
+```sh
+$ git checkout main
+$ git merge b
+```
+"""
+
+# ╔═╡ 4afc49da-240a-42c7-842f-d9adcdf26c5c
+md"""Ici, le merge ne peut pas être fast forward donc
+```sh
+$ git merge --ff-only b
+```
+enverrait une erreur.
+"""
+
+# ╔═╡ 5caab77a-31c9-4042-8fba-2f9b3e1520b7
+frametitle("Si l'autre branche n'est pas prête, que faire ?")
+
+# ╔═╡ 5628641b-ad16-40ac-8156-cbdb19ac4f45
+Foldable(
+	md"Peut-on continuer à commit sur l'autre branche sans synchroniser ?",
+	md"Très déconseillé, on risque de créer des conflits, il faut synchroniser le plus vite possible!"
+)
+
+# ╔═╡ 3d2bad59-45a8-48ea-8a7b-55ffa34af747
+frametitle("Avant de continuer, on synchronise")
+
+# ╔═╡ a03740c1-28a4-4233-9c21-2feca082aa90
+md"""
+```sh
+$ git checkout b
+$ git merge main
+```
+"""
+
+# ╔═╡ 8a2a0c95-1544-42e4-a1ab-a2e9f23be57f
+frametitle("On peut ensuite continuer")
+
+# ╔═╡ 82a1475b-2d04-4a46-86cd-1f437ab9c6b9
+frametitle("Quand la seconde branche est finie")
 
 # ╔═╡ 7b512972-17ee-452b-b62c-c63f9f1ea9f1
 function tree(t; s = 80)
@@ -214,18 +259,31 @@ function tree(t; s = 80)
 		ac(0, aj, 1, aj, "A2")
 		ac(-1, 0, 0, 1, "B1")
 		ac(0, 1, 1, 1, "B2")
+		bj = t <= 6 ? 1 : 0
+		if t == 4
+			ac(1, 1, 2, 1, "B3")
+		elseif t >= 5
+			a(1, 0, 2, bj)
+			ac(1, 1, 2, bj, "M")
+		end
+		if t >= 6
+			ac(2, bj, 3, bj, "B3")
+		end
 		if t <= 1
 			branch("a", 1.2, -1)
 		end
-		branch("b", 1.2, 1)
+		if t <= 6
+			branch("b", t >= 4 ? (t >= 6 ? 3.2 : 2.2) : 1.2, 1)
+		end
 		if t == 1
 			ac(1, -1, 2, 0, "M")
 		elseif t == 3
+			a(1, 1, 2, 0)
 			ac(1, 0, 2, 0, "M")
 		end
-		branch("main", (t == 0) ? -0.8 : ((t == 1 || t == 3) ? 2.2 : 1.2), 0)
-	end 6.5s 2.7s
-end
+		branch("main", t == 7 ? 3.2 : (t == 0) ? -0.8 : ((t == 1 || t == 3) ? 2.2 : 1.2), 0)
+	end 7.5s 2.7s
+end;
 
 # ╔═╡ f62f605f-56f1-4fed-bde5-a2d16310bfd9
 tree(0)
@@ -239,11 +297,115 @@ tree(1)
 # ╔═╡ 739a3253-91d9-4776-a130-d8c5bb2397e2
 tree(3)
 
-# ╔═╡ 11177e51-65d5-4450-93d8-1c90e4e4c40c
-md"""```sh
-$ git checkout iss53
-$ git commit -am "C5"
-```"""
+# ╔═╡ ed704366-8b0e-4b52-94d8-c05e1fd31b5d
+tree(4)
+
+# ╔═╡ 73911f1c-d2cb-4064-889c-fab5f95191ca
+tree(5)
+
+# ╔═╡ 7ebe2342-b365-44d9-a2bd-a1cea0a972e6
+tree(6)
+
+# ╔═╡ 4b870006-b221-49e9-b077-f1abf9ee10b4
+tree(7)
+
+# ╔═╡ d863aac9-b9f7-480e-892d-1d510f34dfa7
+frametitle("Bouton merge sur GitHub/GitLab")
+
+# ╔═╡ 4be20622-1534-4bd1-9653-66527226e670
+md"La branche `main` du slides précédente contient des détails internes aux branches `a` et `b`. On aimerait plutôt avoir un commit par branche avec un lien vers le merge request correspondant pour voir plus de détails le cas échéant."
+
+# ╔═╡ 5febbc94-db91-4c60-acae-9888fef74d63
+frametitle("Squash commits")
+
+# ╔═╡ 109a217e-bc88-46f9-b7f5-6a6993fc9918
+img("squash")
+
+# ╔═╡ 48d34efa-e884-41e2-84ee-9b418b063041
+hbox([
+md"""
+Sans `Squash commits`
+$(img("https://docs.github.com/assets/cb-5402/mw-1440/images/help/pull_requests/standard-merge-commit-diagram.webp", :height => "200pt"))
+""",
+md"""
+Avec `Squash commits`
+$(img("https://docs.github.com/assets/cb-5742/mw-1440/images/help/pull_requests/commit-squashing-diagram.webp", :height => "200pt"))
+""",
+])
+
+# ╔═╡ ae673c76-0bda-41bd-b218-be3f358a97a2
+md"[Source des images](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/about-pull-request-merges)"
+
+# ╔═╡ 9cc57c91-c6a6-42df-b95a-5d95495e9909
+function squash(; s = 80)
+	off(a, b) = a + sign(b - a) * 0.1
+	c(m, i, j) = boxed(m, Point(i * s, j * s))
+	a(i1, j1, i2, j2) = arrow(Point(off(i1, i2) * s, off(j1, j2) * s), Point(off(i2, i1) * s, off(j2, j1) * s))
+	branch(m, i, j) = text(m, Point(i * s, j * s), halign=:left, valign=:middle)
+	function ac(i1, j1, i2, j2, m)
+		a(i1, j1, i2, j2)
+		c(m, i2, j2)
+	end
+	@draw begin
+		c("C0", -3, 0)
+		ac(-3, 0, -2, 0, "C1")
+		ac(-2, 0, -1, 0, "C2")
+		ac(-1, 0, 0, 0, "A")
+		ac(0, 0, 1, 0, "B")
+		branch("main", 1.2, 0)
+	end 7.5s 1.7s
+end;
+
+# ╔═╡ 18283586-52e0-477c-a926-e6c2e5cdbb6e
+squash()
+
+# ╔═╡ b379b723-d3e4-45d3-b5e8-9958c6f5dd9b
+frametitle("Reset")
+
+# ╔═╡ d55c4b86-88f9-423c-8def-3c4de83ad3bb
+md"""
+Si vous avez sans faire exprès commit sur `main`, faites
+```sh
+$ git checkout -b new_branch
+$ git checkout main
+```
+"""
+
+# ╔═╡ 23067943-d07f-4f2a-a3f1-e49f2e2fc21e
+danger(md"""
+Vos changement sont maintenant sur `new_branch` donc vous pouvez les retirer de `main`.
+Mais il faut faire très attention car les commandes suivantes peuvent vous faire perdre des changements.
+Je conseille de faire `git push origin new_branch`, créer un merge request et vérifier visuellement dans l'interface GitLab que vos changements sont là.
+Ensuite, 2 possibilités. Soit
+```sh
+$ git reset --hard origin/main # Dangereux command!
+```
+Soit en deux temps (en s'assurant qu'on est à la racine du dossier, sinon utiliser `..` ou `../..` etc... à la place de `.`)
+```sh
+$ git reset HEAD~1 # Annule le dernier commit, en supposant qu'il y en ai qu'un
+$ git checkout . # Dangereux, ça écrase aussi les changements qui n'ont pas été commit
+```
+""")
+
+# ╔═╡ 296818cf-7598-46d8-8c7d-c91fd41fa9d0
+frametitle("Stash changes")
+
+# ╔═╡ b58456cf-b417-4f40-a854-c04b6db744db
+md"""
+On est parfois dans la mauvaise branche et on veut appliquer nos changement dans une autre ou nouvelle branche.
+On doit alors faire `git checkout` mais `git` ne voudra pas si on a changé des fichiers qui différent (même si c'est à des lignes différentes).
+On `stash` alors les changements.
+Conceptuellement la même chose que `cherry-pick` 🚁 mais sans faire de commit.
+"""
+
+# ╔═╡ 00837930-704a-44eb-84c2-bece8894ef0f
+md"""
+```
+$ git stash
+$ git checkout main
+$ git stash apply
+```
+"""
 
 # ╔═╡ c7fd84df-fd14-41dc-86c4-a2b205d9be56
 img("https://git-scm.com/book/en/v2/images/basic-branching-6.png")
@@ -366,11 +528,37 @@ Pkg.instantiate()
 # ╟─6050693f-ac64-4537-a561-93688ab94b85
 # ╟─32b000ef-39a2-4682-b45a-d9cfd2e33f81
 # ╟─ec4a0cad-f3ca-4f12-aab2-1df86e1e236d
+# ╟─ac0487f3-d9ae-45a4-b4ff-81f0fb1553a5
 # ╟─566046e2-c690-4955-ae63-44a83cfe3234
 # ╟─373dc385-d77e-495a-9f1f-f9424a8f27bb
-# ╠═739a3253-91d9-4776-a130-d8c5bb2397e2
-# ╠═7b512972-17ee-452b-b62c-c63f9f1ea9f1
-# ╟─11177e51-65d5-4450-93d8-1c90e4e4c40c
+# ╟─b9746823-8c9b-462d-875a-250b882efcad
+# ╟─739a3253-91d9-4776-a130-d8c5bb2397e2
+# ╟─4afc49da-240a-42c7-842f-d9adcdf26c5c
+# ╟─5caab77a-31c9-4042-8fba-2f9b3e1520b7
+# ╟─5628641b-ad16-40ac-8156-cbdb19ac4f45
+# ╟─ed704366-8b0e-4b52-94d8-c05e1fd31b5d
+# ╟─3d2bad59-45a8-48ea-8a7b-55ffa34af747
+# ╟─a03740c1-28a4-4233-9c21-2feca082aa90
+# ╟─73911f1c-d2cb-4064-889c-fab5f95191ca
+# ╟─8a2a0c95-1544-42e4-a1ab-a2e9f23be57f
+# ╟─7ebe2342-b365-44d9-a2bd-a1cea0a972e6
+# ╟─82a1475b-2d04-4a46-86cd-1f437ab9c6b9
+# ╟─4b870006-b221-49e9-b077-f1abf9ee10b4
+# ╟─7b512972-17ee-452b-b62c-c63f9f1ea9f1
+# ╟─d863aac9-b9f7-480e-892d-1d510f34dfa7
+# ╟─4be20622-1534-4bd1-9653-66527226e670
+# ╟─18283586-52e0-477c-a926-e6c2e5cdbb6e
+# ╟─5febbc94-db91-4c60-acae-9888fef74d63
+# ╟─109a217e-bc88-46f9-b7f5-6a6993fc9918
+# ╟─48d34efa-e884-41e2-84ee-9b418b063041
+# ╟─ae673c76-0bda-41bd-b218-be3f358a97a2
+# ╟─9cc57c91-c6a6-42df-b95a-5d95495e9909
+# ╟─b379b723-d3e4-45d3-b5e8-9958c6f5dd9b
+# ╟─d55c4b86-88f9-423c-8def-3c4de83ad3bb
+# ╟─23067943-d07f-4f2a-a3f1-e49f2e2fc21e
+# ╟─296818cf-7598-46d8-8c7d-c91fd41fa9d0
+# ╟─b58456cf-b417-4f40-a854-c04b6db744db
+# ╟─00837930-704a-44eb-84c2-bece8894ef0f
 # ╟─c7fd84df-fd14-41dc-86c4-a2b205d9be56
 # ╟─b05cbd8f-8e3e-4627-872b-dc6c53bb7014
 # ╟─84b048b6-6b9e-40e6-8865-9999d6000a8a
