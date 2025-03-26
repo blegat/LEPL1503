@@ -113,7 +113,7 @@ function qa(question::Markdown.MD, answer)
 end
 
 function wooclap(link)
-    return HTML("""<img alt="Wooclap Logo" src="https://www.wooclap.com/images/wooclap-logo.svg"> <a style="margin-left: 80px;" href="https://app.wooclap.com/$link"><tt>https://app.wooclap.com/JAPRXX</tt></a>""")
+    return HTML("""<img alt="Wooclap Logo" src="https://www.wooclap.com/images/wooclap-logo.svg"> <a style="margin-left: 80px;" href="https://app.wooclap.com/$link"><tt>https://app.wooclap.com/$link</tt></a>""")
 end
 
 function definition(name, content)
