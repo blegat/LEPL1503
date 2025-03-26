@@ -130,6 +130,16 @@ function compile_and_run(code::Code; verbose = 0, args = String[], mpi::Bool = f
     return codesnippet(code)
 end
 
+function wrap_in(content)
+    code = content.code
+    if code[end] == '\n'
+        code = code[1:end-1]
+    end
+    return typeof(content)("""
+$(MultilineStrings.indent(code, 2))
+""")
+end
+
 function wrap_in_main(content)
     code = content.code
     if code[end] == '\n'
