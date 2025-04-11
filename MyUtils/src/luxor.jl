@@ -8,14 +8,16 @@ function CenteredBoundedBox(str)
     return Luxor.BoundingBox(lcorner, ocorner)
 end
 
-function boxed(str::AbstractString, p)
+function boxed(str::AbstractString, p; hue = "lightgrey")
+    Luxor.gsave()
     Luxor.translate(p)
-    Luxor.sethue("lightgrey")
+    Luxor.sethue(hue)
     Luxor.poly(CenteredBoundedBox(str) + 5, action = :stroke, close=true)
     Luxor.sethue("black")
     Luxor.text(str, Luxor.Point(0, 0); halign = :center, valign = :middle)
     #settext("<span font='26'>$str</span>", halign="center", markup=true)
     Luxor.origin()
+    Luxor.grestore() # strokecolor
 end
 
 function Luxor.placeimage(url::URL, pos; scale = 1.0, centered = true, kws...)
