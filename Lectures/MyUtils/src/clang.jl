@@ -137,7 +137,11 @@ function compile_and_run(code::Code; verbose = 0, args = String[], valgrind::Boo
         if show_run_command
             @info("Running : $cmd") # `2:end-1` to remove the backsticks
         end
-        run(cmd)
+        try
+            run(cmd)
+        catch err
+            @warn(string(typeof(err)))
+        end
     end
     return codesnippet(code)
 end
