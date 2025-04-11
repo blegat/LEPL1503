@@ -1,0 +1,12 @@
+[deps]
+CommonMark = "a80b9123-70ca-4bc0-993e-6e3bcb318db6"
+Luxor = "ae8d54c2-7ccd-5906-9d76-62fc9837b5bc"
+MyUtils = "5f08ea77-7f1f-482c-9564-31d94ae91ab8"
+Pluto = "c3e4b0f8-55cb-11ea-2926-15256bba5781"
+PlutoPDF = "6eb38059-8c05-41f7-8871-5e7e2697ace6"
+PlutoSliderServer = "2fc8631c-6f24-4c5b-bca7-cbb509c42db4"
+PlutoTeachingTools = "661c6b06-c737-4d37-b85c-46df65de6f69"
+PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
+
+[sources]
+MyUtils = {path = "../Lectures/MyUtils"}
