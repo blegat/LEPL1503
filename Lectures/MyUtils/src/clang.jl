@@ -120,10 +120,13 @@ function compile_lib(code::Code; kws...)
     return codesnippet(code), compile(code; lib = true, kws...)
 end
 
-function compile_and_run(code::Code; verbose = 0, args = String[], mpi::Bool = false, num_processes = nothing, show_run_command = !isempty(args) || verbose >= 1, kws...)
+function compile_and_run(code::Code; verbose = 0, args = String[], valgrind::Bool = false, mpi::Bool = false, num_processes = nothing, show_run_command = !isempty(args) || verbose >= 1, kws...)
     bin_file = compile(code; lib = false, mpi, verbose, kws...)
     if !isnothing(bin_file)
         cmd_vec = [bin_file; args]
+        if valgrind
+            cmd_vec = ["valgrind"; cmd_vec]
+        end
         if mpi
             if !isnothing(num_processes)
                 cmd_vec = [["-n", string(num_processes)]; cmd_vec]

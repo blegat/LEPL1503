@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.20.4
+# v0.20.5
 
 using Markdown
 using InteractiveUtils
@@ -317,7 +317,7 @@ section("Threads")
 frametitle("Les pointeurs vers les fonctions")
 
 # ╔═╡ dd5a283e-d1c3-42f2-a961-4b078fa0b2af
-tutor(wrap_in(c"""
+tutor(c"""
 #include <stdio.h>
 int mul(int a, int b)
 {
@@ -338,7 +338,7 @@ int main(int argc, char **argv){
 
   return 0;
 }
-"""))
+""")
 
 # ╔═╡ ed08082d-0e3c-4919-b563-4e6b92cb1e01
 md"""
