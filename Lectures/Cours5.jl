@@ -64,7 +64,7 @@ Lors de la correction, nous vérifierons qu'il n'y a pas de fuites de mémoire a
 aside(
 	Foldable(
 		md"Pourquoi `valgrind` ne donne-t-il pas le numéro de ligne ?",
-		md"On a pas compilé avec `-g` !
+		md"On n'a pas compilé avec `-g` !
 		On essaie avec `-g` ? $(@bind valgrind_debug CheckBox())",
 	),
 	v_offset = -300,
