@@ -7,6 +7,26 @@
 This repository contains the sources of the [slides](https://blegat.github.io/LEPL1503/) of some of the classes of the LEPL1503 course given at UCLouvain.
 You can visualize the slide through [this link](https://blegat.github.io/LEPL1503/). In order to turn on the presentation mode, enter `present()` in the JavaScript console of your browser (e.g. open it with <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>I</kbd> on Firefox).
 
+## Schedule
+
+Semaine | Lundi | Objectif | Deadlines
+------- | ------- | ------- | ---------
+S1      | 02/02   | TP1 |
+S2      | 09/02   | TP2 |
+S3      | 16/02   | TP3 |
+S4      | 23/02   | TP4 |
+S5      | 02/03   | Détection des mots incorrects |
+S6      | 09/03   | Correction mots incorrects |
+S7      | 16/03   | Détection de la langue | Vendredi 18h: Projet (partie 1)
+S8      | 23/03   | TP5 Lecture/Écriture des fichiers | Vendredi 18h: Peer Reviews + Evaluation de la dynamique de groupe (Dynamo)
+S9      | 30/03   | TP6 Parallélisation |
+S10     | 06/04   | Parallélisation |
+S11     | 13/04   | Optimisations |
+🥚      | 🥚      | 🐰 |
+🥚      | 🥚      | 🐰 |
+S12     | 04/05   | Dernières modifications | Vendredi 18h: Projet (code et README)
+S13     | 11/05   | Rendu pour le **11/05/2026 à 23h59** | Présentation orale
+
 ## Run the slides locally
 
 In order to run the notebooks locally, launch Julia an do
