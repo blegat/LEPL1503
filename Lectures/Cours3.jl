@@ -14,7 +14,7 @@ Pkg.activate(".")
 using Luxor, PlutoUI, PlutoUI.ExperimentalLayout, MyUtils, PlutoTeachingTools, CommonMark
 
 # ╔═╡ d9b5ce6e-f80d-11ef-26cd-f5e2c18c51bb
-header("LEPL1503/LSINC1503 - Cours 3", "O. Bonaventure, B. Legat, L. Metongnon")
+header("LEPL1503/LSINC1503 - Cours 3", "O. Bonaventure, B. Legat, M. Baerts")
 
 # ╔═╡ cbab5d55-63e2-46a4-b86f-d00eb0f1c507
 frametitle("Rappel organisation du cours")

@@ -15,7 +15,7 @@ Pkg.activate(".")
 using PlutoUI, PlutoUI.ExperimentalLayout, MyUtils, PlutoTeachingTools
 
 # ╔═╡ 68b3f601-8cc3-45b2-93f6-8fdbc9cd3411
-header("LEPL1503/LSINC1503 - Cours 2", "O. Bonaventure, B. Legat, L. Metongnon")
+header("LEPL1503/LSINC1503 - Cours 2", "O. Bonaventure, B. Legat, M. Baerts")
 
 # ╔═╡ 3ddd22b2-7d1b-4b3a-8737-09552b51726d
 section("Variables, pointeurs et doubles pointeurs")

@@ -15,7 +15,7 @@ Pkg.activate(".")
 using Luxor, PlutoUI, PlutoUI.ExperimentalLayout, MyUtils, PlutoTeachingTools, CommonMark
 
 # ╔═╡ b150ab7f-d9b0-448b-920e-572e27c5b48b
-header("LEPL1503/LSINC1503 - Cours 4", "O. Bonaventure, B. Legat, L. Metongnon")
+header("LEPL1503/LSINC1503 - Cours 4", "O. Bonaventure, B. Legat, M. Baerts")
 
 # ╔═╡ 9c2a75a0-cfb4-4e06-ae51-a1228269fb08
 section("Ordinateurs actuels")

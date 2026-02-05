@@ -26,7 +26,7 @@ Pkg.activate(".")
 using Luxor, PlutoUI, PlutoUI.ExperimentalLayout, MyUtils, PlutoTeachingTools
 
 # ╔═╡ 7a9a1afc-16a3-11f0-2474-67fc85a76676
-header("LEPL1503/LSINC1503 - Cours 5", "O. Bonaventure, B. Legat, L. Metongnon")
+header("LEPL1503/LSINC1503 - Cours 5", "O. Bonaventure, B. Legat, M. Baerts")
 
 # ╔═╡ 6764ba72-95ec-4f3b-ac10-4e7e1b2bcf3b
 frametitle("Clarifications projet")
