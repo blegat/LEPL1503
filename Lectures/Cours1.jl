@@ -45,8 +45,46 @@ md"## Arithmétique des pointeurs"
 # ╔═╡ a0b28bb3-42b2-4dbc-957d-207599096308
 md"""
 * Il est possible de réaliser des calculs sur les pointeurs
-* Si `ptr` pointe vers une zone de type donné en mémoire, alors `ptr+1` pointe vers la zone suivante de ce type en mémoire.
+* Si `ptr` pointe vers une zone de type donné en mémoire, alors `ptr+1` pointe vers la zone suivante de **ce type** en mémoire.
+
+Pourquoi pas juste le byte suivant ? Par exemple, expliquez l'output suivant:
 """
+
+# ╔═╡ 068aca17-76d9-4d4a-9c13-c4c7086280fc
+md"## Arithmetique des pointeurs"
+
+# ╔═╡ dfac707f-f492-44e1-9cb0-600ec29af681
+md"L'entier 2026 est représenté sur 32 bits: 4 bytes de 8 bits chacun"
+
+# ╔═╡ 9a313e99-ff30-435b-a716-0ae1ea3203e0
+bitstring(Cint(2026))
+
+# ╔═╡ 1f574a88-0516-4e19-a146-beda76e2cc5e
+md"Un `char` ne représente qu'en seul byte, donc `y[0]` voit les bytes suivant:"
+
+# ╔═╡ 72243e55-0806-4380-a054-d463dcd30832
+bitstring(Cint(2026))[end-7:end]
+
+# ╔═╡ 1c3b5990-6802-4773-bd72-53f3a0eff470
+md"Comme on utilise `%d`, c'est interprété comme un entier signé, les 7 premiers bits représentent 106"
+
+# ╔═╡ 76e2d7c4-e54c-402d-b444-4eece84104b5
+Cint(0b1101010)
+
+# ╔═╡ 1394d233-a1d1-4575-9b2d-bd6a2d59de4c
+md"Le bit de signe signifie qu'il faut soustraire 128, on arrive à `-22`"
+
+# ╔═╡ 5a3397a8-bdd5-4e09-a2e3-dc93cb82a9d2
+Cint(0b1101010) - 128
+
+# ╔═╡ 92da2bc6-df2d-4e3f-b25d-78d60e656c14
+md"Le byte suivant représente 7"
+
+# ╔═╡ a79d619c-a091-4242-b292-0844fbf493d0
+bitstring(Cint(2026))[end-15:end-8]
+
+# ╔═╡ 3da8667c-0d2b-4ffe-bfbd-df350837fdda
+0b111
 
 # ╔═╡ d47ad331-b1a4-49e9-a2ff-9243d5df1cbd
 md"## Exécution du code"
@@ -522,6 +560,17 @@ xy_ptr
 # ╔═╡ 695d0382-f30a-4b0f-9110-21cb640941bf
 xy_ptr
 
+# ╔═╡ b6b11213-78a8-472c-ae3b-b9962326c613
+compile_and_run(c"""
+#include <stdio.h>
+int main() {
+  int x[] = {2026, 6, 2};
+  char *y = (char*) x;
+  printf("%lu %d %d\n", sizeof(int), x[0], x[1]);
+  printf("%lu %d %d\n", sizeof(char), y[0], y[1]);
+}
+""")
+
 # ╔═╡ ccb1cfec-aaca-43ca-87c2-c860188f9cdf
 c"""
 int tab[] = {2, 4, 8, 16};
@@ -766,6 +815,9 @@ woo
 # ╔═╡ 0933258d-9d23-4136-96a4-f40333ac6f1a
 woo
 
+# ╔═╡ fe198976-eec1-47ed-9671-6d6274a304ed
+woo
+
 # ╔═╡ a739b3fa-489c-4384-8104-680b250ce611
 woo
 
@@ -881,7 +933,7 @@ two_columns(left, right) = hbox([
 
 # ╔═╡ 6c1b0d3d-0aee-44d0-9154-2d2711dc7a3d
 two_columns(c"""int main(int argc, char**argv) {
-   int tab[]={2,4,8, 16};
+   int tab[]={2, 4, 8, 16};
 """,
 md"""
 * segments text
@@ -1394,6 +1446,19 @@ version = "17.7.0+0"
 # ╟─ba1c0405-b097-43ae-bf46-57c507453bee
 # ╟─adbe76b7-b1a0-4f87-84c3-29d78e85aa54
 # ╟─a0b28bb3-42b2-4dbc-957d-207599096308
+# ╟─b6b11213-78a8-472c-ae3b-b9962326c613
+# ╟─068aca17-76d9-4d4a-9c13-c4c7086280fc
+# ╟─dfac707f-f492-44e1-9cb0-600ec29af681
+# ╠═9a313e99-ff30-435b-a716-0ae1ea3203e0
+# ╟─1f574a88-0516-4e19-a146-beda76e2cc5e
+# ╠═72243e55-0806-4380-a054-d463dcd30832
+# ╟─1c3b5990-6802-4773-bd72-53f3a0eff470
+# ╠═76e2d7c4-e54c-402d-b444-4eece84104b5
+# ╟─1394d233-a1d1-4575-9b2d-bd6a2d59de4c
+# ╠═5a3397a8-bdd5-4e09-a2e3-dc93cb82a9d2
+# ╟─92da2bc6-df2d-4e3f-b25d-78d60e656c14
+# ╟─a79d619c-a091-4242-b292-0844fbf493d0
+# ╠═3da8667c-0d2b-4ffe-bfbd-df350837fdda
 # ╟─d47ad331-b1a4-49e9-a2ff-9243d5df1cbd
 # ╟─129b9cce-3c46-40aa-a53a-4e2fbff5d151
 # ╟─f02e4c73-7369-4f00-a350-341424bb1b0e
@@ -1411,6 +1476,7 @@ version = "17.7.0+0"
 # ╟─f8866701-312c-4dd1-9edc-5acbb60c2e07
 # ╟─c0a45b63-9272-4cdf-a652-299ee9c7dfff
 # ╟─75d35f92-191a-4e12-a3ba-b5e68ebca644
+# ╟─fe198976-eec1-47ed-9671-6d6274a304ed
 # ╟─188d706c-1e55-4b22-9bf5-13c00585e7d2
 # ╟─f2c55534-28a4-4774-b1c2-50e3c922dd12
 # ╟─e90a55d8-e909-4404-937b-a6a2c6818a66
@@ -1436,7 +1502,7 @@ version = "17.7.0+0"
 # ╟─fea327e5-62c8-4772-8cc0-00c7f225e1c4
 # ╟─5fd01b09-3301-4b6f-b8f9-89e3a1075a8c
 # ╟─7f6df947-f1b8-47c5-8fb7-e7d0ff6d2f75
-# ╠═b156e291-cd1b-48cf-91a2-0c44634bafe9
+# ╟─b156e291-cd1b-48cf-91a2-0c44634bafe9
 # ╟─1139437c-739e-4599-aa56-6654925bcb02
 # ╟─0d6ed070-3364-404b-a585-e5775bdf6fa4
 # ╟─9db6379e-ba20-4175-bfe6-ea6e6991f475
