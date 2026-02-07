@@ -304,7 +304,7 @@ html"<p align=center style=\"font-size: 20px; margin-bottom: 5cm; margin-top: 5c
 md"## Utils"
 
 # ╔═╡ 56a4c9f3-f9a9-484c-92ec-b2e9b4d9f11d
-import HTTP, Clang_jll, MultilineStrings, InteractiveUtils#, QRCoders
+import HTTP, Clang_jll, MultilineStrings, InteractiveUtils
 
 # ╔═╡ dab487a1-c9ca-49d4-aa1c-85086c95d9d7
 begin
@@ -788,95 +788,6 @@ int main() {
 }
 """)
 
-# ╔═╡ 1154b80f-a695-4a64-a145-15606066c132
-function wooclap(link)
-	img = HTML("""<img alt="Wooclap Logo" src="https://www.wooclap.com/images/wooclap-logo.svg">""")
-	url = "https://app.wooclap.com/$link"
-	a = HTML("""<a style="margin-left: 80px;" href="https://app.wooclap.com/$link"><tt>$url</tt></a>""")
-	#qr = QRCoders.QRCode(url)
-	return hbox([img, a])#, qr])
-end
-
-# ╔═╡ d4fdfcfd-2849-4577-bce4-41f7e21c1127
-woo = wooclap("LEPL15032026")
-
-# ╔═╡ 8ade0a12-13de-4307-a26f-9ac74fd3d7db
-woo
-
-# ╔═╡ e20d4483-a5fa-4c5a-b367-60dff0e12712
-woo
-
-# ╔═╡ afc0886b-24b4-4002-b0f6-838d86975789
-woo
-
-# ╔═╡ 97766d38-44ac-466f-a993-bfcb73781202
-woo
-
-# ╔═╡ 0933258d-9d23-4136-96a4-f40333ac6f1a
-woo
-
-# ╔═╡ fe198976-eec1-47ed-9671-6d6274a304ed
-woo
-
-# ╔═╡ a739b3fa-489c-4384-8104-680b250ce611
-woo
-
-# ╔═╡ 7f6df947-f1b8-47c5-8fb7-e7d0ff6d2f75
-woo
-
-# ╔═╡ 9db6379e-ba20-4175-bfe6-ea6e6991f475
-woo
-
-# ╔═╡ 04abaa32-e036-4dae-9cb6-3d1c5288e336
-function wooslide(title, code)
-	return md"""
-	## $title
-
-	` `
-
-	$code
-
-	` `
-
-	$woo
-	"""
-end
-
-# ╔═╡ 95941d9c-4cf1-4142-b46b-7335ec9a229e
-wooslide("Pointeurs et chaînes de caractères", c"""
-char string[]="abcdef";
-*(string+1)='X';
-printf("%s\n",string);
-""")
-
-# ╔═╡ bad4291c-c917-41bf-bf14-3eedb6b46ea5
-wooslide("Pointeurs et chaînes de caractères", c"""
-char string[]="abcdef";
-*(string+1)='X';
-printf("%s\n",string);
-""")
-
-# ╔═╡ ef7a1f2f-e0ae-4b71-9d93-c2a8574adfe1
-wooslide("Pointeurs et chaînes de caractères", c"""
-char *string="abcdef";
-string++;
-printf("%s\n",string);
-""")
-
-# ╔═╡ 97a71eed-8d15-4dfd-8072-28cfd060e704
-wooslide("Pointeurs et chaînes de caractères", c"""
-char string[]="abcdef";
-*(string+strlen(string))='G';
-printf("%s\n",string);
-""")
-
-# ╔═╡ 1ecfb069-83b2-43c6-aae2-da371f67165c
-wooslide("Pointeurs et chaînes de caractères", c"""
-char string[]="abcdef";
-*(string+strlen(string)+1)='Z';
-printf("%s\n",string);
-""")
-
 # ╔═╡ 05e27527-c3bd-41d1-a364-a214eb9a0ad6
 begin
 struct Path
@@ -962,6 +873,104 @@ md"""
 * données
 * heap
 * stack
+""")
+
+# ╔═╡ e8faf704-58b2-4462-a73d-89f6a1eed45e
+three_columns(left, center, right) = hbox([
+	left,
+	Div(html" ", style = Dict("flex-grow" => "1")),
+	center,
+	Div(html" ", style = Dict("flex-grow" => "1")),
+	right,
+])
+
+# ╔═╡ 1154b80f-a695-4a64-a145-15606066c132
+function wooclap(link)
+	logo = HTML("""<img alt="Wooclap Logo" src="https://www.wooclap.com/images/wooclap-logo.svg">""")
+	url = "https://app.wooclap.com/$link"
+	a = HTML("""<a style="margin-left: 80px;" href="https://app.wooclap.com/$link"><tt>$url</tt></a>""")
+	qr = img("https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=$url", :height => 50, name = "$link.png")
+	return three_columns(logo, a, qr)
+end
+
+# ╔═╡ d4fdfcfd-2849-4577-bce4-41f7e21c1127
+woo = wooclap("EPL1503")
+
+# ╔═╡ 8ade0a12-13de-4307-a26f-9ac74fd3d7db
+woo
+
+# ╔═╡ e20d4483-a5fa-4c5a-b367-60dff0e12712
+woo
+
+# ╔═╡ afc0886b-24b4-4002-b0f6-838d86975789
+woo
+
+# ╔═╡ 97766d38-44ac-466f-a993-bfcb73781202
+woo
+
+# ╔═╡ 0933258d-9d23-4136-96a4-f40333ac6f1a
+woo
+
+# ╔═╡ fe198976-eec1-47ed-9671-6d6274a304ed
+woo
+
+# ╔═╡ a739b3fa-489c-4384-8104-680b250ce611
+woo
+
+# ╔═╡ 7f6df947-f1b8-47c5-8fb7-e7d0ff6d2f75
+woo
+
+# ╔═╡ 9db6379e-ba20-4175-bfe6-ea6e6991f475
+woo
+
+# ╔═╡ 04abaa32-e036-4dae-9cb6-3d1c5288e336
+function wooslide(title, code)
+	return md"""
+	## $title
+
+	` `
+
+	$code
+
+	` `
+
+	$woo
+	"""
+end
+
+# ╔═╡ 95941d9c-4cf1-4142-b46b-7335ec9a229e
+wooslide("Pointeurs et chaînes de caractères", c"""
+char string[]="abcdef";
+*(string+1)='X';
+printf("%s\n",string);
+""")
+
+# ╔═╡ bad4291c-c917-41bf-bf14-3eedb6b46ea5
+wooslide("Pointeurs et chaînes de caractères", c"""
+char string[]="abcdef";
+*(string+1)='X';
+printf("%s\n",string);
+""")
+
+# ╔═╡ ef7a1f2f-e0ae-4b71-9d93-c2a8574adfe1
+wooslide("Pointeurs et chaînes de caractères", c"""
+char *string="abcdef";
+string++;
+printf("%s\n",string);
+""")
+
+# ╔═╡ 97a71eed-8d15-4dfd-8072-28cfd060e704
+wooslide("Pointeurs et chaînes de caractères", c"""
+char string[]="abcdef";
+*(string+strlen(string))='G';
+printf("%s\n",string);
+""")
+
+# ╔═╡ 1ecfb069-83b2-43c6-aae2-da371f67165c
+wooslide("Pointeurs et chaînes de caractères", c"""
+char string[]="abcdef";
+*(string+strlen(string)+1)='Z';
+printf("%s\n",string);
 """)
 
 # ╔═╡ 5b416b7e-4197-4479-9146-abbafc09ff69
@@ -1553,14 +1562,15 @@ version = "17.7.0+0"
 # ╟─ec2e4242-de1e-4fde-866c-fa7847c28c1b
 # ╟─8158cd5f-4bb1-4357-b1df-a74e336b2ca2
 # ╟─04abaa32-e036-4dae-9cb6-3d1c5288e336
-# ╟─d4fdfcfd-2849-4577-bce4-41f7e21c1127
+# ╠═d4fdfcfd-2849-4577-bce4-41f7e21c1127
 # ╠═0973097a-02c4-11f1-ac60-339637a3ae4b
 # ╠═56a4c9f3-f9a9-484c-92ec-b2e9b4d9f11d
-# ╠═dab487a1-c9ca-49d4-aa1c-85086c95d9d7
-# ╠═698f24bf-e894-4884-b281-a7cdcdafd719
-# ╠═1154b80f-a695-4a64-a145-15606066c132
-# ╠═05e27527-c3bd-41d1-a364-a214eb9a0ad6
-# ╠═526040f3-9711-4461-965b-b0c00bd54c3e
-# ╠═5b416b7e-4197-4479-9146-abbafc09ff69
+# ╟─dab487a1-c9ca-49d4-aa1c-85086c95d9d7
+# ╟─698f24bf-e894-4884-b281-a7cdcdafd719
+# ╟─1154b80f-a695-4a64-a145-15606066c132
+# ╟─05e27527-c3bd-41d1-a364-a214eb9a0ad6
+# ╟─526040f3-9711-4461-965b-b0c00bd54c3e
+# ╟─e8faf704-58b2-4462-a73d-89f6a1eed45e
+# ╟─5b416b7e-4197-4479-9146-abbafc09ff69
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
