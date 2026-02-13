@@ -22,12 +22,11 @@ md"""
 
 # ╔═╡ 47279972-433b-46be-b511-170698ff8753
 md"""
-* Comment construire une matrice ?
-```c
-float A[2][2]={ {1,0}, {2,3} };
-```
-* Une telle matrice sera stockée sur le **stack** (variable locale) ou dans la zone données (variable globale)
+Comment construire une matrice ?
 """
+
+# ╔═╡ 42e6ffd9-27b6-49bc-8518-2d7d4b7ffc40
+md"Une telle matrice sera stockée sur le **stack** (variable locale) ou dans la zone données (variable globale)"
 
 # ╔═╡ 1a82ab2b-dd7c-4b48-b263-e71b13ba0fb2
 md"""
@@ -379,15 +378,15 @@ compile_and_run(c"""
 #include <stdio.h>
 int main(int argc, char **argv) {
   for(int i=0; i<argc; i++) {
-    printf("arg[%d]: %s\\n", i, argv[i]);
+    printf("arg[%d]: %s\n", i, argv[i]);
   }
 }
 """, args = ["ab", "cd", "ef"])
 
-# ╔═╡ 26eea9a8-71ba-4d18-8170-731906e68d05
+# ╔═╡ 1f190c17-4feb-41b2-a10a-60fb191d250e
 wrap_compile_and_run(c"""
-float *matrice0 = (float *) malloc(4 * sizeof(float *));
-matrice0[1][1] = 4;
+float A[2][2]={ {1,0}, {2,3} };
+A[1][1] = 4;
 """)
 
 # ╔═╡ 8f156e1d-5816-4c56-9aec-ad665d2bc782
@@ -1343,9 +1342,10 @@ version = "17.7.0+0"
 # ╟─6d3d7f63-766b-4a1f-91c3-46b401c4c280
 # ╟─acfa3f43-215e-4c97-bf2a-0069e78f95b4
 # ╟─47279972-433b-46be-b511-170698ff8753
+# ╟─1f190c17-4feb-41b2-a10a-60fb191d250e
+# ╟─42e6ffd9-27b6-49bc-8518-2d7d4b7ffc40
 # ╟─b588a04d-6a3f-424e-a83a-eec1dfafc9dd
 # ╟─848723a1-4a62-47b2-957c-167ce9be19f8
-# ╟─26eea9a8-71ba-4d18-8170-731906e68d05
 # ╟─8f156e1d-5816-4c56-9aec-ad665d2bc782
 # ╟─a39d8ac8-70e6-47a5-b80d-e1443c19ae15
 # ╟─324b41a3-4b01-4589-8ca5-28ec148cdeb1
