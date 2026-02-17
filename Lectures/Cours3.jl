@@ -36,15 +36,17 @@ frametitle("Factorial")
 
 # ╔═╡ 2dc7800b-f584-4ddc-9f19-486ca0ce21f5
 tutor(c"""
-int factorial(int n) {
-  if (n <= 1)
-    return 1;
-  else
-    return n * factorial(n - 1);
+int factorial(int n)
+{
+    if (n <= 1)
+        return 1;
+    else
+        return n * factorial(n - 1);
 }
 
-int main () {
-  factorial(10);
+int main()
+{
+    factorial(10);
 }
 """)
 
@@ -59,15 +61,17 @@ md"Cette implémentation de Fibonacci a une très mauvaise complexité mais elle
 
 # ╔═╡ 90ca03b6-331f-401b-bacc-2999e184055b
 tutor(c"""
-int fibonacci(int n) {
-  if (n <= 2)
-    return 1;
-  else
-    return fibonacci(n - 1) + fibonacci(n - 2);
+int fibonacci(int n)
+{
+    if (n <= 2)
+        return 1;
+    else
+        return fibonacci(n - 1) + fibonacci(n - 2);
 }
 
-int main () {
-  fibonacci(6);
+int main()
+{
+    fibonacci(6);
 }
 """)
 

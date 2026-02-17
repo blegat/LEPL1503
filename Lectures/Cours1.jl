@@ -522,13 +522,15 @@ end
 swap_c = c"""
 #include <stdio.h>
 
-void swap(int a, int b){
+void swap(int a, int b)
+{
     int c = a;
     a = b;
     b = c;
 }
 
-int main() {
+int main()
+{
     int x = 1;
     int y = 2;
     swap(x, y);
@@ -546,7 +548,8 @@ $swap_c
 xy_ptr = c"""
 #include <stdio.h>
 
-int main () {
+int main()
+{
     int x[] = {10, 20, 30, 40, 50, 60, 70, 80};
     int y[] = {2, 4, 6, 8};
     int *x_ptr = x;
@@ -563,30 +566,31 @@ xy_ptr
 # ╔═╡ b6b11213-78a8-472c-ae3b-b9962326c613
 compile_and_run(c"""
 #include <stdio.h>
-int main() {
-  int x[] = {2026, 6, 2};
-  char *y = (char*) x;
-  printf("%lu %d %d\n", sizeof(int), x[0], x[1]);
-  printf("%lu %d %d\n", sizeof(char), y[0], y[1]);
+int main()
+{
+    int x[] = {2026, 6, 2};
+    char *y = (char *)x;
+    printf("%lu %d %d\n", sizeof(int), x[0], x[1]);
+    printf("%lu %d %d\n", sizeof(char), y[0], y[1]);
 }
 """)
 
 # ╔═╡ ccb1cfec-aaca-43ca-87c2-c860188f9cdf
 c"""
 int tab[] = {2, 4, 8, 16};
-printf("%d \n", *(tab+1));
+printf("%d \n", *(tab + 1));
 """
 
 # ╔═╡ e23fb881-bcf0-46db-8806-c9591a02c391
 c"""
 int tab[] = {2, 4, 8, 16};
-printf("%d \n", *(tab)+2);
+printf("%d \n", *(tab) + 2);
 """
 
 # ╔═╡ 6e9e33e2-1610-4cb1-be29-72750d639992
 c"""
 int tab[] = {2, 4, 8, 16};
-printf("%d \n", *tab+3);
+printf("%d \n", *tab + 3);
 """
 
 # ╔═╡ 75d35f92-191a-4e12-a3ba-b5e68ebca644
@@ -594,23 +598,25 @@ c"""
 double max1(double v);
 double max2(double *v);
 double max3(double *v, int n);
-double * max4(double *v, int n);
+double *max4(double *v, int n);
 """
 
 # ╔═╡ e90a55d8-e909-4404-937b-a6a2c6818a66
 somme = c"""
 #include <stdio.h>
 
-int main() {
-  int sum = 0;
-  int x[] = {10, 20, 30};
-  int *ptr = x;
-  for(int i=0; i<4; i++) {
-    sum += *(ptr);
-    ptr++;
-  }
-  printf("Somme: %d\n", sum);
-  return 0;
+int main()
+{
+    int sum = 0;
+    int x[] = {10, 20, 30};
+    int *ptr = x;
+    for (int i = 0; i < 4; i++)
+    {
+        sum += *(ptr);
+        ptr++;
+    }
+    printf("Somme: %d\n", sum);
+    return 0;
 }
 """;
 
@@ -619,59 +625,62 @@ somme
 
 # ╔═╡ 5fd01b09-3301-4b6f-b8f9-89e3a1075a8c
 c"""
-char *string="abcdef";
-printf("%s\n",string+2);
+char *string = "abcdef";
+printf("%s\n", string + 2);
 """
 
 # ╔═╡ 0d6ed070-3364-404b-a585-e5775bdf6fa4
 c"""
-char *string="abcdef";
-printf("%c\n",*(string+3));
+char *string = "abcdef";
+printf("%c\n", *(string + 3));
 """
 
 # ╔═╡ ddbe345b-d667-47df-8232-839ebe393d53
 c"""
-char *string1="abcdef";
-char string2[]="abcdef";
-char string3="ab";
-char *string4='A';
-char string5='B';
-char *string6="C";
+char *string1 = "abcdef";
+char string2[] = "abcdef";
+char string3 = "ab";
+char *string4 = 'A';
+char string5 = 'B';
+char *string6 = "C";
 """
 
 # ╔═╡ d901922a-ba35-47fa-9e3a-051926f24afb
 c"""
 #define MILLION 1000000
 
-struct large_t {
-  int i;
-  char str[MILLION];
+struct large_t
+{
+    int i;
+    char str[MILLION];
 };
 
-int sum(struct large_t s1, struct large_t s2) {
-  return (s1.i+s2.i);
+int sum(struct large_t s1, struct large_t s2)
+{
+    return (s1.i + s2.i);
 }
 
-int sumptr(struct large_t *s1, struct large_t *s2) {
-  return (s1->i+s2->i);
+int sumptr(struct large_t *s1, struct large_t *s2)
+{
+    return (s1->i + s2->i);
 }
 """
 
 # ╔═╡ cebdcb4d-6894-4b04-91b8-c9f83d1c9fc8
-c"""int *tab2=(int *) malloc(4*sizeof(int));
-*tab2=2;
-*(tab2+1)=4;
+c"""int *tab2 = (int *)malloc(4 * sizeof(int));
+*tab2 = 2;
+*(tab2 + 1) = 4;
 free(tab2);
-printf("%d\n",*(tab2+1));"""
+printf("%d\n", *(tab2 + 1));"""
 
 # ╔═╡ 627ad27a-d332-4f12-b1c9-70926864232d
-c"""
-int *tab2=(int *) malloc(4*sizeof(int));
-*tab2=2;
+
+int *tab2 = (int *)malloc(4 * sizeof(int));
+*tab2 = 2;
 tab2++;
-*tab2=4;
+*tab2 = 4;
 free(tab2);
-printf("%d\n",*(tab2));"""
+printf("%d\n", *(tab2));"""
 
 # ╔═╡ 698f24bf-e894-4884-b281-a7cdcdafd719
 # No need to go beyond `620` because pythontutor will just add an internal slider an not show full code
@@ -704,62 +713,69 @@ public class MainClass {
 # ╔═╡ 68c0d683-71b7-48d9-850a-1fe9b551608a
 tutor(c"""
 #include <stdio.h>
-int main() {
-  char c = 'X';
-  char str[] = "EPL";
-  char str2[] = "UCLouvain";
-  char *ptr;
-  printf("Caractère: %d\n", c);
-  printf("String 1: %s\n", str);
-  printf("String 2: %s\n", str2);
-  ptr = str2;
-  printf("String 3: %s\n", ptr);
-  return 0;
+int main()
+{
+    char c = 'X';
+    char str[] = "EPL";
+    char str2[] = "UCLouvain";
+    char *ptr;
+    printf("Caractère: %d\n", c);
+    printf("String 1: %s\n", str);
+    printf("String 2: %s\n", str2);
+    ptr = str2;
+    printf("String 3: %s\n", ptr);
+    return 0;
 }
 """)
 
 # ╔═╡ 0be89cc6-b76f-4ca3-af18-0b573a5291d9
 tutor(c"""
 #include <stdio.h>
-int len(char str[]){
-  int i=0;
-  while (str[i] != '\0')
-	i++;
-  return i;
+int len(char str[])
+{
+    int i = 0;
+    while (str[i] != '\0')
+        i++;
+    return i;
 }
-int main() {
-  char str[] = "UCLouvain";
-  printf("Longueur: %d\n", len(str));
+int main()
+{
+    char str[] = "UCLouvain";
+    printf("Longueur: %d\n", len(str));
 }
 """)
 
 # ╔═╡ 8b0305e1-cf04-4632-8da4-a688cf5c2a10
 tutor(c"""
 #include <stdio.h>
-int len(char str[]){
-  int i=0;
-  while (*(str+i) != '\0')
-	i++;
-  return i;
+int len(char str[])
+{
+    int i = 0;
+    while (*(str + i) != '\0')
+        i++;
+    return i;
 }
-int main() {
-  char str[] = "UCLouvain";
-  printf("Longueur: %d\n", len(str));
+int main()
+{
+    char str[] = "UCLouvain";
+    printf("Longueur: %d\n", len(str));
 }
 """)
 
 # ╔═╡ bbb4ca2c-c063-4495-bfd2-1999f8f13b08
 tutor(c"""
 #include <stdio.h>
-int main() {
-  char *str = "UCLouvain";
-  int len = 0;
-  while (*(str) != '\0'){
-	len++;
-	str++;
-  }
-  printf("Chaîne %s longueur %d\n", str, len);
-  return 0;
+int main()
+{
+    char *str = "UCLouvain";
+    int len = 0;
+    while (*(str) != '\0')
+    {
+        len++;
+        str++;
+    }
+    printf("Chaîne %s longueur %d\n", str, len);
+    return 0;
 }
 """)
 
@@ -767,24 +783,28 @@ int main() {
 tutor(c"""
 #include <stdio.h>
 // retourne i*j
-int times(int i, int j) {
-  int m;
-  m=i*j;
-  return m;
+int times(int i, int j)
+{
+    int m;
+    m = i * j;
+    return m;
 }
 // calcul récursif de factorielle
 // n>0
-int fact(int n) {
-  int f;
-  if(n==1) {
-    return(n);
-  }
-  f=fact(n-1);
-  f=times(n,f);
-  return f;
+int fact(int n)
+{
+    int f;
+    if (n == 1)
+    {
+        return (n);
+    }
+    f = fact(n - 1);
+    f = times(n, f);
+    return f;
 }
-int main() {
-  printf("%d\n", fact(3));
+int main()
+{
+    printf("%d\n", fact(3));
 }
 """)
 
@@ -843,8 +863,8 @@ two_columns(left, right) = hbox([
 ])
 
 # ╔═╡ 6c1b0d3d-0aee-44d0-9154-2d2711dc7a3d
-two_columns(c"""int main(int argc, char**argv) {
-   int tab[]={2, 4, 8, 16};
+two_columns(c"""int main(int argc, char **argv) {
+   int tab[] = {2, 4, 8, 16};
 """,
 md"""
 * segments text
@@ -854,8 +874,8 @@ md"""
 """)
 
 # ╔═╡ cbaea0f9-6290-49f6-9e5a-7146d5f81f2f
-two_columns(c"""int main(int argc, char**argv) {
-   int *tab = (int *) malloc(4*sizeof(int));
+two_columns(c"""int main(int argc, char **argv) {
+   int *tab = (int *)malloc(4 * sizeof(int));
 """,
 md"""
 * segments text
@@ -865,8 +885,8 @@ md"""
 """)
 
 # ╔═╡ 750d19b9-5f61-435f-b44f-c197f259cc28
-two_columns(c"""int main(int argc, char**argv) {
-   int *tab = (int *) malloc(4*sizeof(int));
+two_columns(c"""int main(int argc, char **argv) {
+   int *tab = (int *)malloc(4 * sizeof(int));
 """,
 md"""
 * segments text
@@ -940,37 +960,37 @@ end
 
 # ╔═╡ 95941d9c-4cf1-4142-b46b-7335ec9a229e
 wooslide("Pointeurs et chaînes de caractères", c"""
-char string[]="abcdef";
-*(string+1)='X';
-printf("%s\n",string);
+char string[] = "abcdef";
+*(string + 1) = 'X';
+printf("%s\n", string);
 """)
 
 # ╔═╡ bad4291c-c917-41bf-bf14-3eedb6b46ea5
 wooslide("Pointeurs et chaînes de caractères", c"""
-char string[]="abcdef";
-*(string+1)='X';
-printf("%s\n",string);
+char string[] = "abcdef";
+*(string + 1) = 'X';
+printf("%s\n", string);
 """)
 
 # ╔═╡ ef7a1f2f-e0ae-4b71-9d93-c2a8574adfe1
 wooslide("Pointeurs et chaînes de caractères", c"""
-char *string="abcdef";
+char *string = "abcdef";
 string++;
-printf("%s\n",string);
+printf("%s\n", string);
 """)
 
 # ╔═╡ 97a71eed-8d15-4dfd-8072-28cfd060e704
 wooslide("Pointeurs et chaînes de caractères", c"""
-char string[]="abcdef";
-*(string+strlen(string))='G';
-printf("%s\n",string);
+char string[] = "abcdef";
+*(string + strlen(string)) = 'G';
+printf("%s\n", string);
 """)
 
 # ╔═╡ 1ecfb069-83b2-43c6-aae2-da371f67165c
 wooslide("Pointeurs et chaînes de caractères", c"""
-char string[]="abcdef";
-*(string+strlen(string)+1)='Z';
-printf("%s\n",string);
+char string[] = "abcdef";
+*(string + strlen(string) + 1) = 'Z';
+printf("%s\n", string);
 """)
 
 # ╔═╡ 5b416b7e-4197-4479-9146-abbafc09ff69

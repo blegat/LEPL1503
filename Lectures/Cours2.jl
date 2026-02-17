@@ -32,9 +32,9 @@ md"Une telle matrice sera stockée sur le **stack** (variable locale) ou dans la
 md"""
 Si la matrice a été créée par
 ```c
-float **matrice = (float **) malloc(2 * sizeof(float *));
-float *ligne0 = (float *) malloc(2 * sizeof(float));
-float *ligne1 = (float *) malloc(2 * sizeof(float));
+float **matrice = (float **)malloc(2 * sizeof(float *));
+float *ligne0 = (float *)malloc(2 * sizeof(float));
+float *ligne1 = (float *)malloc(2 * sizeof(float));
 matrice[0] = ligne0;
 matrice[1] = ligne1;
 ```
@@ -376,30 +376,32 @@ end
 # ╔═╡ 6d3d7f63-766b-4a1f-91c3-46b401c4c280
 compile_and_run(c"""
 #include <stdio.h>
-int main(int argc, char **argv) {
-  for(int i=0; i<argc; i++) {
-    printf("arg[%d]: %s\n", i, argv[i]);
-  }
+int main(int argc, char **argv)
+{
+    for (int i = 0; i < argc; i++)
+    {
+        printf("arg[%d]: %s\n", i, argv[i]);
+    }
 }
 """, args = ["ab", "cd", "ef"])
 
 # ╔═╡ 1f190c17-4feb-41b2-a10a-60fb191d250e
 wrap_compile_and_run(c"""
-float A[2][2]={ {1,0}, {2,3} };
+float A[2][2] = {{1, 0}, {2, 3}};
 A[1][1] = 4;
 """)
 
 # ╔═╡ 8f156e1d-5816-4c56-9aec-ad665d2bc782
 wrap_compile_and_run(c"""
-float *matrice1=(float *) malloc(4 * sizeof(float));
+float *matrice1 = (float *)malloc(4 * sizeof(float));
 matrice1[1][1] = 4;
 """)
 
 # ╔═╡ 0b41747b-fe00-49a0-9ed9-99f0b2046b2e
 c"""
-float **matrice = (float **) malloc(2 * sizeof(float *));
-float *ligne0 = (float *) malloc(2 * sizeof(float));
-float *ligne1 = (float *) malloc(2 * sizeof(float));
+float **matrice = (float **)malloc(2 * sizeof(float *));
+float *ligne0 = (float *)malloc(2 * sizeof(float));
+float *ligne1 = (float *)malloc(2 * sizeof(float));
 matrice[0] = ligne0;
 matrice[1] = ligne1;
 matrice[0][0] = 1; // 1
@@ -409,33 +411,34 @@ matrice[0][0] = 1; // 1
 
 # ╔═╡ b5388c3e-bcaf-43b6-b9d9-c9979f2afce2
 c"""
-float **matrice = (float **) malloc(2 * sizeof(float *));
-float *ligne0 = (float *) malloc(2 * sizeof(float));
-float *ligne1 = (float *) malloc(2 * sizeof(float));
+float **matrice = (float **)malloc(2 * sizeof(float *));
+float *ligne0 = (float *)malloc(2 * sizeof(float));
+float *ligne1 = (float *)malloc(2 * sizeof(float));
 matrice[0] = ligne0;
 matrice[1] = ligne1;
-*(*matrice+1)=0;   // 1
-*(matrice++)=0;    // 2
-*(matrice[0]+1)=0; // 3
+*(*matrice + 1) = 0;   // 1
+*(matrice++) = 0;      // 2
+*(matrice[0] + 1) = 0; // 3
 """
 
 # ╔═╡ 9160427d-4db7-4a97-9dde-14d19d59b1ef
 c"""
-float **matrice = (float **) malloc(2 * sizeof(float *));
-float *ligne0 = (float *) malloc(2 * sizeof(float));
-float *ligne1 = (float *) malloc(2 * sizeof(float));
+float **matrice = (float **)malloc(2 * sizeof(float *));
+float *ligne0 = (float *)malloc(2 * sizeof(float));
+float *ligne1 = (float *)malloc(2 * sizeof(float));
 matrice[0] = ligne0;
 matrice[1] = ligne1;
-*(*(++matrice))=2; // 1
-*(*(matrice+1))=2; // 2
-*(*matrice+1)=2;   // 3
+*(*(++matrice)) = 2;   // 1
+*(*(matrice + 1)) = 2; // 2
+*(*matrice + 1) = 2;   // 3
 """
 
 # ╔═╡ b66272c8-02b0-4d22-84d6-7274efe11e2a
 c"""
-struct vector_t {
-  int size;
-  float *v;
+struct vector_t
+{
+    int size;
+    float *v;
 };
 """
 
@@ -461,9 +464,9 @@ c"""
  */
 
 int init(int size, float val,
-  struct vector_t  v,     // 1
-  struct vector_t ** v,   // 2
-  struct vector_t * v,    // 3
+         struct vector_t v,   // 1
+         struct vector_t **v, // 2
+         struct vector_t *v,  // 3
 )
 """
 
@@ -475,20 +478,23 @@ c"""struct vector_t {
 
 # ╔═╡ dd7f51b5-ca6a-4eb4-802d-9514861ae6a4
 c"""
-int init(int size, float val, struct vector_t ** v) {
-  if ((size<0) || v==NULL)
-    return -1;
-  *v=(struct vector_t *)
-     malloc(sizeof(struct vector_t));
-  if (*v == NULL) {
-    return -1;
-  }
-  (*v)->tab=(float *)malloc(size*sizeof(float));
-  if ((*v)->tab == NULL) {
-     return -1;
-  }
-  (*v)->length = size;
-  for (int i = 0; i<size; i++) {
+int init(int size, float val, struct vector_t **v)
+{
+    if ((size < 0) || v == NULL)
+        return -1;
+    *v = (struct vector_t *)malloc(sizeof(struct vector_t));
+    if (*v == NULL)
+    {
+        return -1;
+    }
+    (*v)->tab = (float *)malloc(size * sizeof(float));
+    if ((*v)->tab == NULL)
+    {
+        return -1;
+    }
+    (*v)->length = size;
+    for (int i = 0; i < size; i++)
+    {
 """
 
 # ╔═╡ b58ba8eb-0661-4eac-8ead-2daff4126d57
@@ -513,9 +519,9 @@ c"""
  */
 
 int get(struct vector_t *v, int i,
-  float val   // 1
-  float **val // 2
-  float *val  // 3
+        float val   // 1
+        float **val // 2
+        float *val  // 3
 ) {
 """
 
@@ -543,15 +549,19 @@ c"""
 
 # ╔═╡ 27b6779a-5624-4e8e-ae32-8a8971923d01
 c"""
-int *stack() {
-  int v[] = {1, 2, 3};
-  return v;
+int *stack()
+{
+    int v[] = {1, 2, 3};
+    return v;
 }
 
-int *heap() {
-  int *v = (int *) malloc(3 * sizeof(int));
-  v[0] = 1; v[1] = 2; v[2] = 3;
-  return v;
+int *heap()
+{
+    int *v = (int *)malloc(3 * sizeof(int));
+    v[0] = 1;
+    v[1] = 2;
+    v[2] = 3;
+    return v;
 }"""
 
 # ╔═╡ d107cd6f-c45c-4289-bd0f-5f329633fdda
@@ -577,9 +587,9 @@ ppx=(int **) malloc(sizeof(int*));
 
 # ╔═╡ 324b41a3-4b01-4589-8ca5-28ec148cdeb1
 tutor(wrap_in_main(c"""
-float **matrice2 = (float **) malloc(2 * sizeof(float *));
-float *ligne0 = (float *) malloc(2 * sizeof(float));
-float *ligne1 = (float *) malloc(2 * sizeof(float));
+float **matrice2 = (float **)malloc(2 * sizeof(float *));
+float *ligne0 = (float *)malloc(2 * sizeof(float));
+float *ligne1 = (float *)malloc(2 * sizeof(float));
 matrice2[0] = ligne0;
 matrice2[1] = ligne1;
 matrice2[1][1] = 4;
@@ -587,8 +597,8 @@ matrice2[1][1] = 4;
 
 # ╔═╡ 654184b1-4b5e-4c90-800e-b413a04eeea1
 tutor(wrap_in_main(c"""
-float **matrice3 = (float **) malloc(2 * sizeof(float *));
-float *valeurs = (float *) malloc(4 * sizeof(float));
+float **matrice3 = (float **)malloc(2 * sizeof(float *));
+float *valeurs = (float *)malloc(4 * sizeof(float));
 matrice3[0] = valeurs;
 matrice3[1] = valeurs + 2;
 matrice3[1][1] = 4;
@@ -596,9 +606,9 @@ matrice3[1][1] = 4;
 
 # ╔═╡ 2d35189b-46aa-4922-ad4f-432533da2a80
 tutor(wrap_in_main(c"""
-float **matrice = (float **) malloc(2 * sizeof(float *));
-matrice[0] = (float *) malloc(2 * sizeof(float));
-matrice[1] = (float *) malloc(2 * sizeof(float));
+float **matrice = (float **)malloc(2 * sizeof(float *));
+matrice[0] = (float *)malloc(2 * sizeof(float));
+matrice[1] = (float *)malloc(2 * sizeof(float));
 free(matrice);
 free(matrice[0]);
 free(matrice[1]);
@@ -608,34 +618,35 @@ free(matrice[1]);
 tutor(c"""
 #include <stdlib.h>
 
-struct vector_t {
-  int length; // nombre d'élements
-  float *tab; // tableau avec les réels
+struct vector_t
+{
+    int length; // nombre d'élements
+    float *tab; // tableau avec les réels
 };
 
-int init(int size, float val, struct vector_t ** v) {
-  if( (size<0)|| v==NULL)
-    return -1;
-  *v=(struct vector_t *)
-     malloc(sizeof(struct vector_t));
-  if(*v==NULL) {
-    return -1;
-  }
-  (*v)->tab=(float *)malloc(size*sizeof(float));
-  if((*v)->tab==NULL) {
-     return -1;
-  }
-  (*v)->length = size;
-  for (int i = 0;i<size;i++) {
-    float *t = (*v)->tab;
-    t[i] = val;
-    // ou *((*v)->tab+i)=val;
-  }
-  return 0;
+int init(int size, float val, struct vector_t **v)
+{
+    if ((size < 0) || v == NULL)
+        return -1;
+    *v = (struct vector_t *)malloc(sizeof(struct vector_t));
+    if (*v == NULL)
+        return -1;
+    (*v)->tab = (float *)malloc(size * sizeof(float));
+    if ((*v)->tab == NULL)
+        return -1;
+    (*v)->length = size;
+    for (int i = 0; i < size; i++)
+    {
+        float *t = (*v)->tab;
+        t[i] = val;
+        // ou *((*v)->tab + i) = val;
+    }
+    return 0;
 }
-int main () {
-  struct vector_t *ptr = NULL;
-  int err = init(4, 1.23, &ptr);
+int main()
+{
+    struct vector_t *ptr = NULL;
+    int err = init(4, 1.23, &ptr);
 }
 """)
 
@@ -644,23 +655,28 @@ tutor(c"""
 #include <stdlib.h>
 #include <stdio.h>
 
-int square(int a) {
-  return a * a;
+int square(int a)
+{
+    return a * a;
 }
-int plus(int a, int b) {
-  return a + b;
-}
-
-int mapreduce(int (*f)(int), int (*op)(int, int), int *vec, int len, int init) {
-  for (int i = 0; i < len; i++) {
-    init = op(init, f(vec[i]));
-  }
-  return init;
+int plus(int a, int b)
+{
+    return a + b;
 }
 
-int main () {
-  int vec[] = {1, 2, 3, 4};
-  printf("%d\\n", mapreduce(square, plus, vec, 4, 0));
+int mapreduce(int (*f)(int), int (*op)(int, int), int *vec, int len, int init)
+{
+    for (int i = 0; i < len; i++)
+    {
+        init = op(init, f(vec[i]));
+    }
+    return init;
+}
+
+int main()
+{
+    int vec[] = {1, 2, 3, 4};
+    printf("%d\\n", mapreduce(square, plus, vec, 4, 0));
 }
 """)
 
@@ -668,24 +684,29 @@ int main () {
 tutor(c"""
 #include <stdlib.h>
 
-int *stack() {
-  int v[] = {1, 2, 3};
-  return v;
+int *stack()
+{
+    int v[] = {1, 2, 3};
+    return v;
 }
 
-int *heap() {
-  int *v = (int *) malloc(3 * sizeof(int));
-  v[0] = 1; v[1] = 2; v[2] = 3;
-  return v;
+int *heap()
+{
+    int *v = (int *)malloc(3 * sizeof(int));
+    v[0] = 1;
+    v[1] = 2;
+    v[2] = 3;
+    return v;
 }
 
-int main () {
-  int *v1 = heap();
-  printf("%d %d %d\\n", v1[0], v1[1], v1[2]);
-  free(v1); // don't forget!
-  int *v2 = stack();
-  printf("%d %d %d\\n", v2[0], v2[1], v2[2]);
-  return 0;
+int main()
+{
+    int *v1 = heap();
+    printf("%d %d %d\\n", v1[0], v1[1], v1[2]);
+    free(v1); // don't forget!
+    int *v2 = stack();
+    printf("%d %d %d\\n", v2[0], v2[1], v2[2]);
+    return 0;
 }
 """)
 
@@ -818,21 +839,19 @@ free(matrice);
 
 # ╔═╡ 488d8bed-855f-470a-a2fa-68c13fd08739
 qa(c"struct vector_t * init(int size, float val) {", c"""
-  // manque tests erreur malloc
-  struct vector_t *t=(struct vector_t *)
-          malloc(sizeof(struct vector_t));
-  t->v=(float *)malloc(size*sizeof(float));
-  t->size=size;
-  for(int i=0;i<size;i++) {
-    *(t->v+i)=val;
-  }
-  return t;
+// manque tests erreur malloc
+struct vector_t *t = (struct vector_t *)malloc(sizeof(struct vector_t));
+t->v = (float *)malloc(size * sizeof(float));
+t->size = size;
+for (int i = 0; i < size; i++)
+{
+    *(t->v + i) = val;
 }
 """)
 
 # ╔═╡ 419f48c0-8377-4a67-a801-e87d2a61c17a
 qa(c"float get(struct vector_t *t, int i) {", c"""
-  return *(t->v+i);
+  return *(t->v + i);
 }""")
 
 # ╔═╡ cfc54158-a170-4f1d-b1dd-ab8e0f1a172e
@@ -855,7 +874,7 @@ t[i] = val;
 ```
 ou
 ```c
-*((*v)->tab+i)=val;
+*((*v)->tab + i) = val;
 ```
 """)
 
@@ -863,7 +882,7 @@ ou
 qa(md"Comment implémenter `get` ?", c"""
   if (i < 0 || i >= v->length)
     return -1;
-  *val = *(v->tab+i);
+  *val = *(v->tab + i);
   return 0;
 }
 """)
@@ -872,7 +891,7 @@ qa(md"Comment implémenter `get` ?", c"""
 qa(md"Comment implémenter `set` ?", c"""
   if (i < 0 || i >= v->length)
     return -1;
-  *(v->tab+i) = val;
+  *(v->tab + i) = val;
   return 0;
 }
 """)
