@@ -856,8 +856,8 @@ qa(c"float get(struct vector_t *t, int i) {", c"""
 
 # ╔═╡ cfc54158-a170-4f1d-b1dd-ab8e0f1a172e
 qa(c"void set(struct vector_t *t, int i, float val) {", c"""
-  if((i<t->size)&&(i>0))
-    *(t->v+i)=val;
+  if ((i < t->size) && (i > 0))
+      *(t->v+i)=val;
 }""")
 
 # ╔═╡ 4dad1e1b-2288-49b9-8190-f2f374ca353c
