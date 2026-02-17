@@ -534,9 +534,9 @@ c"""/*
  */
 
 int set(struct vector_t *v, int i,
-float  val     // 1
-float ** val   // 2
-float * val    // 3
+        float val   // 1
+        float **val // 2
+        float *val  // 3
 ) {"""
 
 # ╔═╡ cb9c27b9-ce7d-4bdf-af7d-c88883a210bc
