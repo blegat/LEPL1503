@@ -17,7 +17,7 @@ using Luxor, PlutoUI, PlutoUI.ExperimentalLayout, MyUtils, PlutoTeachingTools, C
 header("LEPL1503/LSINC1503 - Cours 3", "O. Bonaventure, B. Legat, M. Baerts")
 
 # ╔═╡ cbab5d55-63e2-46a4-b86f-d00eb0f1c507
-frametitle("Rappel organisation du cours")
+md"## Rappel organisation du cours"
 
 # ╔═╡ 28ad2f17-89d5-44b4-87c3-d385d874ed87
 md"""
@@ -29,10 +29,10 @@ Le tuteur n'a pas le temps de résoudre les problèmes d'installation en séance
 """
 
 # ╔═╡ 93efbc2f-e078-46aa-b33d-03b30ee629ab
-section("Stack overflow 💥")
+md"# Stack overflow 💥"
 
 # ╔═╡ 2dc74f5c-a40e-4a3f-964d-d77e46684592
-frametitle("Factorial")
+md"## Factorial"
 
 # ╔═╡ 2dc7800b-f584-4ddc-9f19-486ca0ce21f5
 tutor(c"""
@@ -54,7 +54,7 @@ int main()
 Foldable(md"Que se passe-t-il si on oublie `if (n <= 1)` ?", md"On pourrait croire que le programme ne s'arrête jamais. Seulement, la taille de la stack va grandir progressivement jusqu'à atteindre la limite mémoire. Ceci provoquera une *stack overflow*.")
 
 # ╔═╡ 0bcea29e-a529-4a34-98b3-f7708ae0c164
-frametitle("Fibonacci")
+md"## Fibonacci"
 
 # ╔═╡ f8650fa0-02be-4117-9f70-e2d71a6dcc68
 md"Cette implémentation de Fibonacci a une très mauvaise complexité mais elle illustre bien la dynamique de la stack qui grandit et rapetissit rapetissit au rythme des appels de fonctions."
@@ -76,7 +76,7 @@ int main()
 """)
 
 # ╔═╡ 226a5f51-738e-4abf-9cbe-f131dae2ea55
-section("Git")
+md"# Git"
 
 # ╔═╡ 0a31d929-9d65-417b-b6b2-e432a1f01ffe
 md"""
@@ -85,7 +85,7 @@ md"""
 """
 
 # ╔═╡ 88674bd2-66b1-4c49-a7dd-071b93188d1f
-frametitle("Contexte")
+md"## Contexte"
 
 # ╔═╡ fe8b1e1b-8a8b-4d44-8045-0fbc205e7814
 md"""
@@ -101,7 +101,7 @@ md"""
 """
 
 # ╔═╡ 2f255c13-f975-40b6-9ca4-e3ca08960126
-frametitle("Typical workflow")
+md"## Typical workflow"
 
 # ╔═╡ 41830ab8-ad81-4116-972d-9e36a5ee89a1
 md"""
@@ -134,7 +134,7 @@ $diff_version
 """), v_offset = -300)
 
 # ╔═╡ 1c39a7f2-cd5e-456a-bf16-76493e29adeb
-frametitle("Le cycle de vie d'une branch")
+md"## Le cycle de vie d'une branch"
 
 # ╔═╡ 34da9f3f-4bde-45da-b27b-d6b4445bbe8b
 md"""
@@ -157,16 +157,16 @@ md"""
 """
 
 # ╔═╡ 15953e07-0d3a-462a-8f4d-8c1609d37b50
-section("Merge")
+md"# Merge"
 
 # ╔═╡ 0b248037-782c-4f57-ad2c-c20d2940f3db
 md"[Source des images](https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging)"
 
 # ╔═╡ a0adfd7c-52eb-437f-b9af-9323fc374c1a
-frametitle("Deux branches en cours...")
+md"## Deux branches en cours..."
 
 # ╔═╡ e4fa4941-25bb-4191-a7df-700852e7b5bc
-frametitle("Une des deux est mergée en premier")
+md"## Une des deux est mergée en premier"
 
 # ╔═╡ 96e9ced9-9f89-4053-90b9-679447316ca6
 md"```sh
@@ -182,7 +182,7 @@ $ git merge --ff-only a
 pour qu'il envoie une erreur si ce n'est pas fast forward."
 
 # ╔═╡ 6050693f-ac64-4537-a561-93688ab94b85
-frametitle("Un merge explicite")
+md"## Un merge explicite"
 
 # ╔═╡ 32b000ef-39a2-4682-b45a-d9cfd2e33f81
 md"```sh
@@ -194,7 +194,7 @@ $ git merge --no-ff a
 md"**Important** Comme on était sur la branche `main`, on ne modifie **que** `main`. Remarquez que `a` n'a pas bougé! Ceci est toujours vrai sur `git`, vous ne modifiez que la branche sur laquelle vous êtes `checkout`."
 
 # ╔═╡ 373dc385-d77e-495a-9f1f-f9424a8f27bb
-frametitle("Si l'autre branche est prête, on la merge")
+md"## Si l'autre branche est prête, on la merge"
 
 # ╔═╡ b9746823-8c9b-462d-875a-250b882efcad
 md"""
@@ -213,7 +213,7 @@ enverrait une erreur.
 """
 
 # ╔═╡ 5caab77a-31c9-4042-8fba-2f9b3e1520b7
-frametitle("Si l'autre branche n'est pas prête, que faire ?")
+md"## Si l'autre branche n'est pas prête, que faire ?"
 
 # ╔═╡ 5628641b-ad16-40ac-8156-cbdb19ac4f45
 Foldable(
@@ -222,7 +222,7 @@ Foldable(
 )
 
 # ╔═╡ 3d2bad59-45a8-48ea-8a7b-55ffa34af747
-frametitle("Avant de continuer, on synchronise")
+md"## Avant de continuer, on synchronise"
 
 # ╔═╡ a03740c1-28a4-4233-9c21-2feca082aa90
 md"""
@@ -233,10 +233,10 @@ $ git merge main
 """
 
 # ╔═╡ 8a2a0c95-1544-42e4-a1ab-a2e9f23be57f
-frametitle("On peut ensuite continuer")
+md"## On peut ensuite continuer"
 
 # ╔═╡ 82a1475b-2d04-4a46-86cd-1f437ab9c6b9
-frametitle("Quand la seconde branche est finie")
+md"## Quand la seconde branche est finie"
 
 # ╔═╡ 7b512972-17ee-452b-b62c-c63f9f1ea9f1
 function tree(t; s = 80)
@@ -309,7 +309,7 @@ tree(6)
 tree(7)
 
 # ╔═╡ d863aac9-b9f7-480e-892d-1d510f34dfa7
-frametitle("Bouton merge sur GitHub/GitLab")
+md"## Bouton merge sur GitHub/GitLab"
 
 # ╔═╡ 4be20622-1534-4bd1-9653-66527226e670
 md"La branche `main` du slides précédente contient des détails internes aux branches `a` et `b`. On aimerait plutôt avoir un commit par branche avec un lien vers le merge request correspondant pour voir plus de détails le cas échéant."
@@ -338,7 +338,7 @@ end;
 squash()
 
 # ╔═╡ 5febbc94-db91-4c60-acae-9888fef74d63
-frametitle("Squash commits")
+md"## Squash commits"
 
 # ╔═╡ 109a217e-bc88-46f9-b7f5-6a6993fc9918
 img("squash")
@@ -359,7 +359,7 @@ $(img("https://docs.github.com/assets/cb-5742/mw-1440/images/help/pull_requests/
 md"[Source des images](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/about-pull-request-merges)"
 
 # ╔═╡ b379b723-d3e4-45d3-b5e8-9958c6f5dd9b
-frametitle("Reset")
+md"## Reset"
 
 # ╔═╡ d55c4b86-88f9-423c-8def-3c4de83ad3bb
 md"""
@@ -387,7 +387,7 @@ $ git checkout . # Dangereux, ça écrase aussi les changements qui n'ont pas é
 """)
 
 # ╔═╡ 296818cf-7598-46d8-8c7d-c91fd41fa9d0
-frametitle("Stash changes")
+md"## Stash changes"
 
 # ╔═╡ b58456cf-b417-4f40-a854-c04b6db744db
 md"""
@@ -407,7 +407,7 @@ $ git stash apply
 """
 
 # ╔═╡ 27e4de24-a81c-4437-a566-05da736f6e9d
-section("Markdown")
+md"# Markdown"
 
 # ╔═╡ 50acf567-a72a-4ada-af79-876b782e85c4
 md"""
@@ -418,7 +418,7 @@ md"""
 """
 
 # ╔═╡ 006977f7-c420-4562-b193-7fa7053c3397
-frametitle("Example avec CommonMark")
+md"## Example avec CommonMark"
 
 # ╔═╡ 93b2e538-939a-4ed6-a039-cd749110987e
 cm"""
@@ -431,7 +431,7 @@ cm"""
 """
 
 # ╔═╡ 1b304f84-b649-45a0-860f-eb6a573df510
-frametitle("Syntax highlighting")
+md"## Syntax highlighting"
 
 # ╔═╡ 04b7e3c9-0962-4146-bcc3-0274efc33644
 md"""
@@ -450,7 +450,7 @@ int i = 0;
 html"""<code class="language-c">int i = 0;</code>"""
 
 # ╔═╡ d7102814-0102-43fb-b9ee-f78da0b2febe
-frametitle("Permalink")
+md"## Permalink"
 
 # ╔═╡ 3cbfb4f4-28a2-4c72-83ae-7f9c6233e8b6
 md"""Un lien vers des lignes spécifiques du code doivent être liées à un commit spécifique car une branche évolue avec le temps. [GitHub affiche un code snippet](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/creating-a-permanent-link-to-a-code-snippet) comme ci-dessous [mais pas encore sur GitLab](https://stackoverflow.com/questions/76063040/how-do-i-link-or-add-a-reference-to-specific-lines-of-code-of-a-file-in-the-repo)"""

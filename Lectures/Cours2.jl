@@ -69,94 +69,94 @@ html"<p align=center style=\"font-size: 20px; margin-bottom: 5cm; margin-top: 5c
 section(s) = md"# $s"
 
 # ╔═╡ 3ddd22b2-7d1b-4b3a-8737-09552b51726d
-section("Variables, pointeurs et doubles pointeurs")
+md"# Variables, pointeurs et doubles pointeurs"
 
 # ╔═╡ b588a04d-6a3f-424e-a83a-eec1dfafc9dd
-section("Matrices sur le heap")
+md"# Matrices sur le heap"
 
 # ╔═╡ 336f53c9-5982-4694-8bd4-92c2a1d1b5cc
-section("Initialisation d'une valeur")
+md"# Initialisation d'une valeur"
 
 # ╔═╡ c81abb3d-7192-499e-a47a-c0b960aa49cd
-section("Libération de la mémoire")
+md"# Libération de la mémoire"
 
 # ╔═╡ 49f0db66-da21-42b0-91d5-db04075e559a
 section("Un vecteur \"Java\" en C")
 
 # ╔═╡ 6f257725-72c3-404c-bb35-079265058a43
-section("Pointeur de fonction")
+md"# Pointeur de fonction"
 
 # ╔═╡ 4e5e1340-c2e6-4b4a-bfb9-e1096d179040
-section("Retourner un tableau")
+md"# Retourner un tableau"
 
 # ╔═╡ 319bc8b4-7139-43b0-a57b-66c6a9da7cb9
-section("Structure différente du stack et heap")
+md"# Structure différente du stack et heap"
 
 # ╔═╡ 3b6a95e0-96e9-4634-9207-42ace759e738
 frametitle(s) = md"## $s"
 
 # ╔═╡ fc027d24-619e-4f6f-95ed-3dd12f61b60c
-frametitle("Visualisation")
+md"## Visualisation"
 
 # ╔═╡ cd3cce7d-b149-4ee1-8b6e-ff213a48ce7d
-frametitle("Arguments de main")
+md"## Arguments de main"
 
 # ╔═╡ acfa3f43-215e-4c97-bf2a-0069e78f95b4
-frametitle("Matrices en C")
+md"## Matrices en C"
 
 # ╔═╡ 848723a1-4a62-47b2-957c-167ce9be19f8
-frametitle("Comment mettre une matrice 2x2 sur le heap ?")
+md"## Comment mettre une matrice 2x2 sur le heap ?"
 
 # ╔═╡ a39d8ac8-70e6-47a5-b80d-e1443c19ae15
-frametitle("Première approche, un malloc par ligne")
+md"## Première approche, un malloc par ligne"
 
 # ╔═╡ 3b5e218f-c134-40a9-9bc3-1fbab8d64d62
-frametitle("Deuxième approche, un malloc pour toutes les valeurs")
+md"## Deuxième approche, un malloc pour toutes les valeurs"
 
 # ╔═╡ 37f6e305-fb5c-4215-b8a1-564a7632a377
-frametitle("Comment initialiser la première valeur ?")
+md"## Comment initialiser la première valeur ?"
 
 # ╔═╡ c73a9ebe-9597-4c49-8493-aec1d71a281a
-frametitle("Comment faire matrice[0][1] = 0 ?")
+md"## Comment faire matrice[0][1] = 0 ?"
 
 # ╔═╡ 67cf8ac0-5b91-4d19-aca4-4309f3109a0c
-frametitle("Comment faire matrice[1][0] = 2 ?")
+md"## Comment faire matrice[1][0] = 2 ?"
 
 # ╔═╡ 92428490-6d76-44a7-9d5b-a9e988f5ff25
-frametitle("L'importance de l'ordre de désallocation")
+md"## L'importance de l'ordre de désallocation"
 
 # ╔═╡ 90532252-a756-40a1-8867-76041f5545a0
-frametitle("Toujours free dans le sens inverse de malloc")
+md"## Toujours free dans le sens inverse de malloc"
 
 # ╔═╡ 7838b43b-428d-4045-8cfe-17c9a824ac65
-frametitle("Première implémentation")
+md"## Première implémentation"
 
 # ╔═╡ f386a8d4-35be-4612-91c7-31ff0f004e2d
-frametitle("Une autre implémentation …")
+md"## Une autre implémentation …"
 
 # ╔═╡ 6cc7a1d4-df02-494f-bf18-0652d49280e5
-frametitle("Initialisation")
+md"## Initialisation"
 
 # ╔═╡ 0e0ddf7c-a34b-447a-8142-334d14f96ae1
-frametitle("Allocation de la mémoire")
+md"## Allocation de la mémoire"
 
 # ╔═╡ 2e1fc3ec-c1ca-43b8-893c-bda691635475
-frametitle("Visualization de init")
+md"## Visualization de init"
 
 # ╔═╡ 4b009812-191d-4969-bf32-5941ca707f37
-frametitle("Récupération d'un élément")
+md"## Récupération d'un élément"
 
 # ╔═╡ 44c8617f-ba56-40fe-80b4-963cf6e6f4b5
-frametitle("Modification d'un élément")
+md"## Modification d'un élément"
 
 # ╔═╡ 03847d85-c675-4b4a-9331-fd7a32b26938
-frametitle("Libération de la mémoire")
+md"## Libération de la mémoire"
 
 # ╔═╡ 8283cc88-a3c8-4bb2-af31-0b72f2eb2c4a
-frametitle("Heap ou stack ?")
+md"## Heap ou stack ?"
 
 # ╔═╡ 4643cd02-67f4-40cd-aa7d-cfdb83fc62be
-frametitle("Retourner un tableau : visualization")
+md"## Retourner un tableau : visualization"
 
 # ╔═╡ ecc856dc-e6f2-4a91-8c37-0bb920531297
 import HTTP, Clang_jll, MultilineStrings

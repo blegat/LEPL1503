@@ -29,7 +29,7 @@ using Luxor, PlutoUI, PlutoUI.ExperimentalLayout, MyUtils, PlutoTeachingTools
 header("LEPL1503/LSINC1503 - Cours 5", "O. Bonaventure, B. Legat, M. Baerts")
 
 # ╔═╡ 6764ba72-95ec-4f3b-ac10-4e7e1b2bcf3b
-frametitle("Clarifications projet")
+md"## Clarifications projet"
 
 # ╔═╡ 810cdd19-7e3f-4cf4-a337-d9c1244e96ce
 md"""
@@ -41,7 +41,7 @@ md"""
 """
 
 # ╔═╡ d87d73d9-d9d8-46e9-9599-0daa7fa95e9c
-frametitle("Chacun doit contribuer sur le Git")
+md"## Chacun doit contribuer sur le Git"
 
 # ╔═╡ ee9648f2-bd69-4bf4-b95b-cc3fc2bf5b60
 md"""
@@ -53,7 +53,7 @@ md"""
 """
 
 # ╔═╡ d1c8fa7e-8874-45e3-a398-e1fa2322af32
-frametitle("Vérifiez qu'il n'y a pas de fuites de mémoires")
+md"## Vérifiez qu'il n'y a pas de fuites de mémoires"
 
 # ╔═╡ 52ddb3b6-0f88-4596-a480-d4d17489292c
 md"""
@@ -77,7 +77,7 @@ valgrind = Example("valgrind.c");
 compile_and_run(valgrind, valgrind = true, verbose = true, cflags = valgrind_debug ? ["-g"] : String[])
 
 # ╔═╡ dfb72971-ccf6-46ec-b686-37e071bd9598
-frametitle("Interface par fichiers")
+md"## Interface par fichiers"
 
 # ╔═╡ 5892921c-b019-418c-ba01-3d7a4e4697b3
 md"""
@@ -93,7 +93,7 @@ C'est une bonne chose d'écrire des unit tests mais comme les signatures des fon
 """
 
 # ╔═╡ 9e9a0b57-30ce-4c9c-b0f5-a111f692d13f
-frametitle("Debugging")
+md"## Debugging"
 
 # ╔═╡ 9afe0855-162f-4234-8001-610e08e39bb0
 md"""
@@ -106,7 +106,7 @@ md"""
 """
 
 # ╔═╡ 3b928e29-a281-4dc2-9429-41e7d98dad54
-frametitle("Exemple avec sanitize")
+md"## Exemple avec sanitize"
 
 # ╔═╡ d50aa7f3-9c15-412e-82c2-f870aab8ffb0
 out_of_bounds = Example("out_of_bounds.c");
@@ -118,7 +118,7 @@ compile_and_run(out_of_bounds, valgrind = false, verbose = true, cflags = ["-Wno
 compile_and_run(out_of_bounds, valgrind = false, verbose = true, cflags = ["-Wno-array-bounds", "-fsanitize=address", "-g"])
 
 # ╔═╡ 0221a56e-c279-4ca4-b211-dd61b95a23bd
-frametitle("Matrices creuses")
+md"## Matrices creuses"
 
 # ╔═╡ ee19532c-e2fd-466f-9830-62ba94870a51
 md"""
