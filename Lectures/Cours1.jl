@@ -675,6 +675,7 @@ printf("%d\n", *(tab2 + 1));"""
 
 # ╔═╡ 627ad27a-d332-4f12-b1c9-70926864232d
 
+c"""
 int *tab2 = (int *)malloc(4 * sizeof(int));
 *tab2 = 2;
 tab2++;
