@@ -1,11 +1,11 @@
 ### A Pluto.jl notebook ###
-# v0.20.21
+# v0.20.22
 
 using Markdown
 using InteractiveUtils
 
 # ╔═╡ 0973097a-02c4-11f1-ac60-339637a3ae4b
-using PlutoUI, PlutoUI.ExperimentalLayout, HypertextLiteral, PlutoTeachingTools
+using PlutoUI, PlutoUI.ExperimentalLayout, HypertextLiteral, PlutoTeachingTools, SimpleClang
 
 # ╔═╡ a4adbbef-a392-40da-9443-0ec5c7b07914
 @htl("""
@@ -16,6 +16,32 @@ $(PlutoUI.TableOfContents(depth=1))
 
 # ╔═╡ c9babcf0-963d-46e3-b8d9-9593e0ea66c0
 md"# Pointeurs "
+
+# ╔═╡ f0f26473-f64a-4111-b40e-79e3b60f2b9d
+swap_c = c"""
+#include <stdio.h>
+
+void swap(int a, int b)
+{
+    int c = a;
+    a = b;
+    b = c;
+}
+
+int main()
+{
+    int x = 1;
+    int y = 2;
+    swap(x, y);
+    printf("%d %d\n", x, y);
+}
+""";
+
+# ╔═╡ 7c7f942d-c235-4ec9-b21b-dcb6c90554a8
+md"""
+## Comment échanger deux variables entières ?
+$swap_c
+"""
 
 # ╔═╡ d3d74430-c125-40a8-9d38-9ad5c01b62cd
 md"""
@@ -39,6 +65,22 @@ md"""
 * `y_ptr` est l'adresse du premier élément du tableau `y`
 """
 
+# ╔═╡ ba1c0405-b097-43ae-bf46-57c507453bee
+xy_ptr = c"""
+#include <stdio.h>
+
+int main()
+{
+    int x[] = {10, 20, 30, 40, 50, 60, 70, 80};
+    int y[] = {2, 4, 6, 8};
+    int *x_ptr = x;
+    int *y_ptr = &(y[0]);
+}
+""";
+
+# ╔═╡ c457f42e-7d5d-4e98-93e0-5ef06271350d
+xy_ptr
+
 # ╔═╡ adbe76b7-b1a0-4f87-84c3-29d78e85aa54
 md"## Arithmétique des pointeurs"
 
@@ -49,6 +91,18 @@ md"""
 
 Pourquoi pas juste le byte suivant ? Par exemple, expliquez l'output suivant:
 """
+
+# ╔═╡ b6b11213-78a8-472c-ae3b-b9962326c613
+compile_and_run(c"""
+#include <stdio.h>
+int main()
+{
+    int x[] = {2026, 6, 2};
+    char *y = (char *)x;
+    printf("%lu %d %d\n", sizeof(int), x[0], x[1]);
+    printf("%lu %d %d\n", sizeof(char), y[0], y[1]);
+}
+""")
 
 # ╔═╡ 068aca17-76d9-4d4a-9c13-c4c7086280fc
 md"## Arithmetique des pointeurs"
@@ -92,14 +146,35 @@ md"## Exécution du code"
 # ╔═╡ f02e4c73-7369-4f00-a350-341424bb1b0e
 md"## Questions"
 
+# ╔═╡ 695d0382-f30a-4b0f-9110-21cb640941bf
+xy_ptr
+
 # ╔═╡ 85d7d6e9-5d64-4756-95f4-d9e653fd8f4c
 md"## Pointeurs vers des entiers"
+
+# ╔═╡ ccb1cfec-aaca-43ca-87c2-c860188f9cdf
+c"""
+int tab[] = {2, 4, 8, 16};
+printf("%d \n", *(tab + 1));
+"""
 
 # ╔═╡ bc821e86-8e8b-46db-8738-dac57d2711f2
 md"## Pointeurs vers des entiers"
 
+# ╔═╡ e23fb881-bcf0-46db-8806-c9591a02c391
+c"""
+int tab[] = {2, 4, 8, 16};
+printf("%d \n", *(tab) + 2);
+"""
+
 # ╔═╡ 4e590ad1-d5ca-48e9-bbce-a2027905f74a
 md"## Pointeurs vers des entiers"
+
+# ╔═╡ 6e9e33e2-1610-4cb1-be29-72750d639992
+c"""
+int tab[] = {2, 4, 8, 16};
+printf("%d \n", *tab + 3);
+"""
 
 # ╔═╡ f8866701-312c-4dd1-9edc-5acbb60c2e07
 md"## Prototypes de fonctions"
@@ -109,8 +184,38 @@ md"""
 Lequel de ces prototypes est possible pour une fonction qui retourne le maximum d'un vecteur de réels ?
 """
 
+# ╔═╡ 75d35f92-191a-4e12-a3ba-b5e68ebca644
+c"""
+double max1(double v);
+double max2(double *v);
+double max3(double *v, int n);
+double *max4(double *v, int n);
+"""
+
 # ╔═╡ 188d706c-1e55-4b22-9bf5-13c00585e7d2
 md"## Qu’affiche ce code ?"
+
+# ╔═╡ e90a55d8-e909-4404-937b-a6a2c6818a66
+somme = c"""
+#include <stdio.h>
+
+int main()
+{
+    int sum = 0;
+    int x[] = {10, 20, 30};
+    int *ptr = x;
+    for (int i = 0; i < 4; i++)
+    {
+        sum += *(ptr);
+        ptr++;
+    }
+    printf("Somme: %d\n", sum);
+    return 0;
+}
+""";
+
+# ╔═╡ f2c55534-28a4-4774-b1c2-50e3c922dd12
+somme
 
 # ╔═╡ 7318d4e6-a8ad-4f1d-8f1d-35b091ea0409
 md"## Somme d'entiers"
@@ -151,11 +256,23 @@ md"## Pointeurs et chaînes de caractères"
 # ╔═╡ fea327e5-62c8-4772-8cc0-00c7f225e1c4
 md"Qu'affiche ?"
 
+# ╔═╡ 5fd01b09-3301-4b6f-b8f9-89e3a1075a8c
+c"""
+char *string = "abcdef";
+printf("%s\n", string + 2);
+"""
+
 # ╔═╡ b156e291-cd1b-48cf-91a2-0c44634bafe9
 md"## Pointeurs et chaînes de caractères"
 
 # ╔═╡ 1139437c-739e-4599-aa56-6654925bcb02
 md"Qu'affiche ?"
+
+# ╔═╡ 0d6ed070-3364-404b-a585-e5775bdf6fa4
+c"""
+char *string = "abcdef";
+printf("%c\n", *(string + 3));
+"""
 
 # ╔═╡ 0703ee4a-eada-4243-a9e1-bf054cbf4bc5
 danger(md"Le `\0` a été supprimé, printf affichera cette chaîne uniquement si il y a un `\0` en mémoire à l’adresse qui suit celle de `G`")
@@ -169,6 +286,16 @@ md"## Pointeurs et chaînes de caractères"
 
 # ╔═╡ 9303edd4-71df-499a-b64f-eebef96819a6
 md"Lesquelles de ces déclarations sont valides ?"
+
+# ╔═╡ ddbe345b-d667-47df-8232-839ebe393d53
+c"""
+char *string1 = "abcdef";
+char string2[] = "abcdef";
+char string3 = "ab";
+char *string4 = 'A';
+char string5 = 'B';
+char *string6 = "C";
+"""
 
 # ╔═╡ 839fd0b2-57b2-4986-9fc7-5ae5f80f45cd
 md"# Organisation des processus en mémoire"
@@ -273,378 +400,6 @@ md"""
 # ╔═╡ 3aa0b2f0-a3d1-4201-a68d-57ba7b08842e
 md"## Y-a-t-il une différence de performance entre ces 2 fonctions ?"
 
-# ╔═╡ 5da040e9-84c2-4f4b-9f84-a8fe46ba7126
-md"## Localisation en mémoire"
-
-# ╔═╡ c7119f95-2485-49ac-bd33-0c4bc907df7c
-md"Dans le code ci-dessous, dans quelle zone de la mémoire se trouve le contenu du tableau `tab[]`"
-
-# ╔═╡ dfef622a-c02a-428e-94e5-035019fd3457
-md"## Localisation en mémoire"
-
-# ╔═╡ 667efd31-4b95-4546-be32-76b383e256e1
-md"Dans le code ci-dessous, dans quelle zone de la mémoire se trouve **le pointeur** `tab[]`"
-
-# ╔═╡ f0ef730f-1a20-481a-8301-490b3664ed94
-md"## Localisation en mémoire"
-
-# ╔═╡ 3fe81691-b8f3-47a2-9a11-78233b34874c
-md"Dans le code ci-dessous, dans quelle zone de la mémoire se trouve le contenu du tableau `tab`"
-
-# ╔═╡ c5ecef00-e1e6-4201-8108-3fa287af548c
-md"## Accès après free"
-
-# ╔═╡ 369c4985-cdb5-4a30-a6e0-2ac02217489a
-md"## Free depuis un pointeur dans le tableau"
-
-# ╔═╡ ec2e4242-de1e-4fde-866c-fa7847c28c1b
-html"<p align=center style=\"font-size: 20px; margin-bottom: 5cm; margin-top: 5cm;\">The End</p>"
-
-# ╔═╡ 8158cd5f-4bb1-4357-b1df-a74e336b2ca2
-md"## Utils"
-
-# ╔═╡ 56a4c9f3-f9a9-484c-92ec-b2e9b4d9f11d
-import HTTP, Clang_jll, MultilineStrings, InteractiveUtils
-
-# ╔═╡ dab487a1-c9ca-49d4-aa1c-85086c95d9d7
-begin
-abstract type Code end
-
-struct CCode <: Code
-    code::String
-end
-
-macro c_str(s)
-    return :($CCode($(esc(s))))
-end
-
-struct CppCode <: Code
-    code::String
-end
-
-macro cpp_str(s)
-    return :($CppCode($(esc(s))))
-end
-
-struct CLCode <: Code
-    code::String
-end
-
-macro cl_str(s)
-    return :($CLCode($(esc(s))))
-end
-
-struct JavaCode <: Code
-    code::String
-end
-
-macro java_str(s)
-    return :($JavaCode($(esc(s))))
-end
-
-source_extension(::CCode) = "c"
-source_extension(::CppCode) = "cpp"
-source_extension(::CLCode) = "cl"
-source_extension(::JavaCode) = "java"
-
-compiler(::CCode, mpi::Bool) = mpi ? "mpicc" : "clang"
-function compiler(::CppCode, mpi::Bool)
-    @assert !mpi
-    return "clang++"
-end
-
-inline_code(code::AbstractString, ext::String) = HTML("""<code class="language-$ext">$code</code>""")
-inline_code(code::Code) = inline_code(code.code, source_extension(code))
-
-function md_code(code::AbstractString, ext::String)
-    code = "```" * ext * '\n' * code
-    if code[end] != '\n'
-        code *= '\n'
-    end
-    return Markdown.parse(code * "```")
-end
-md_code(code::Code) = md_code(code.code, source_extension(code))
-function Base.show(io::IO, m::MIME"text/html", code::Code)
-    return show(io, m, md_code(code))
-end
-
-function compile(
-    code::Code;
-    lib,
-    emit_llvm = false,
-    cflags = ["-O3"],
-    mpi::Bool = false,
-    use_system::Bool = mpi || "-fopenmp" in cflags, # `-fopenmp` will not work with pure Clang_jll, it needs openmp installed as well
-    verbose = 0,
-)
-    path = mktempdir()
-    main_file = joinpath(path, "main." * source_extension(code))
-    bin_file = joinpath(path, ifelse(emit_llvm, "main.llvm", ifelse(lib, "lib.so", "bin")))
-    write(main_file, code.code)
-    args = String[]
-    if !use_system && code isa CppCode
-        # `clang++` is not part of `Clang_jll`
-        push!(args, "-x")
-        push!(args, "c++")
-    end
-    append!(args, cflags)
-    if lib
-        push!(args, "-fPIC")
-        push!(args, "-shared")
-    end
-    if emit_llvm
-        push!(args, "-S")
-        push!(args, "-emit-llvm")
-    end
-    push!(args, main_file)
-    push!(args, "-o")
-    push!(args, bin_file)
-    try
-        if use_system
-            cmd = Cmd([compiler(code, mpi); args])
-            if verbose >= 1
-                @info("Compiling : $cmd")
-            end
-            run(cmd)
-        else
-            Clang_jll.clang() do exe
-                cmd = Cmd([exe; args])
-                if verbose >= 1
-                    @info("Compiling : $cmd")
-                end
-                run(cmd)
-            end
-        end
-    catch err
-        if err isa ProcessFailedException
-            return
-        else
-            rethrow(err)
-        end
-    end
-    return bin_file
-end
-
-function emit_llvm(code; kws...)
-    llvm = compile(code; lib = false, emit_llvm = true, kws...)
-    InteractiveUtils.print_llvm(stdout, read(llvm, String))
-    return code
-end
-
-function compile_lib(code::Code; kws...)
-    return codesnippet(code), compile(code; lib = true, kws...)
-end
-
-function compile_and_run(code::Code; verbose = 0, args = String[], valgrind::Bool = false, mpi::Bool = false, num_processes = nothing, show_run_command = !isempty(args) || verbose >= 1, kws...)
-    bin_file = compile(code; lib = false, mpi, verbose, kws...)
-    if !isnothing(bin_file)
-        cmd_vec = [bin_file; args]
-        if valgrind
-            cmd_vec = ["valgrind"; cmd_vec]
-        end
-        if mpi
-            if !isnothing(num_processes)
-                cmd_vec = [["-n", string(num_processes)]; cmd_vec]
-            end
-            cmd_vec = ["mpiexec"; cmd_vec]
-        end
-        cmd = Cmd(cmd_vec)
-        if show_run_command
-            @info("Running : $cmd") # `2:end-1` to remove the backsticks
-        end
-        try
-            run(cmd)
-        catch err
-            @warn(string(typeof(err)))
-        end
-    end
-    return codesnippet(code)
-end
-
-function wrap_in_main(content)
-    code = content.code
-    if code[end] == '\n'
-        code = code[1:end-1]
-    end
-    return typeof(content)("""
-#include <stdlib.h>
-
-int main(int argc, char **argv) {
-$(MultilineStrings.indent(code, 2))
-}
-""")
-end
-
-function wrap_compile_and_run(code; kws...)
-    compile_and_run(wrap_in_main(code); kws...)
-    return code
-end
-
-# TODO It would be nice if the user could select a dropdown or hover with the mouse and see the full code
-function codesnippet(code::Code)
-    lines = readlines(IOBuffer(code.code))
-    i = findfirst(line -> contains(line, "codesnippet"), lines)
-    if isnothing(i)
-        return code
-    end
-    j = findlast(line -> contains(line, "codesnippet"), lines)
-    return typeof(code)(join(lines[i+1:j-1], '\n'))
-end
-
-struct Example
-    name::String
-end
-
-function code(example::Example)
-    code = read(joinpath(dirname(dirname(dirname(@__DIR__))), "examples", example.name), String)
-    ext = split(example.name, '.')[end]
-    if ext == "c"
-        return CCode(code)
-    elseif ext == "cpp" || ext == "cc"
-        return CppCode(code)
-    elseif ext == "cl"
-        return CLCode(code)
-    else
-        error("Unrecognized extension `$ext`.")
-    end
-end
-
-function compile_and_run(example::Example; kws...)
-    return compile_and_run(code(example); kws...)
-end
-
-function compile_lib(example::Example; kws...)
-    return compile_lib(code(example); kws...)
-end
-end
-
-# ╔═╡ f0f26473-f64a-4111-b40e-79e3b60f2b9d
-swap_c = c"""
-#include <stdio.h>
-
-void swap(int a, int b)
-{
-    int c = a;
-    a = b;
-    b = c;
-}
-
-int main()
-{
-    int x = 1;
-    int y = 2;
-    swap(x, y);
-    printf("%d %d\n", x, y);
-}
-""";
-
-# ╔═╡ 7c7f942d-c235-4ec9-b21b-dcb6c90554a8
-md"""
-## Comment échanger deux variables entières ?
-$swap_c
-"""
-
-# ╔═╡ ba1c0405-b097-43ae-bf46-57c507453bee
-xy_ptr = c"""
-#include <stdio.h>
-
-int main()
-{
-    int x[] = {10, 20, 30, 40, 50, 60, 70, 80};
-    int y[] = {2, 4, 6, 8};
-    int *x_ptr = x;
-    int *y_ptr = &(y[0]);
-}
-""";
-
-# ╔═╡ c457f42e-7d5d-4e98-93e0-5ef06271350d
-xy_ptr
-
-# ╔═╡ 695d0382-f30a-4b0f-9110-21cb640941bf
-xy_ptr
-
-# ╔═╡ b6b11213-78a8-472c-ae3b-b9962326c613
-compile_and_run(c"""
-#include <stdio.h>
-int main()
-{
-    int x[] = {2026, 6, 2};
-    char *y = (char *)x;
-    printf("%lu %d %d\n", sizeof(int), x[0], x[1]);
-    printf("%lu %d %d\n", sizeof(char), y[0], y[1]);
-}
-""")
-
-# ╔═╡ ccb1cfec-aaca-43ca-87c2-c860188f9cdf
-c"""
-int tab[] = {2, 4, 8, 16};
-printf("%d \n", *(tab + 1));
-"""
-
-# ╔═╡ e23fb881-bcf0-46db-8806-c9591a02c391
-c"""
-int tab[] = {2, 4, 8, 16};
-printf("%d \n", *(tab) + 2);
-"""
-
-# ╔═╡ 6e9e33e2-1610-4cb1-be29-72750d639992
-c"""
-int tab[] = {2, 4, 8, 16};
-printf("%d \n", *tab + 3);
-"""
-
-# ╔═╡ 75d35f92-191a-4e12-a3ba-b5e68ebca644
-c"""
-double max1(double v);
-double max2(double *v);
-double max3(double *v, int n);
-double *max4(double *v, int n);
-"""
-
-# ╔═╡ e90a55d8-e909-4404-937b-a6a2c6818a66
-somme = c"""
-#include <stdio.h>
-
-int main()
-{
-    int sum = 0;
-    int x[] = {10, 20, 30};
-    int *ptr = x;
-    for (int i = 0; i < 4; i++)
-    {
-        sum += *(ptr);
-        ptr++;
-    }
-    printf("Somme: %d\n", sum);
-    return 0;
-}
-""";
-
-# ╔═╡ f2c55534-28a4-4774-b1c2-50e3c922dd12
-somme
-
-# ╔═╡ 5fd01b09-3301-4b6f-b8f9-89e3a1075a8c
-c"""
-char *string = "abcdef";
-printf("%s\n", string + 2);
-"""
-
-# ╔═╡ 0d6ed070-3364-404b-a585-e5775bdf6fa4
-c"""
-char *string = "abcdef";
-printf("%c\n", *(string + 3));
-"""
-
-# ╔═╡ ddbe345b-d667-47df-8232-839ebe393d53
-c"""
-char *string1 = "abcdef";
-char string2[] = "abcdef";
-char string3 = "ab";
-char *string4 = 'A';
-char string5 = 'B';
-char *string6 = "C";
-"""
-
 # ╔═╡ d901922a-ba35-47fa-9e3a-051926f24afb
 c"""
 #define MILLION 1000000
@@ -666,12 +421,36 @@ int sumptr(struct large_t *s1, struct large_t *s2)
 }
 """
 
+# ╔═╡ 5da040e9-84c2-4f4b-9f84-a8fe46ba7126
+md"## Localisation en mémoire"
+
+# ╔═╡ c7119f95-2485-49ac-bd33-0c4bc907df7c
+md"Dans le code ci-dessous, dans quelle zone de la mémoire se trouve le contenu du tableau `tab[]`"
+
+# ╔═╡ dfef622a-c02a-428e-94e5-035019fd3457
+md"## Localisation en mémoire"
+
+# ╔═╡ 667efd31-4b95-4546-be32-76b383e256e1
+md"Dans le code ci-dessous, dans quelle zone de la mémoire se trouve **le pointeur** `tab[]`"
+
+# ╔═╡ f0ef730f-1a20-481a-8301-490b3664ed94
+md"## Localisation en mémoire"
+
+# ╔═╡ 3fe81691-b8f3-47a2-9a11-78233b34874c
+md"Dans le code ci-dessous, dans quelle zone de la mémoire se trouve le contenu du tableau `tab`"
+
+# ╔═╡ c5ecef00-e1e6-4201-8108-3fa287af548c
+md"## Accès après free"
+
 # ╔═╡ cebdcb4d-6894-4b04-91b8-c9f83d1c9fc8
 c"""int *tab2 = (int *)malloc(4 * sizeof(int));
 *tab2 = 2;
 *(tab2 + 1) = 4;
 free(tab2);
 printf("%d\n", *(tab2 + 1));"""
+
+# ╔═╡ 369c4985-cdb5-4a30-a6e0-2ac02217489a
+md"## Free depuis un pointeur dans le tableau"
 
 # ╔═╡ 627ad27a-d332-4f12-b1c9-70926864232d
 
@@ -682,6 +461,28 @@ tab2++;
 *tab2 = 4;
 free(tab2);
 printf("%d\n", *(tab2));"""
+
+# ╔═╡ ec2e4242-de1e-4fde-866c-fa7847c28c1b
+html"<p align=center style=\"font-size: 20px; margin-bottom: 5cm; margin-top: 5cm;\">The End</p>"
+
+# ╔═╡ 8158cd5f-4bb1-4357-b1df-a74e336b2ca2
+md"## Utils"
+
+# ╔═╡ 56a4c9f3-f9a9-484c-92ec-b2e9b4d9f11d
+import HTTP, Clang_jll, MultilineStrings, InteractiveUtils
+
+# ╔═╡ 13cdb2a5-e913-413d-a766-ba56a74520a6
+begin
+struct JavaCode <: Code
+    code::String
+end
+
+macro java_str(s)
+    return :($JavaCode($(esc(s))))
+end
+
+SimpleClang.source_extension(::JavaCode) = "java"
+end
 
 # ╔═╡ 698f24bf-e894-4884-b281-a7cdcdafd719
 # No need to go beyond `620` because pythontutor will just add an internal slider an not show full code
@@ -1026,23 +827,25 @@ InteractiveUtils = "b77e0a4c-d291-57a0-90e8-8db25a27a240"
 MultilineStrings = "1e8d2bf6-9821-4900-9a2f-4d87552df2bd"
 PlutoTeachingTools = "661c6b06-c737-4d37-b85c-46df65de6f69"
 PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
+SimpleClang = "d80a2e99-53a4-4f81-9fa2-fda2140d535e"
 
 [compat]
 Clang_jll = "~18.1.7"
 HTTP = "~1.10.19"
-HypertextLiteral = "~0.9.5"
-MultilineStrings = "~0.1.1"
+HypertextLiteral = "~1.0.0"
+MultilineStrings = "~1.0.0"
 PlutoTeachingTools = "~0.4.7"
 PlutoUI = "~0.7.79"
+SimpleClang = "~0.1.0"
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000002
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.12.4"
+julia_version = "1.12.5"
 manifest_format = "2.0"
-project_hash = "da294ad0fd75da8c24a629f44d5108d385c56c5d"
+project_hash = "b1cc3c95a018c3b2d5fb189ee0868b92a7a0c5b3"
 
 [[deps.AbstractPlutoDingetjes]]
 deps = ["Pkg"]
@@ -1081,9 +884,13 @@ version = "0.7.8"
 
 [[deps.ColorTypes]]
 deps = ["FixedPointNumbers", "Random"]
-git-tree-sha1 = "b10d0b65641d57b8b4d5e234446582de5047050d"
+git-tree-sha1 = "67e11ee83a43eb71ddc950302c53bf33f0690dfe"
 uuid = "3da002f7-5984-5a60-b8a6-cbb66c0b333f"
-version = "0.11.5"
+version = "0.12.1"
+weakdeps = ["StyledStrings"]
+
+    [deps.ColorTypes.extensions]
+    StyledStringsExt = "StyledStrings"
 
 [[deps.CompilerSupportLibraries_jll]]
 deps = ["Artifacts", "Libdl"]
@@ -1092,9 +899,9 @@ version = "1.3.0+1"
 
 [[deps.ConcurrentUtilities]]
 deps = ["Serialization", "Sockets"]
-git-tree-sha1 = "d9d26935a0bcffc87d2613ce14c527c99fc543fd"
+git-tree-sha1 = "21d088c496ea22914fe80906eb5bce65755e5ec8"
 uuid = "f0e56b4a-5159-44fe-b623-3e5288b988bb"
-version = "2.5.0"
+version = "2.5.1"
 
 [[deps.Dates]]
 deps = ["Printf"]
@@ -1147,9 +954,9 @@ version = "0.0.5"
 
 [[deps.HypertextLiteral]]
 deps = ["Tricks"]
-git-tree-sha1 = "7134810b1afce04bbc1045ca1985fbe81ce17653"
+git-tree-sha1 = "d1a86724f81bcd184a38fd284ce183ec067d71a0"
 uuid = "ac1192a8-f4b3-4bfe-ba22-af5b92cd3ab2"
-version = "0.9.5"
+version = "1.0.0"
 
 [[deps.IOCapture]]
 deps = ["Logging", "Random"]
@@ -1178,6 +985,12 @@ version = "3.1.4+0"
 deps = ["StyledStrings"]
 uuid = "ac6e5ff7-fb65-4e79-a425-ec3bc9c03011"
 version = "1.12.0"
+
+[[deps.LLVMOpenMP_jll]]
+deps = ["Artifacts", "JLLWrappers", "Libdl"]
+git-tree-sha1 = "eb62a3deb62fc6d8822c0c4bef73e4412419c5d8"
+uuid = "1d63c593-3942-5779-bab2-d838dc0a180e"
+version = "18.1.8+0"
 
 [[deps.LaTeXStrings]]
 git-tree-sha1 = "dda21b8cbd6a6c40d9d02a73230f9d70fed6918c"
@@ -1278,9 +1091,9 @@ uuid = "14a3606d-f60d-562e-9121-12d972cd8159"
 version = "2025.11.4"
 
 [[deps.MultilineStrings]]
-git-tree-sha1 = "3214216b069fb1bc329f55094681e06b64a51022"
+git-tree-sha1 = "8c49220ba78101000fcbbf9cb858010dd9b74a7b"
 uuid = "1e8d2bf6-9821-4900-9a2f-4d87552df2bd"
-version = "0.1.1"
+version = "1.0.0"
 
 [[deps.NetworkOptions]]
 uuid = "ca575930-c2e3-43a9-ace4-1e988b2c1908"
@@ -1375,6 +1188,12 @@ version = "1.11.0"
 git-tree-sha1 = "f305871d2f381d21527c770d4788c06c097c9bc1"
 uuid = "777ac1f9-54b0-4bf8-805c-2214025038e7"
 version = "1.2.0"
+
+[[deps.SimpleClang]]
+deps = ["Clang_jll", "InteractiveUtils", "LLVMOpenMP_jll", "Markdown", "MultilineStrings"]
+git-tree-sha1 = "b3d3225c2513bedab65df13f7968c3ab48e785cc"
+uuid = "d80a2e99-53a4-4f81-9fa2-fda2140d535e"
+version = "0.1.0"
 
 [[deps.Sockets]]
 uuid = "6462fe0b-24de-5631-8697-dd941f90decc"
@@ -1586,7 +1405,7 @@ version = "17.7.0+0"
 # ╠═d4fdfcfd-2849-4577-bce4-41f7e21c1127
 # ╠═0973097a-02c4-11f1-ac60-339637a3ae4b
 # ╠═56a4c9f3-f9a9-484c-92ec-b2e9b4d9f11d
-# ╟─dab487a1-c9ca-49d4-aa1c-85086c95d9d7
+# ╟─13cdb2a5-e913-413d-a766-ba56a74520a6
 # ╟─698f24bf-e894-4884-b281-a7cdcdafd719
 # ╟─1154b80f-a695-4a64-a145-15606066c132
 # ╟─05e27527-c3bd-41d1-a364-a214eb9a0ad6
