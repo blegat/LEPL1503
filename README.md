@@ -25,7 +25,7 @@ S11     | 13/04   | Optimisations |
 🥚      | 🥚      | 🐰 |
 🥚      | 🥚      | 🐰 |
 S12     | 04/05   | Dernières modifications | Vendredi 18h: Projet (code et README)
-S13     | 11/05   | Rendu pour le **11/05/2026 à 23h59** | Présentation orale
+S13     | 11/05   | Présentation orale | Slides à rendre pour la veille de l'oral à 18h
 
 ## Run the slides locally
 
