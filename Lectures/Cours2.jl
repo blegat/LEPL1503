@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.20.21
+# v0.20.23
 
 using Markdown
 using InteractiveUtils
@@ -14,11 +14,23 @@ $(PlutoTeachingTools.ChooseDisplayMode())
 $(PlutoUI.TableOfContents(depth=1))
 """)
 
+# ╔═╡ 3ddd22b2-7d1b-4b3a-8737-09552b51726d
+md"# Variables, pointeurs et doubles pointeurs"
+
+# ╔═╡ fc027d24-619e-4f6f-95ed-3dd12f61b60c
+md"## Visualisation"
+
+# ╔═╡ cd3cce7d-b149-4ee1-8b6e-ff213a48ce7d
+md"## Arguments de main"
+
 # ╔═╡ 5bd30ea4-3193-4fb4-9bf8-369fcfa6547b
 md"""
 * `int argc` : Le nombre d'arguments (incluant le nom de l'exécutable)
 * `char **argv` : liste des arguments initialisée par le système d’exploitation au lancement du programme
 """
+
+# ╔═╡ acfa3f43-215e-4c97-bf2a-0069e78f95b4
+md"## Matrices en C"
 
 # ╔═╡ 47279972-433b-46be-b511-170698ff8753
 md"""
@@ -27,6 +39,36 @@ Comment construire une matrice ?
 
 # ╔═╡ 42e6ffd9-27b6-49bc-8518-2d7d4b7ffc40
 md"Une telle matrice sera stockée sur le **stack** (variable locale) ou dans la zone données (variable globale)"
+
+# ╔═╡ b588a04d-6a3f-424e-a83a-eec1dfafc9dd
+md"# Matrices sur le heap"
+
+# ╔═╡ 848723a1-4a62-47b2-957c-167ce9be19f8
+md"## Comment mettre une matrice 2x2 sur le heap ?"
+
+# ╔═╡ a39d8ac8-70e6-47a5-b80d-e1443c19ae15
+md"## Première approche, un malloc par ligne"
+
+# ╔═╡ 3b5e218f-c134-40a9-9bc3-1fbab8d64d62
+md"## Deuxième approche, un malloc pour toutes les valeurs"
+
+# ╔═╡ 336f53c9-5982-4694-8bd4-92c2a1d1b5cc
+md"# Initialisation d'une valeur"
+
+# ╔═╡ 37f6e305-fb5c-4215-b8a1-564a7632a377
+md"## Comment initialiser la première valeur ?"
+
+# ╔═╡ c73a9ebe-9597-4c49-8493-aec1d71a281a
+md"## Comment faire matrice[0][1] = 0 ?"
+
+# ╔═╡ 67cf8ac0-5b91-4d19-aca4-4309f3109a0c
+md"## Comment faire matrice[1][0] = 2 ?"
+
+# ╔═╡ c81abb3d-7192-499e-a47a-c0b960aa49cd
+md"# Libération de la mémoire"
+
+# ╔═╡ 92428490-6d76-44a7-9d5b-a9e988f5ff25
+md"## L'importance de l'ordre de désallocation"
 
 # ╔═╡ 1a82ab2b-dd7c-4b48-b263-e71b13ba0fb2
 md"""
@@ -40,91 +82,6 @@ matrice[1] = ligne1;
 ```
 """
 
-# ╔═╡ 87877209-958b-4635-bdbc-97548acdfb3f
-md"""
-Toutes les fonctions doivent vérifier leurs arguments et retourner
-* -1 en cas d'erreur
-* 0 en cas de succès
-"""
-
-# ╔═╡ b66c9e2f-17b3-44dc-83e4-cb3a9329039b
-md"Quels arguments ?"
-
-# ╔═╡ 406d30a9-f477-4898-9caf-770fcc25b2a9
-md"Comment libérer la mémoire quand le vecteur est devenu inutile ?"
-
-# ╔═╡ 14a56b43-789a-42f0-9228-0c6a660629c9
-md"`mapreduce` donne un exemple de fonction d'ordre supérieur en C"
-
-# ╔═╡ b8392f14-05d4-43e4-bd2a-3d4ba6ced65b
-md"Laquelle de ces deux fonctions présente une façon correcte de retourner un tableau ?"
-
-# ╔═╡ 20d23ab4-ae24-4169-92be-ed9ec77c5518
-aside(md"[Source](https://learn.adafruit.com/memories-of-an-arduino/measuring-free-memory)", v_offset = -200)
-
-# ╔═╡ e0bfde10-5b3d-48b2-aa03-a1e6b0fc97e3
-html"<p align=center style=\"font-size: 20px; margin-bottom: 5cm; margin-top: 5cm;\">The End</p>"
-
-# ╔═╡ 378c90d9-e206-4858-b362-4015ca46bbb0
-section(s) = md"# $s"
-
-# ╔═╡ 3ddd22b2-7d1b-4b3a-8737-09552b51726d
-md"# Variables, pointeurs et doubles pointeurs"
-
-# ╔═╡ b588a04d-6a3f-424e-a83a-eec1dfafc9dd
-md"# Matrices sur le heap"
-
-# ╔═╡ 336f53c9-5982-4694-8bd4-92c2a1d1b5cc
-md"# Initialisation d'une valeur"
-
-# ╔═╡ c81abb3d-7192-499e-a47a-c0b960aa49cd
-md"# Libération de la mémoire"
-
-# ╔═╡ 49f0db66-da21-42b0-91d5-db04075e559a
-section("Un vecteur \"Java\" en C")
-
-# ╔═╡ 6f257725-72c3-404c-bb35-079265058a43
-md"# Pointeur de fonction"
-
-# ╔═╡ 4e5e1340-c2e6-4b4a-bfb9-e1096d179040
-md"# Retourner un tableau"
-
-# ╔═╡ 319bc8b4-7139-43b0-a57b-66c6a9da7cb9
-md"# Structure différente du stack et heap"
-
-# ╔═╡ 3b6a95e0-96e9-4634-9207-42ace759e738
-frametitle(s) = md"## $s"
-
-# ╔═╡ fc027d24-619e-4f6f-95ed-3dd12f61b60c
-md"## Visualisation"
-
-# ╔═╡ cd3cce7d-b149-4ee1-8b6e-ff213a48ce7d
-md"## Arguments de main"
-
-# ╔═╡ acfa3f43-215e-4c97-bf2a-0069e78f95b4
-md"## Matrices en C"
-
-# ╔═╡ 848723a1-4a62-47b2-957c-167ce9be19f8
-md"## Comment mettre une matrice 2x2 sur le heap ?"
-
-# ╔═╡ a39d8ac8-70e6-47a5-b80d-e1443c19ae15
-md"## Première approche, un malloc par ligne"
-
-# ╔═╡ 3b5e218f-c134-40a9-9bc3-1fbab8d64d62
-md"## Deuxième approche, un malloc pour toutes les valeurs"
-
-# ╔═╡ 37f6e305-fb5c-4215-b8a1-564a7632a377
-md"## Comment initialiser la première valeur ?"
-
-# ╔═╡ c73a9ebe-9597-4c49-8493-aec1d71a281a
-md"## Comment faire matrice[0][1] = 0 ?"
-
-# ╔═╡ 67cf8ac0-5b91-4d19-aca4-4309f3109a0c
-md"## Comment faire matrice[1][0] = 2 ?"
-
-# ╔═╡ 92428490-6d76-44a7-9d5b-a9e988f5ff25
-md"## L'importance de l'ordre de désallocation"
-
 # ╔═╡ 90532252-a756-40a1-8867-76041f5545a0
 md"## Toujours free dans le sens inverse de malloc"
 
@@ -134,8 +91,18 @@ md"## Première implémentation"
 # ╔═╡ f386a8d4-35be-4612-91c7-31ff0f004e2d
 md"## Une autre implémentation …"
 
+# ╔═╡ 87877209-958b-4635-bdbc-97548acdfb3f
+md"""
+Toutes les fonctions doivent vérifier leurs arguments et retourner
+* -1 en cas d'erreur
+* 0 en cas de succès
+"""
+
 # ╔═╡ 6cc7a1d4-df02-494f-bf18-0652d49280e5
 md"## Initialisation"
+
+# ╔═╡ b66c9e2f-17b3-44dc-83e4-cb3a9329039b
+md"Quels arguments ?"
 
 # ╔═╡ 0e0ddf7c-a34b-447a-8142-334d14f96ae1
 md"## Allocation de la mémoire"
@@ -152,11 +119,44 @@ md"## Modification d'un élément"
 # ╔═╡ 03847d85-c675-4b4a-9331-fd7a32b26938
 md"## Libération de la mémoire"
 
+# ╔═╡ 406d30a9-f477-4898-9caf-770fcc25b2a9
+md"Comment libérer la mémoire quand le vecteur est devenu inutile ?"
+
+# ╔═╡ 6f257725-72c3-404c-bb35-079265058a43
+md"# Pointeur de fonction"
+
+# ╔═╡ 14a56b43-789a-42f0-9228-0c6a660629c9
+md"`mapreduce` donne un exemple de fonction d'ordre supérieur en C"
+
+# ╔═╡ 4e5e1340-c2e6-4b4a-bfb9-e1096d179040
+md"# Retourner un tableau"
+
 # ╔═╡ 8283cc88-a3c8-4bb2-af31-0b72f2eb2c4a
 md"## Heap ou stack ?"
 
+# ╔═╡ b8392f14-05d4-43e4-bd2a-3d4ba6ced65b
+md"Laquelle de ces deux fonctions présente une façon correcte de retourner un tableau ?"
+
 # ╔═╡ 4643cd02-67f4-40cd-aa7d-cfdb83fc62be
 md"## Retourner un tableau : visualization"
+
+# ╔═╡ 319bc8b4-7139-43b0-a57b-66c6a9da7cb9
+md"# Structure différente du stack et heap"
+
+# ╔═╡ 20d23ab4-ae24-4169-92be-ed9ec77c5518
+aside(md"[Source](https://learn.adafruit.com/memories-of-an-arduino/measuring-free-memory)", v_offset = -200)
+
+# ╔═╡ e0bfde10-5b3d-48b2-aa03-a1e6b0fc97e3
+html"<p align=center style=\"font-size: 20px; margin-bottom: 5cm; margin-top: 5cm;\">The End</p>"
+
+# ╔═╡ 378c90d9-e206-4858-b362-4015ca46bbb0
+section(s) = md"# $s"
+
+# ╔═╡ 49f0db66-da21-42b0-91d5-db04075e559a
+section("Un vecteur \"Java\" en C")
+
+# ╔═╡ 3b6a95e0-96e9-4634-9207-42ace759e738
+frametitle(s) = md"## $s"
 
 # ╔═╡ ecc856dc-e6f2-4a91-8c37-0bb920531297
 import HTTP, Clang_jll, MultilineStrings
@@ -534,9 +534,9 @@ c"""/*
  */
 
 int set(struct vector_t *v, int i,
-struct vector_t  v     // 1
-struct vector_t ** v   // 2
-struct vector_t * v    // 3
+float  val     // 1
+float ** val   // 2
+float * val    // 3
 ) {"""
 
 # ╔═╡ cb9c27b9-ce7d-4bdf-af7d-c88883a210bc
