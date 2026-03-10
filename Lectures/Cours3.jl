@@ -67,7 +67,7 @@ $diff_version
 """), v_offset = -300)
 
 # ╔═╡ 1c39a7f2-cd5e-456a-bf16-76493e29adeb
-md"## Le cycle de vie d'une branch"
+md"## Le cycle de vie d'une branche: développement"
 
 # ╔═╡ 34da9f3f-4bde-45da-b27b-d6b4445bbe8b
 md"""
@@ -87,7 +87,14 @@ md"""
   - `git commit -m "Courte description <50 caractères" -m "Expliquer la raison: pourquoi est-ce utile"`
   - `git commit --amend` peut être utilisé pour éditer le message de commit et corriger des changements. Attention, Tous les changements ajoutés précédemment avec `git add` vont être fusionnés dans le commit précédent. Utilisez `git status` pour voir où vous en êtes.
   - `git push origin new_branch`
-* Sur GitLab, on crée un merge request (MR) et on attend
+"""
+
+# ╔═╡ e8ccec6e-15a2-4ebd-aab7-f351016f917a
+md"## Le cycle de vie d'une branche: collaboration"
+
+# ╔═╡ 742f7ca6-c63b-43f2-a272-1faad9f05ed7
+md"""
+* Sur GitLab, on crée un merge request (MR) via le lien affiché au `push` et on attend
   1) le résultat de GitLab CI
   2) les peer reviewing de nos pairs
 * Pour résoudre les problèmes de CI ou les reviews, on ajoute des commits sur la branche
@@ -1377,6 +1384,8 @@ version = "4.1.0+0"
 # ╟─6ea1cef3-384c-40a1-a09b-edf604888c3d
 # ╟─1c39a7f2-cd5e-456a-bf16-76493e29adeb
 # ╟─34da9f3f-4bde-45da-b27b-d6b4445bbe8b
+# ╟─e8ccec6e-15a2-4ebd-aab7-f351016f917a
+# ╟─742f7ca6-c63b-43f2-a272-1faad9f05ed7
 # ╟─15953e07-0d3a-462a-8f4d-8c1609d37b50
 # ╟─0b248037-782c-4f57-ad2c-c20d2940f3db
 # ╟─a0adfd7c-52eb-437f-b9af-9323fc374c1a
