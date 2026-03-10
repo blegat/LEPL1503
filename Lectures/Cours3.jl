@@ -72,19 +72,34 @@ md"## Le cycle de vie d'une branch"
 # ╔═╡ 34da9f3f-4bde-45da-b27b-d6b4445bbe8b
 md"""
 * Avant tout changement, on part de la dernière version de main:
-  - `git checkout main`
+  - `git switch main`
   - `git pull origin main`
+* Utilisez `git status` pour savoir où on en est et avoir des recommendations.
+* Utilisez `git diff` pour voir les changements opérés. Avec `--cached` pour voir les changements acceptés dans la "stage", prêts à être commités.
 * Après tout changement, on crée une branche et on la push
-  - `git checkout -b new_branch`
-  - `git commit -am "Courte description"` ce message deviendra le titre du MR
+  - `git switch -c new_branch`
+  - `git status` pour voir où on en est
+  - `git diff` pour voir les changements opérés
+  - `git add -p` pour ajouter les changements de manière interactive: on en profite pour s'auto-reviewer et on peut découper les commits pour aider les reviewers. `y` pour yes, `n` pour no, `?` pour l'aide.
+  - `git add <new_files>` au cas où il y a de nouveaux fichiers
+  - `git status` pour voir où on en est
+  - `git diff --cached` pour voir les changements acceptés, prêts à être commités
+  - `git commit -m "Courte description <50 caractères" -m "Expliquer la raison: pourquoi est-ce utile"
+  - `git commit --amend` peut être utilisé pour éditer le message de commit et corriger des changements. Attention, Tous les changements ajoutés précédemment avec `git add` vont être fusionnés dans le commit précédent. Utilisez `git status` pour voir où vous en êtes.
   - `git push origin new_branch`
 * Sur GitLab, on crée un merge request (MR) et on attend
   1) le résultat de GitLab CI
   2) les peer reviewing de nos pairs
 * Pour résoudre les problèmes de CI ou les reviews, on ajoute des commits sur la branche
-  - `git checkout new_branch` (plus besoin de `-b` car la branche existe déjà)
+  - `git switch new_branch` (plus besoin de `-c` car la branche existe déjà)
   - `git pull origin new_branch` au cas où d'autres l'ont changé
-  - `git commit -am "Address review"` ce message a moins d'importance
+  - `git status` pour voir où on en est
+  - `git diff` pour voir les changements opérés
+  - `git add -p` pour ajouter les changements de manière interractive: on en profite pour s'auto-reviewer et on peut découper les commits pour aider les reviewers. `y` pour yes, `n` pour no, `?` pour l'aide.
+  - `git add <new_files>` au cas où il y a de nouveaux fichiers
+  - `git status` pour voir où on en est
+  - `git diff --cached` pour voir les changements acceptés, prêts à être commités
+  - `git commit -m "Courte description <50 caractères" -m "Expliquer la raison: pourquoi est-ce utile"
   - `git push origin new_branch`
 * Une fois que le CI est vert et que nos pairs on accepté, on merge le MR
 """
@@ -103,7 +118,7 @@ md"## Une des deux est mergée en premier"
 
 # ╔═╡ 96e9ced9-9f89-4053-90b9-679447316ca6
 md"```sh
-$ git checkout main
+$ git switch main
 $ git merge a
 ```"
 
@@ -119,12 +134,12 @@ md"## Un merge explicite"
 
 # ╔═╡ 32b000ef-39a2-4682-b45a-d9cfd2e33f81
 md"```sh
-$ git checkout main
+$ git switch main
 $ git merge --no-ff a
 ```"
 
 # ╔═╡ ac0487f3-d9ae-45a4-b4ff-81f0fb1553a5
-md"**Important** Comme on était sur la branche `main`, on ne modifie **que** `main`. Remarquez que `a` n'a pas bougé! Ceci est toujours vrai sur `git`, vous ne modifiez que la branche sur laquelle vous êtes `checkout`."
+md"**Important** Comme on était sur la branche `main`, on ne modifie **que** `main`. Remarquez que `a` n'a pas bougé! Ceci est toujours vrai sur `git`, vous ne modifiez que la branche sur laquelle vous êtes."
 
 # ╔═╡ 373dc385-d77e-495a-9f1f-f9424a8f27bb
 md"## Si l'autre branche est prête, on la merge"
@@ -132,7 +147,7 @@ md"## Si l'autre branche est prête, on la merge"
 # ╔═╡ b9746823-8c9b-462d-875a-250b882efcad
 md"""
 ```sh
-$ git checkout main
+$ git switch main
 $ git merge b
 ```
 """
@@ -160,7 +175,7 @@ md"## Avant de continuer, on synchronise"
 # ╔═╡ a03740c1-28a4-4233-9c21-2feca082aa90
 md"""
 ```sh
-$ git checkout b
+$ git switch b
 $ git merge main
 ```
 """
@@ -190,8 +205,8 @@ md"## Reset"
 md"""
 Si vous avez sans faire exprès commit sur `main`, faites
 ```sh
-$ git checkout -b new_branch
-$ git checkout main
+$ git switch -c new_branch
+$ git switch main
 ```
 """
 
@@ -202,7 +217,7 @@ Mais il faut faire très attention car les commandes suivantes peuvent vous fair
 Je conseille de faire `git push origin new_branch`, créer un merge request et vérifier visuellement dans l'interface GitLab que vos changements sont là.
 Ensuite, 2 possibilités. Soit
 ```sh
-$ git reset --hard origin/main # Dangereux command!
+$ git reset --hard origin/main # Commande dangereuse !
 ```
 Soit en deux temps (en s'assurant qu'on est à la racine du dossier, sinon utiliser `..` ou `../..` etc... à la place de `.`)
 ```sh
@@ -217,7 +232,7 @@ md"## Stash changes"
 # ╔═╡ b58456cf-b417-4f40-a854-c04b6db744db
 md"""
 On est parfois dans la mauvaise branche et on veut appliquer nos changement dans une autre ou nouvelle branche.
-On doit alors faire `git checkout` mais `git` ne voudra pas si on a changé des fichiers qui différent (même si c'est à des lignes différentes).
+On doit alors faire `git switch` mais `git` ne voudra pas si on a changé des fichiers qui différent (même si c'est à des lignes différentes).
 On `stash` alors les changements.
 Conceptuellement la même chose que `cherry-pick` 🚁 mais sans faire de commit.
 """
@@ -226,7 +241,7 @@ Conceptuellement la même chose que `cherry-pick` 🚁 mais sans faire de commit
 md"""
 ```
 $ git stash
-$ git checkout main
+$ git switch main
 $ git stash apply
 ```
 """
@@ -328,6 +343,7 @@ end
 md"""
 * [Tutoriel $(img("https://upload.wikimedia.org/wikipedia/commons/e/e0/Git-logo.svg", :height => "15pt")) disponible dans le syllabus](https://lepl1503.info.ucl.ac.be/syllabus/outils/git.html)
 * [Learn Git Branching interactivey](https://learngitbranching.js.org/) $(img("https://learngitbranching.js.org/assets/favicon.ico", :height => "15pt"))
+* [Et merde, Git!?!](https://ohshitgit.com/fr): Des astuces à utiliser en cas de soucis.
 """
 
 # ╔═╡ fe8b1e1b-8a8b-4d44-8045-0fbc205e7814
