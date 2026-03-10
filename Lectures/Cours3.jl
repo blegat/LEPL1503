@@ -39,7 +39,7 @@ Foldable(md"Que se passe-t-il si on oublie `if (n <= 1)` ?", md"On pourrait croi
 md"## Fibonacci"
 
 # ╔═╡ f8650fa0-02be-4117-9f70-e2d71a6dcc68
-md"Cette implémentation de Fibonacci a une très mauvaise complexité mais elle illustre bien la dynamique de la stack qui grandit et rapetissit rapetissit au rythme des appels de fonctions."
+md"Cette implémentation de Fibonacci a une très mauvaise complexité mais elle illustre bien la dynamique de la stack qui grandit et rapetissit au rythme des appels de fonctions."
 
 # ╔═╡ 226a5f51-738e-4abf-9cbe-f131dae2ea55
 md"# Git"
