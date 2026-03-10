@@ -80,7 +80,7 @@ md"""
   - `git switch -c new_branch`
   - `git status` pour voir où on en est
   - `git diff` pour voir les changements opérés
-  - `git commit -am "Courte description"` ce message deviendra le titre du MR
+  - `git commit -m "Courte description <50 caractères" -m "Expliquer la raison: pourquoi est-ce utile"
   - `git push origin new_branch`
 * Sur GitLab, on crée un merge request (MR) et on attend
   1) le résultat de GitLab CI
@@ -90,7 +90,7 @@ md"""
   - `git pull origin new_branch` au cas où d'autres l'ont changé
   - `git status` pour voir où on en est
   - `git diff` pour voir les changements opérés
-  - `git commit -am "Address review"` ce message a moins d'importance
+  - `git commit -m "Courte description <50 caractères" -m "Expliquer la raison: pourquoi est-ce utile"
   - `git push origin new_branch`
 * Une fois que le CI est vert et que nos pairs on accepté, on merge le MR
 """
