@@ -84,7 +84,7 @@ md"""
   - `git add <new_files>` au cas où il y a de nouveaux fichiers
   - `git status` pour voir où on en est
   - `git diff --cached` pour voir les changements acceptés, prêts à être commités
-  - `git commit -m "Courte description <50 caractères" -m "Expliquer la raison: pourquoi est-ce utile"
+  - `git commit -m "Courte description <50 caractères" -m "Expliquer la raison: pourquoi est-ce utile"`
   - `git commit --amend` peut être utilisé pour éditer le message de commit et corriger des changements. Attention, Tous les changements ajoutés précédemment avec `git add` vont être fusionnés dans le commit précédent. Utilisez `git status` pour voir où vous en êtes.
   - `git push origin new_branch`
 * Sur GitLab, on crée un merge request (MR) et on attend
@@ -99,7 +99,7 @@ md"""
   - `git add <new_files>` au cas où il y a de nouveaux fichiers
   - `git status` pour voir où on en est
   - `git diff --cached` pour voir les changements acceptés, prêts à être commités
-  - `git commit -m "Courte description <50 caractères" -m "Expliquer la raison: pourquoi est-ce utile"
+  - `git commit -m "Courte description <50 caractères" -m "Expliquer la raison: pourquoi est-ce utile"`
   - `git push origin new_branch`
 * Une fois que le CI est vert et que nos pairs on accepté, on merge le MR
 """
