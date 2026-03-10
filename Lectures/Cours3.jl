@@ -80,7 +80,7 @@ md"""
   - `git switch -c new_branch`
   - `git status` pour voir où on en est
   - `git diff` pour voir les changements opérés
-  - `git add -p` pour ajouter les changements de manière interractive: on en profite pour s'auto-reviewer et on peut découper les commits pour aider les reviewers. `y` pour yes, `n` pour no, `?` pour l'aide.
+  - `git add -p` pour ajouter les changements de manière interactive: on en profite pour s'auto-reviewer et on peut découper les commits pour aider les reviewers. `y` pour yes, `n` pour no, `?` pour l'aide.
   - `git add <new_files>` au cas où il y a de nouveaux fichiers
   - `git status` pour voir où on en est
   - `git diff --cached` pour voir les changements acceptés, prêts à être commités
