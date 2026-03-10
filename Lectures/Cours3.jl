@@ -74,8 +74,12 @@ md"""
 * Avant tout changement, on part de la dernière version de main:
   - `git switch main`
   - `git pull origin main`
+* Utilisez `git status` pour savoir où on en est et avoir des recommendations.
+* Utilisez `git diff` pour voir les changements opérés.
 * Après tout changement, on crée une branche et on la push
   - `git switch -c new_branch`
+  - `git status` pour voir où on en est
+  - `git diff` pour voir les changements opérés
   - `git commit -am "Courte description"` ce message deviendra le titre du MR
   - `git push origin new_branch`
 * Sur GitLab, on crée un merge request (MR) et on attend
@@ -84,6 +88,8 @@ md"""
 * Pour résoudre les problèmes de CI ou les reviews, on ajoute des commits sur la branche
   - `git switch new_branch` (plus besoin de `-c` car la branche existe déjà)
   - `git pull origin new_branch` au cas où d'autres l'ont changé
+  - `git status` pour voir où on en est
+  - `git diff` pour voir les changements opérés
   - `git commit -am "Address review"` ce message a moins d'importance
   - `git push origin new_branch`
 * Une fois que le CI est vert et que nos pairs on accepté, on merge le MR
