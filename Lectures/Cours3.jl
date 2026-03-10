@@ -72,17 +72,17 @@ md"## Le cycle de vie d'une branch"
 # ╔═╡ 34da9f3f-4bde-45da-b27b-d6b4445bbe8b
 md"""
 * Avant tout changement, on part de la dernière version de main:
-  - `git checkout main`
+  - `git switch main`
   - `git pull origin main`
 * Après tout changement, on crée une branche et on la push
-  - `git checkout -b new_branch`
+  - `git switch -c new_branch`
   - `git commit -am "Courte description"` ce message deviendra le titre du MR
   - `git push origin new_branch`
 * Sur GitLab, on crée un merge request (MR) et on attend
   1) le résultat de GitLab CI
   2) les peer reviewing de nos pairs
 * Pour résoudre les problèmes de CI ou les reviews, on ajoute des commits sur la branche
-  - `git checkout new_branch` (plus besoin de `-b` car la branche existe déjà)
+  - `git switch new_branch` (plus besoin de `-c` car la branche existe déjà)
   - `git pull origin new_branch` au cas où d'autres l'ont changé
   - `git commit -am "Address review"` ce message a moins d'importance
   - `git push origin new_branch`
@@ -103,7 +103,7 @@ md"## Une des deux est mergée en premier"
 
 # ╔═╡ 96e9ced9-9f89-4053-90b9-679447316ca6
 md"```sh
-$ git checkout main
+$ git switch main
 $ git merge a
 ```"
 
@@ -119,12 +119,12 @@ md"## Un merge explicite"
 
 # ╔═╡ 32b000ef-39a2-4682-b45a-d9cfd2e33f81
 md"```sh
-$ git checkout main
+$ git switch main
 $ git merge --no-ff a
 ```"
 
 # ╔═╡ ac0487f3-d9ae-45a4-b4ff-81f0fb1553a5
-md"**Important** Comme on était sur la branche `main`, on ne modifie **que** `main`. Remarquez que `a` n'a pas bougé! Ceci est toujours vrai sur `git`, vous ne modifiez que la branche sur laquelle vous êtes `checkout`."
+md"**Important** Comme on était sur la branche `main`, on ne modifie **que** `main`. Remarquez que `a` n'a pas bougé! Ceci est toujours vrai sur `git`, vous ne modifiez que la branche sur laquelle vous êtes."
 
 # ╔═╡ 373dc385-d77e-495a-9f1f-f9424a8f27bb
 md"## Si l'autre branche est prête, on la merge"
@@ -132,7 +132,7 @@ md"## Si l'autre branche est prête, on la merge"
 # ╔═╡ b9746823-8c9b-462d-875a-250b882efcad
 md"""
 ```sh
-$ git checkout main
+$ git switch main
 $ git merge b
 ```
 """
@@ -160,7 +160,7 @@ md"## Avant de continuer, on synchronise"
 # ╔═╡ a03740c1-28a4-4233-9c21-2feca082aa90
 md"""
 ```sh
-$ git checkout b
+$ git switch b
 $ git merge main
 ```
 """
@@ -190,8 +190,8 @@ md"## Reset"
 md"""
 Si vous avez sans faire exprès commit sur `main`, faites
 ```sh
-$ git checkout -b new_branch
-$ git checkout main
+$ git switch -c new_branch
+$ git switch main
 ```
 """
 
@@ -217,7 +217,7 @@ md"## Stash changes"
 # ╔═╡ b58456cf-b417-4f40-a854-c04b6db744db
 md"""
 On est parfois dans la mauvaise branche et on veut appliquer nos changement dans une autre ou nouvelle branche.
-On doit alors faire `git checkout` mais `git` ne voudra pas si on a changé des fichiers qui différent (même si c'est à des lignes différentes).
+On doit alors faire `git switch` mais `git` ne voudra pas si on a changé des fichiers qui différent (même si c'est à des lignes différentes).
 On `stash` alors les changements.
 Conceptuellement la même chose que `cherry-pick` 🚁 mais sans faire de commit.
 """
@@ -226,7 +226,7 @@ Conceptuellement la même chose que `cherry-pick` 🚁 mais sans faire de commit
 md"""
 ```
 $ git stash
-$ git checkout main
+$ git switch main
 $ git stash apply
 ```
 """
