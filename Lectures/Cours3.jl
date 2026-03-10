@@ -343,6 +343,7 @@ end
 md"""
 * [Tutoriel $(img("https://upload.wikimedia.org/wikipedia/commons/e/e0/Git-logo.svg", :height => "15pt")) disponible dans le syllabus](https://lepl1503.info.ucl.ac.be/syllabus/outils/git.html)
 * [Learn Git Branching interactivey](https://learngitbranching.js.org/) $(img("https://learngitbranching.js.org/assets/favicon.ico", :height => "15pt"))
+* [Et merde, Git!?!](https://ohshitgit.com/fr): Des astuces à utiliser en cas de soucis.
 """
 
 # ╔═╡ fe8b1e1b-8a8b-4d44-8045-0fbc205e7814
