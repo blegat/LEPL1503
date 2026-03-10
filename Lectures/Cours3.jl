@@ -217,7 +217,7 @@ Mais il faut faire très attention car les commandes suivantes peuvent vous fair
 Je conseille de faire `git push origin new_branch`, créer un merge request et vérifier visuellement dans l'interface GitLab que vos changements sont là.
 Ensuite, 2 possibilités. Soit
 ```sh
-$ git reset --hard origin/main # Dangereux command!
+$ git reset --hard origin/main # Commande dangereuse !
 ```
 Soit en deux temps (en s'assurant qu'on est à la racine du dossier, sinon utiliser `..` ou `../..` etc... à la place de `.`)
 ```sh
