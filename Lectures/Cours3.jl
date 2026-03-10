@@ -75,11 +75,15 @@ md"""
   - `git switch main`
   - `git pull origin main`
 * Utilisez `git status` pour savoir où on en est et avoir des recommendations.
-* Utilisez `git diff` pour voir les changements opérés.
+* Utilisez `git diff` pour voir les changements opérés. Avec `--cached` pour voir les changements acceptés dans la "stage", prêts à être commités.
 * Après tout changement, on crée une branche et on la push
   - `git switch -c new_branch`
   - `git status` pour voir où on en est
   - `git diff` pour voir les changements opérés
+  - `git add -p` pour ajouter les changements de manière interractive: on en profite pour s'auto-reviewer et on peut découper les commits pour aider les reviewers. `y` pour yes, `n` pour no, `?` pour l'aide.
+  - `git add <new_files>` au cas où il y a de nouveaux fichiers
+  - `git status` pour voir où on en est
+  - `git diff --cached` pour voir les changements acceptés, prêts à être commités
   - `git commit -m "Courte description <50 caractères" -m "Expliquer la raison: pourquoi est-ce utile"
   - `git push origin new_branch`
 * Sur GitLab, on crée un merge request (MR) et on attend
@@ -90,6 +94,10 @@ md"""
   - `git pull origin new_branch` au cas où d'autres l'ont changé
   - `git status` pour voir où on en est
   - `git diff` pour voir les changements opérés
+  - `git add -p` pour ajouter les changements de manière interractive: on en profite pour s'auto-reviewer et on peut découper les commits pour aider les reviewers. `y` pour yes, `n` pour no, `?` pour l'aide.
+  - `git add <new_files>` au cas où il y a de nouveaux fichiers
+  - `git status` pour voir où on en est
+  - `git diff --cached` pour voir les changements acceptés, prêts à être commités
   - `git commit -m "Courte description <50 caractères" -m "Expliquer la raison: pourquoi est-ce utile"
   - `git push origin new_branch`
 * Une fois que le CI est vert et que nos pairs on accepté, on merge le MR
