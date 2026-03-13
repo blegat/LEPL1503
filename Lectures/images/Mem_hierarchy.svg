@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="485.49mm" height="137.18mm" version="1.1" viewBox="0 0 485.49 137.18" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<defs>
+<marker id="f" overflow="visible" orient="auto">
+<path transform="matrix(.8 0 0 .8 10 0)" d="m0 0 5-5-17.5 5 17.5 5z" fill-rule="evenodd" stroke="#000" stroke-width="1pt"/>
+</marker>
+<marker id="b" overflow="visible" orient="auto">
+<path transform="matrix(-.8 0 0 -.8 -10 0)" d="m0 0 5-5-17.5 5 17.5 5z" fill-rule="evenodd" stroke="#000" stroke-width="1pt"/>
+</marker>
+<marker id="d" overflow="visible" orient="auto">
+<path transform="matrix(.8 0 0 .8 10 0)" d="m0 0 5-5-17.5 5 17.5 5z" fill-rule="evenodd" stroke="#000" stroke-width="1pt"/>
+</marker>
+<marker id="c" overflow="visible" orient="auto">
+<path transform="matrix(-.8 0 0 -.8 -10 0)" d="m0 0 5-5-17.5 5 17.5 5z" fill-rule="evenodd" stroke="#000" stroke-width="1pt"/>
+</marker>
+<marker id="e" overflow="visible" orient="auto">
+<path transform="matrix(.8 0 0 .8 10 0)" d="m0 0 5-5-17.5 5 17.5 5z" fill-rule="evenodd" stroke="#000" stroke-width="1pt"/>
+</marker>
+<marker id="a" overflow="visible" orient="auto">
+<path transform="matrix(-.8 0 0 -.8 -10 0)" d="m0 0 5-5-17.5 5 17.5 5z" fill-rule="evenodd" stroke="#000" stroke-width="1pt"/>
+</marker>
+</defs>
+<metadata>
+<rdf:RDF>
+<cc:Work rdf:about="">
+<dc:format>image/svg+xml</dc:format>
+<dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+<dc:title/>
+</cc:Work>
+</rdf:RDF>
+</metadata>
+<g transform="translate(240.27 -26.46)">
+<rect x="-220.6" y="77.174" width="50.546" height="37.939" fill="#83807f"/>
+<rect x="-222.44" y="75.452" width="50.546" height="37.939" fill="#98ccff" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width=".92845"/>
+<rect x="-20.375" y="65.138" width="75.335" height="62.458" fill="#83807f"/>
+<rect x="-22.371" y="62.969" width="75.335" height="62.458" fill="#feff99" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width=".92845"/>
+<rect x="104.44" y="34.648" width="123.41" height="124.09" fill="#83807f"/>
+<rect x="101.7" y="31.831" width="123.41" height="124.09" fill="#ffcb95" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width=".92845"/>
+<rect x="-119.66" y="77.174" width="50.546" height="37.939" fill="#83807f"/>
+<rect x="-121.49" y="75.452" width="50.546" height="37.939" fill="#cefecc" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width=".92845"/>
+<path d="m-70.332 95.05h47.735" fill="none" marker-end="url(#b)" marker-start="url(#f)" stroke="#000" stroke-width=".64412"/>
+<path d="m54.446 95.05h46.32" fill="none" marker-end="url(#c)" marker-start="url(#d)" stroke="#000" stroke-width=".6345"/>
+<path d="m-170.59 95.05h47.735" fill="none" marker-end="url(#a)" marker-start="url(#e)" stroke="#000" stroke-width=".64412"/>
+<text x="-207.66762" y="98.221687" fill="#000000" font-family="sans-serif" font-size="18.342px" letter-spacing="0px" stroke-width=".24565" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="-207.66762" y="98.221687" font-size="10.481px" stroke-width=".24565">CPU</tspan></text>
+<text x="-102.42331" y="98.24472" fill="#000000" font-family="sans-serif" font-size="18.342px" letter-spacing="0px" stroke-width=".24565" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="-102.42331" y="98.24472" font-size="10.481px" stroke-width=".24565">L1</tspan></text>
+<text x="8.8765059" y="97.997864" fill="#000000" font-family="sans-serif" font-size="18.342px" letter-spacing="0px" stroke-width=".24565" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="8.8765059" y="97.997864" font-size="10.481px" stroke-width=".24565">L2</tspan></text>
+<text x="137.76436" y="85.644966" fill="#000000" font-family="sans-serif" font-size="10.481px" letter-spacing="0px" stroke-width=".24565" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="137.76436" y="85.644966">Mémoire</tspan><tspan x="137.76436" y="108.57264">principale</tspan></text>
+<text x="-154.28224" y="89.988876" fill="#000000" font-family="sans-serif" font-size="7.8609px" letter-spacing="0px" stroke-width=".24565" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="-154.28224" y="89.988876" stroke-width=".24565">Mot</tspan></text>
+<text x="-57.204117" y="88.0037" fill="#000000" font-family="sans-serif" font-size="7.8609px" letter-spacing="0px" stroke-width=".24565" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="-57.204117" y="88.0037" stroke-width=".24565">Ligne</tspan></text>
+</g>
+</svg>
