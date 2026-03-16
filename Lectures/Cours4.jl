@@ -44,7 +44,7 @@ hbox([
 	void multiply_matrices(int mat1[N][N], int mat2[N][N], int res[N][N])
 	{
 	    int i, j, k;
-	    for (i = 0; i < N; i++) {
+	    for (i = 0; i < N; i++) {  // 'i' first
 	        for (j = 0; j < N; j++) {
 	            res[i][j] = 0;
 	            for (k = 0; k < N; k++)
@@ -57,7 +57,7 @@ hbox([
 	void multiply_matrices2(int mat1[N][N], int mat2[N][N], int res[N][N])
 	{
 	    int i, j, k;
-	    for (j = 0; j < N; j++) {
+	    for (j = 0; j < N; j++) {  // 'j' first
 	        for (i = 0; i < N; i++) {
 	            res[i][j] = 0;
 	            for (k = 0; k < N; k++)
