@@ -43,35 +43,27 @@ hbox([
 	c"""
 	void multiply_matrices(int mat1[N][N], int mat2[N][N], int res[N][N])
 	{
-	int i, j, k;
-	for (i = 0; i < N; i++)
-		{
-		for (j = 0; j < N; j++)
-			{
-			res[i][j] = 0;
-			for (k = 0; k < N; k++)
-				{
-				res[i][j] += mat1[i][k] * mat2[k][j];
-				}
-			}
-		}
+	    int i, j, k;
+	    for (i = 0; i < N; i++) {  // 'i' first
+	        for (j = 0; j < N; j++) {
+	            res[i][j] = 0;
+	            for (k = 0; k < N; k++)
+	                res[i][j] += mat1[i][k] * mat2[k][j];
+	        }
+	    }
 	}
 	""",
 	c"""
 	void multiply_matrices2(int mat1[N][N], int mat2[N][N], int res[N][N])
 	{
-	int i, j, k;
-	for (j = 0; j < N; j++)
-		{
-		for (i = 0; i < N; i++)
-			{
-			res[i][j] = 0;
-			for (k = 0; k < N; k++)
-				{
-				res[i][j] += mat1[i][k] * mat2[k][j];
-				}
-			}
-		}
+	    int i, j, k;
+	    for (j = 0; j < N; j++) {  // 'j' first
+	        for (i = 0; i < N; i++) {
+	            res[i][j] = 0;
+	            for (k = 0; k < N; k++)
+	                res[i][j] += mat1[i][k] * mat2[k][j];
+	        }
+	    }
 	}
 	"""
 ])
@@ -84,36 +76,50 @@ md"## Les appels system"
 
 # ╔═╡ c31eb3a1-2c0e-4360-86eb-de982ba45c03
 c"""
-		int open(const char *pathname, int flags, mode_t mode); // Ouvre le fichier et retourne un file descriptor, en cas d'erreur return -1
-		// Toutes les fonctions suivantes utilisent le file descriptor retourné par open
-		ssize_t read(int fd, void buf[.count], size_t count); // Permet de lire dans un fichier, en cas d'erreur return -1
-	    ssize_t write(int fd, const void buf[.count], size_t count); // Permet d'écrire dans un fichier, en cas d'erreur return -1
-	    off_t lseek(int fd, off_t offset, int whence); // Permet de se déplacer dans un fichier, en cas d'erreur return -1
-	"""
+// Ouvre le fichier et retourne un file descriptor, en cas d'erreur return -1
+int open(const char *pathname, int flags, mode_t mode);
+
+// Toutes les fonctions suivantes utilisent le file descriptor retourné par open
+
+// Permet de lire dans un fichier, en cas d'erreur return -1
+ssize_t read(int fd, void buf[.count], size_t count);
+
+// Permet d'écrire dans un fichier, en cas d'erreur return -1
+ssize_t write(int fd, const void buf[.count], size_t count);
+
+// Permet de se déplacer dans un fichier, en cas d'erreur return -1
+off_t lseek(int fd, off_t offset, int whence);
+"""
 
 # ╔═╡ 7a20ee7e-8a2b-4e32-bc7b-fcdbdc981bed
 md"## Appel system Open"
 
 # ╔═╡ dd7ffd0c-e2a1-4e37-bc49-3dd2c23aa0dd
 md"""
-	int open(const char *pathname, int flags, mode_t mode);
-	Descriptions des arguments :
-	1. Le chemin vers le fichier
-	2. Le drapeau qui designe le mode d'accès du fichier
-	   - O_RDONLY        open for reading only
-	   - O_WRONLY        open for writing only
-	   - O_RDWR          open for reading and writing
-	   - O_APPEND        append on each write
-	   - O_CREAT         create file if it does not exist
-	   - O_TRUNC         truncate size to 0
-	3. Le mode qui représente les permissions (uniquement pour la création de fichier)
-	   - S_IRWXU  00700 user (file owner) has read, write, and execute permission
-	   - S_IRUSR  00400 user has read permission
-	   - S_IWUSR  00200 user has write permission
-	   - S_IRWXG  00070 group has read, write, and execute permission
-	   - S_IRGRP  00040 group has read permission
-	   - S_IWOTH  00002 others have write permission
+```c
+int open(const char *pathname, int flags, mode_t mode);
+```
 
+Descriptions des arguments :
+1. Le chemin vers le fichier
+2. Le drapeau qui designe le mode d'accès du fichier
+```
+    - O_RDONLY        open for reading only
+    - O_WRONLY        open for writing only
+    - O_RDWR          open for reading and writing
+    - O_APPEND        append on each write
+    - O_CREAT         create file if it does not exist
+    - O_TRUNC         truncate size to 0
+```
+3. Le mode qui représente les permissions (uniquement pour la création de fichier)
+```
+    - S_IRWXU  00700 user (file owner) has read, write, and execute permission
+    - S_IRUSR  00400 user has read permission
+    - S_IWUSR  00200 user has write permission
+    - S_IRWXG  00070 group has read, write, and execute permission
+    - S_IRGRP  00040 group has read permission
+    - S_IWOTH  00002 others have write permission
+```
 """
 
 # ╔═╡ f00ce4dc-7031-428d-a4ea-0c4138eee251
@@ -121,60 +127,63 @@ md"## Detection d'erreurs lors des appels system"
 
 # ╔═╡ 7ad1992d-9cc0-4fbe-9b10-4b7d0c9bca47
 md"""
-  **Un appel système peut échouer pour diverses raisons, il faut donc vérifier le retour de la fonction appelée**
+**Un appel système peut échouer pour diverses raisons, il faut donc vérifier le retour de la fonction appelée**
   - La variable globale *errno* mise à jour par **Unix** vous donne un code qui vous informe sur la nature de l'échec de l'appel de la fonction.
   - Cette variable se met à jour seulement en cas d'erreur et n'est pas re-initialisée
-  - La fonction *void perror(const char *s)* permet d'interpreter l'erreur courante de errno
-  - La fonction *char *strerror(int errnum)* permet d'nterpreter l'erreur courante de errno
+  - La fonction `void perror(const char *s)` permet d'interpreter l'erreur courante de errno
+  - La fonction `char *strerror(int errnum)` permet d'nterpreter l'erreur courante de errno
 """
 
 # ╔═╡ cfe36d4f-f80a-4ed9-9692-c283dfa15ccd
 c"""
-      int fd = open(filename, flags, mode);
-	  if (fd == -1) {
-		if (errno == ENOENT) {
-		  // No such file or directory
-		} else if (errno == EACCES) 
-		  // Permission denied
-		} else {
-		  perror('open');
-		}
-	  }
-	"""
+int fd = open(filename, flags, mode);
+if (fd == -1) {
+    if (errno == ENOENT) {
+        // No such file or directory
+    } else if (errno == EACCES)
+        // Permission denied
+    } else {
+        perror('open');
+    }
+}
+"""
 
 # ╔═╡ 15cf3ef6-1026-4c18-928c-b2fe2618621e
 md"## Les descripteurs de fichiers"
 
 # ╔═╡ ec48c057-5561-4bff-953f-c9f3654855cb
 md"""
-	- Il s'agit d'un ID qui permet d'identifier les fichiers ouverts par un processus
-	- La liste de ces descripteurs de fichiers sont maintenus par le Noyau pour chaque processus
+- Il s'agit d'un ID qui permet d'identifier les fichiers ouverts par un processus
+- La liste de ces descripteurs de fichiers sont maintenus par le Noyau pour chaque processus
 
-	| File Descriptor | Flux       |
-	|-----------------|------------|
-	| 0               | Stdin      |
-	| 1               | Stdout     |
-	| 2               | Stderr     |
-	| 3               | First File |
-	- Le file descriptor est le premier entier disponible dans la liste sinon on en crée un nouveau
+| File Descriptor | Flux       |
+|-----------------|------------|
+| 0               | Stdin      |
+| 1               | Stdout     |
+| 2               | Stderr     |
+| 3               | First File |
+- Le file descriptor est le premier entier disponible dans la liste sinon on en crée un nouveau
 """
 
 # ╔═╡ b6e44edd-c618-408d-818c-bbc45e019c72
 c"""
-	#include <fcntl.h> // pour open
-	#include <stdio.h>
+#include <fcntl.h> // pour open
+#include <stdio.h>
 
-	int main(int argc, char **argv) {
-		int fd1,fd2,fd3,err;
+int main(int argc, char **argv) {
+	int fd1, fd2, fd3, err;
 
-		fd1=open("/dev/zero",O_RDONLY);
-		printf("Filedescriptor : %d\n",fd1);
-		fd2=open("/dev/zero",O_RDONLY);
-		printf("Filedescriptor : %d\n",fd2);
-		err=close(fd1);
-		fd3=open("/dev/zero",O_RDONLY);
-		printf("Filedescriptor : %d\n",fd3);
-	}
+	fd1 = open("/dev/zero",O_RDONLY);
+	printf("Filedescriptor : %d\n",fd1);
+
+	fd2 = open("/dev/zero",O_RDONLY);
+	printf("Filedescriptor : %d\n",fd2);
+
+	err = close(fd1);
+
+	fd3 = open("/dev/zero",O_RDONLY);
+	printf("Filedescriptor : %d\n",fd3);
+}
 """
 
 # ╔═╡ 9695ec17-accc-48e9-9ed6-d8884887eb55
@@ -191,26 +200,33 @@ md"## Appel système mmap et munmap"
 
 # ╔═╡ cdf8d4a6-4b07-48da-b4ee-0ed99b314450
 md"""
-	void *mmap(void *addr, size_t length, int prot, int flags, int fd, off_t offset);
-	Descriptions des arguments :
-    1. L'addresse où le le fichier a été mappé. Quand il est à NULL, le noyau choisit l'addresse
-	2. La taille du fichier en octets
-	3. La protection appliquée à l'emplacement en mémoire
-	   - PROT_EXEC  Pages may be executed.
-       - PROT_READ  Pages may be read.
-       - PROT_WRITE Pages may be written.
-       - PROT_NONE  Pages may not be accessed.
-	4. Les drapeaux qui determine si les mise à jour du mapping seront exclusive ou non aux processus.
-	   - MAP_SHARED  Share this mapping.
-       - MAP_PRIVATE Create a private copy-on-write mapping.
-	5. Le file descriptor obtenu avec open
-	6. offset permet de spécifier où il faut commencer à lire
+```c
+void *mmap(void *addr, size_t length, int prot, int flags, int fd, off_t offset);
+```
+
+Descriptions des arguments :
+1. L'adresse où le le fichier a été mappé. Quand il est à `NULL`, le noyau choisit l'adresse
+2. La taille du fichier en octets
+3. La protection appliquée à l'emplacement en mémoire
+```
+    - PROT_EXEC  Pages may be executed.
+    - PROT_READ  Pages may be read.
+    - PROT_WRITE Pages may be written.
+    - PROT_NONE  Pages may not be accessed.
+```
+4. Les drapeaux qui determine si les mise à jour du mapping seront exclusive ou non aux processus.
+```
+    - MAP_SHARED  Share this mapping.
+    - MAP_PRIVATE Create a private copy-on-write mapping.
+```
+5. Le file descriptor obtenu avec `open`
+6. offset permet de spécifier où il faut commencer à lire
 """
 
 # ╔═╡ 2d31195c-d525-4b75-b448-eb3ba58486fd
-md"""
-	int munmap(void addr, size_t length);
-	Il supprime le mapping de la mémoire
+c"""
+int munmap(void addr, size_t length);
+// Il supprime le mapping de la mémoire
 """
 
 # ╔═╡ 9b9560e8-7b4b-43c1-9be7-079e1928567c
@@ -221,30 +237,32 @@ md"## Les pointeurs vers les fonctions"
 
 # ╔═╡ ed08082d-0e3c-4919-b563-4e6b92cb1e01
 md"""
+```c
 #include <stdlib.h>
 
 void qsort(void *base, size_t nmemb, size_t size,
            int(*compar)(const void *, const void *));
+```
 
-DESCRIPTION
-The qsort() function sorts an array with nmemb elements of size size. The base argument points to the start of the array.
-The contents of the array are sorted in ascending order according to a comparison function pointed to by compar, which is called with two arguments that point to the objects being compared.
-The comparison function must return an integer less than, equal to, or greater than zero if the first argument is considered to be respectively less than, equal to, or greater than the second. If two members compare as equal, their order in the sorted array is undefined.
+DESCRIPTION:
+- The `qsort()` function sorts an array with `nmemb` elements of size `size`. The `base` argument points to the start of the array.
+- The contents of the array are sorted in ascending order according to a comparison function pointed to by `compar`, which is called with two arguments that point to the objects being compared.
+- The comparison function must return an integer less than, equal to, or greater than zero if the first argument is considered to be respectively less than, equal to, or greater than the second. If two members compare as equal, their order in the sorted array is undefined.
 """
 
 # ╔═╡ d3ace570-38c6-47a3-a456-70c051373289
 c"""
-qsort(array,SIZE,sizeof(double),cmp);
+// qsort(array, SIZE, sizeof(double), cmp);
+
 int cmp(const void *ptr1, const void *ptr2) {
-  const double *a=ptr1;
-  const double *b=ptr2;
-  if(*a==*b)
-    return 0;
-  else
-    if(*a<*b)
+  const double *a = ptr1;
+  const double *b = ptr2;
+
+  if (*a == *b)
+      return 0;
+  if (*a < *b)
       return -1;
-    else
-      return +1;
+  return +1;
 }
 """
 
@@ -256,10 +274,10 @@ md"## Threads"
 
 # ╔═╡ 470620b4-d817-43bb-ad13-24979b2cfc43
 md"""
-	- De nombreuses applications font plusieurs actions simultannées
-	- un outil graphique avec fenêtres ouvertes
-	- un make compilant plusieurs fichiers C
-	- Il est naturel de séparer ces activités, mais créer un processus pour chacune est coûteux et complique les interactions entre sous-processus
+- De nombreuses applications font plusieurs actions simultannées
+- un outil graphique avec fenêtres ouvertes
+- un make compilant plusieurs fichiers C
+- Il est naturel de séparer ces activités, mais créer un processus pour chacune est coûteux et complique les interactions entre sous-processus
 """
 
 # ╔═╡ b0049332-4936-4175-8095-ce4f17885b1a
@@ -267,12 +285,17 @@ md"## Les appels system Threads"
 
 # ╔═╡ 266e2b4b-2c31-4684-abff-18441b2906c8
 c"""
-	int pthread_create(pthread_t *restrict thread,
-                          const pthread_attr_t *restrict attr,
-                          typeof(void *(void *)) *start_routine,
-                          void *restrict arg); // Cette fonction permet de créer le thread
-	void pthread_exit(void *retval); // Cette fonction permet de terminer le thread et de retourner une valeur
-	int pthread_join(pthread_t thread, void **retval); // Cette fonction demande d'attendre que le thread se finisse
+// Cette fonction permet de créer le thread
+int pthread_create(pthread_t *restrict thread,
+                   const pthread_attr_t *restrict attr,
+                   typeof(void *(void *)) *start_routine,
+                   void *restrict arg);
+
+// Cette fonction permet de terminer le thread et de retourner une valeur
+void pthread_exit(void *retval);
+
+// Cette fonction demande d'attendre que le thread se finisse
+int pthread_join(pthread_t thread, void **retval);
 """
 
 # ╔═╡ bf3106b8-337c-4b7e-98fd-1468ae5efeb1
@@ -280,103 +303,108 @@ md"## Appel system pthread_create"
 
 # ╔═╡ ade1bc91-d0e8-470f-ab87-9d876b0c46cb
 md"""
-	int pthread_create(pthread_t *restrict thread,
-                          const pthread_attr_t *restrict attr,
-                          typeof(void *(void *)) *start_routine,
-                          void *restrict arg);
-	Descriptions des arguments :
-	1. L'ID du thread
-	2. Les attributs du thread, il peut être NULL
-	3. Le foncteur qui va être exécuté
-	4. L'argument du foncteur
+```c
+int pthread_create(pthread_t *restrict thread,
+                   const pthread_attr_t *restrict attr,
+                   typeof(void *(void *)) *start_routine,
+                   void *restrict arg);
+```
+Descriptions des arguments :
+1. L'ID du thread
+2. Les attributs du thread, il peut être NULL
+3. Le foncteur qui va être exécuté
+4. L'argument du foncteur
 """
 
 # ╔═╡ 23f5128b-3f6e-42a1-b807-25aad7a442ee
-md"""
-	void *f1(void *param) { }
-	void f2(void *param) { }
-	void *f3(void param) { }
-	void f4() { }
+c"""
+void *f1(void *param) { }
+void  f2(void *param) { }
+void *f3(void param) { }
+void  f4() { }
 """
 
 # ╔═╡ e30651f2-2eed-49c8-8f8b-3823ca349f15
-	c"""
-	#include <pthread.h>
-	#include <stdio.h>
-	int global = 0;
-	void *thread_first(void * param) {
-  		global++;
-  		return(NULL); // Une facon de terminer un thread
-	}
-	void *thread_second(void * param) {
-  		global++;
-  		pthread_exit(NULL); // Une autre facon de terminer un thread
-	}
+c"""
+#include <pthread.h>
+#include <stdio.h>
+int global = 0;
+void *thread_first(void * param) {
+	global++;
+	return(NULL); // Une facon de terminer un thread
+}
+void *thread_second(void * param) {
+	global++;
+	pthread_exit(NULL); // Une autre facon de terminer un thread
+}
 
-	int main (int argc, char *argv[])  {
-		pthread_t first, second;
-		int err;
+int main(int argc, char *argv[])  {
+	pthread_t first, second;
+	int err;
 
-		err=pthread_create(&first,NULL,&thread_first,NULL); 
-		if(err!=0)
-			perror("pthread_create");
+	err = pthread_create(&first, NULL, &thread_first, NULL);
+	if (err != 0)
+		perror("pthread_create");
 
-		err=pthread_create(&second,NULL,&thread_second,NULL); 
+	err = pthread_create(&second, NULL, &thread_second, NULL);
 
-		for(int i=0; i<1000000000;i++) { /*...*/ }
+	for (int i = 0; i < 1000000000; i++) { /*...*/ }
 
-		err=pthread_join(first,NULL);
-			if(err!=0)
-				perror("pthread_join");
-		err=pthread_join(second ,NULL);
-			if(err!=0)
-				perror("pthread_join");
-	}
-	"""
+	err = pthread_join(first, NULL);
+	if (err != 0)
+		perror("pthread_join");
+
+    err = pthread_join(second, NULL);
+	if (err != 0)
+		perror("pthread_join");
+}
+"""
 
 # ╔═╡ 26a1ee91-1710-4940-a66d-825dd892bcba
 md"## "
 
 # ╔═╡ c6d9420b-8ba9-40df-b649-1a78653acf3e
 c"""
-	pthread_t threads[NTHREADS];
-  	int arg[NTHREADS];
-	void *neg (void * param) {
-		int *l;
-		l=(int *) param;
-		int r=-*l;
-		return ((void *) &r);
+pthread_t threads[NTHREADS];
+int arg[NTHREADS];
+void *neg(void * param) {
+	int *l, r;
+	l = (int *)param;
+	r = -*l;
+	return ((void *) &r);
+}
+int main(int argc, char *argv[])  {
+	int err;
+	for (long i = 0; i < NTHREADS; i++) {
+		arg[i] = i;
+		err = pthread_create(&(threads[i]), NULL, &neg, (void *)&(arg[i]));
+		if (err != 0)
+		    error(err, "pthread_create");
+
+		int *r;
+		err = pthread_join(threads[i], (void **)&r);
+		if (err != 0)
+		    error(err, "pthread_join");
+
+        printf("Resultat[%d]=%d\n", i, *r);
 	}
-	int main (int argc, char *argv[])  {
-		int err;
-		for(long i=0;i<NTHREADS;i++) {
-			arg[i]=i;
-			err=pthread_create(&(threads[i]),NULL,&neg,(void *) &(arg[i])); 
-			if(err!=0)
-			error(err,"pthread_create");
-			int *r;
-			err=pthread_join(threads[i],(void **)&r);
-			printf("Resultat[%d]=%d\n",i,*r);
-			if(err!=0)
-			error(err,"pthread_join");
-		}
-	}
-	"""
+}
+"""
 
 # ╔═╡ 72986e7d-37c8-4d0c-9624-24336a08fc20
 c"""
-	pthread_t t1;
+pthread_t t1;
 
-	void *f(void *param) { }
-	void launch(void ){
+void *f(void *param) { }
+void launch(void) {
 	pthread_t t2;
-	pthread_t * t3=(pthread_t *) malloc(sizeof(pthread_t));
+	pthread_t *t3 = (pthread_t *)malloc(sizeof(pthread_t));
 
-	int err=pthread_create(&t1,NULL,&f, v);
-	err=pthread_create(t1,NULL,&f, v);
-	err=pthread_create(&t2,NULL,&f, v);
-	err=pthread_create(t3,NULL,&f, v);
-	}
+	int err = pthread_create(&t1, NULL, &f, v);
+	err = pthread_create(t1, NULL, &f, v);
+	err = pthread_create(&t2, NULL, &f, v);
+	err = pthread_create(t3, NULL, &f, v);
+}
 """
 
 # ╔═╡ de619cdb-e82c-4899-931e-bd79e4a115a3
@@ -384,13 +412,13 @@ c"""
 int fd1;
 
 void *f1(void *param) {
-  char buf;
-  int err=read(fd1,&buf,sizeof(char));
+	char buf;
+	int err = read(fd1, &buf, sizeof(char));
 }
-int main(…) {
 
- fd1=open("t1.dat",O_RDWR);
- int err=pthread_create(&(t1),NULL,&f1,NULL);
+int main(...) {
+    fd1 = open("t1.dat", O_RDWR);
+    int err = pthread_create(&(t1), NULL, &f1, NULL);
 """
 
 # ╔═╡ 3b4da661-112b-4c07-b1fa-9b48f8b88c55
@@ -398,46 +426,49 @@ md"## Passer plusieurs réels à un thread"
 
 # ╔═╡ f69608cd-b72b-4de7-b723-f3a3c195efed
 c"""
-	pthread_t pt;
-	double tab[2]={2.0,3.0}; //Utiliser un tableau
+pthread_t pt;
+double tab[2] = {2.0, 3.0}; // Utiliser un tableau
 
-	void *f3(void *param) {
+void *f3(void *param) {
 	printf("f3\n");
-	double *p=(double *) param;
-	printf("%f %f\n",*p,*p+1);
+	double *p = (double *)param;
+	printf("%f %f\n", *p, *p+1);
 	return NULL;
-	}
-	int main( int argc, char **argv) {
-	int err=pthread_create(&pt,NULL,&f3,(void *)tab)
+}
+
+int main(int argc, char **argv) {
+	int err = pthread_create(&pt, NULL, &f3, (void *)tab);
 """
 
 # ╔═╡ 3d63c085-d739-4553-9e8d-fdc21a529954
 c"""
 pthread_t pt;
 struct pair { // Utiliser une structure
-  double x;
-  double y;
-}; 
+	double x;
+	double y;
+};
+
 void *f2(void *param) {
-  struct pair *p=(struct pair *) param;
-  printf("%f %f\n",p->x,p->y);
-  return NULL;
+	struct pair *p = (struct pair *)param;
+	printf("%f %f\n", p->x, p->y);
+	return NULL;
 }
-int main( int argc, char **argv) {
-struct pair * a =(struct pair *) malloc(sizeof(struct pair));
-a->x=2.3; a->y=4.5;
-int err=pthread_create(&pt,NULL,&f2,(void *)a);
+
+int main(int argc, char **argv) {
+	struct pair * a = (struct pair *)malloc(sizeof(struct pair));
+	a->x = 2.3;
+	a->y = 4.5;
+	int err = pthread_create(&pt, NULL, &f2, (void *)a);
 """
 
 # ╔═╡ 37eb768e-d085-4dc6-87f5-8ad91227acb6
-md"## Attention à printf"
+md"## Attention à `printf()`"
 
 # ╔═╡ a594301e-c385-4cf6-b80f-af3b6c8f2ffb
 md"""
-	Méfiez-vous !
-		- Tous les threads partagent stdout, mais printf utilise un buffer qui n'envoie 
-		- des données sur stdout que lorsqu'il y en a suffisamment
-		- man fflush
+Méfiez-vous !
+- Tous les threads partagent `stdout`, mais `printf` utilise un buffer qui n'envoie des données sur `stdout` que lorsqu'il y en a suffisamment
+- `man fflush`
 """
 
 # ╔═╡ 89e02c70-2a4f-4b99-b82d-9cfda85267b4
@@ -460,24 +491,24 @@ Violation d’exclusion mutuelle
 
 # ╔═╡ 0c0106db-8117-4d18-82e2-effde1379a6b
 hbox([
-	c"""long global=0;
+	c"""long global = 0;
 int increment(int i) {
-  return i+1;
+    return i+1;
 }
-void *func(void * param) {
-  for(int j=0;j<1000000;j++) {
-    global=increment(global);
- }
-  return(NULL);
+void *func(void *param) {
+    for(int j = 0; j < 1000000; j++) {
+        global = increment(global);
+    }
+    return(NULL);
 } """,
 	md"""
-		for i in {1..5}; do ./pthread-test;  done
-			global: 3408577
-			global: 3175353
-			global: 1994419
-			global: 3051040
-			global: 2118713
-	"""
+    $ for i in {1..5}; do ./pthread-test; done
+    global: 3408577
+    global: 3175353
+    global: 1994419
+    global: 3051040
+    global: 2118713
+"""
 ])
 
 # ╔═╡ 3b08b786-abb9-404d-8c76-4db9e6c10915
@@ -485,11 +516,12 @@ md"## Problème de l'exclusion mutuelle: les sections critiques"
 
 # ╔═╡ 464190c6-a826-4c61-ab4f-0b936816d0c2
 md"""
-	Conditions à remplir par une solution 
-		- Deux threads ne peuvent y être en même temps
-		- Un thread se trouvant hors de sa section critique ne peut pas bloquer un autre thread
-		- Un thread ne doit pas attendre indéfiniment le droit d'entrer dans sa section critique
-		- Aucune hypothèse n'est faite sur la vitesse des threads ou le nombre de CPUs
+Conditions à remplir par une solution :
+
+- Deux threads ne peuvent y être en même temps
+- Un thread se trouvant hors de sa section critique ne peut pas bloquer un autre thread
+- Un thread ne doit pas attendre indéfiniment le droit d'entrer dans sa section critique
+- Aucune hypothèse n'est faite sur la vitesse des threads ou le nombre de CPUs
 """
 
 # ╔═╡ 0b42d8e7-adcf-43ed-bb5f-5f6ffa92a70a
@@ -497,9 +529,10 @@ md"## Mutex posix"
 
 # ╔═╡ d246b6fe-977b-4c68-b8b3-807898da6936
 md"""
-	Structure de données spéciale de la librairie threads POSIX associée à une ressource
-		- libre (unlocked en anglais)
-		- réservée (locked en anglais)
+Structure de données spéciale de la librairie threads POSIX associée à une ressource
+
+- libre (unlocked en anglais)
+- réservée (locked en anglais)
 """
 
 # ╔═╡ 788ec052-987d-4328-9e53-c030bd3def87
@@ -507,17 +540,18 @@ md"## Les opérations sur les mutex"
 
 # ╔═╡ f42ade01-d9b5-4832-b280-f310b89d773c
 md"""
-	3 opérations possibles sur un mutex
-		1. Initialisation à unlocked
-		2. lock(m)
-		3. unlock(m)
+3 opérations possibles sur un mutex
+
+1. Initialisation à unlocked
+2. lock(m)
+3. unlock(m)
 """
 
 # ╔═╡ f700dd17-a1e1-4cf2-a03b-58dbadf6dcb2
-md"""
-	pthread_mutex_lock(…)
-	pthread_mutex_unlock(…)
-	pthread_mutex_init(…)
+c"""
+pthread_mutex_lock(…)
+pthread_mutex_unlock(…)
+pthread_mutex_init(…)
 """
 
 # ╔═╡ f77751d5-065b-48ee-8646-d3e27f642ec7
@@ -540,10 +574,11 @@ md"## Les sémaphores"
 
 # ╔═╡ aa81dd8f-99ea-47bb-a1dd-cbfb5f466f37
 md"""
-	3 opérations possibles sur un mutex
-		1. Init(s) A une valeur entière non-négative
-		2. Down(s) parfois appelé wait(s) ou P(s)
-		3. Up(s) parfois appelé signal(s)/post(s) ou V(s)
+3 opérations possibles sur un mutex :
+
+1. `Init(s)` initialisation à une valeur entière non-négative
+2. `Down(s)` parfois appelé `wait(s)` ou `P(s)`
+3. `Up(s)` parfois appelé `signal(s)`, `post(s)` ou `V(s)`
 """
 
 # ╔═╡ d717a3c4-6113-46ed-90a8-9bc9f97eaa1b
@@ -551,11 +586,17 @@ md"## Appel system pour les semaphores"
 
 # ╔═╡ 413c8ec4-4c87-43b8-9577-2316e8eda546
 c"""
-	int sem_init(sem_t *sem, int pshared, unsigned int value); // Initialise le nombre de lock
-	int sem_wait(sem_t *sem);  // Decrémente le nombre de lock
-	int sem_trywait(sem_t *sem); // Decrémente le nombre de lock
-	int sem_post(sem_t *sem); // Incrémente le nombre de lock
-	}
+// Initialise le nombre de lock
+int sem_init(sem_t *sem, int pshared, unsigned int value);
+
+// Decrémente le nombre de lock
+int sem_wait(sem_t *sem);
+
+// Decrémente le nombre de lock
+int sem_trywait(sem_t *sem);
+
+// Incrémente le nombre de lock
+int sem_post(sem_t *sem);
 """
 
 # ╔═╡ 41f23129-cabe-469d-88cc-793f5108fc6f
@@ -574,18 +615,18 @@ md"# Seconde phase du projet"
 md"## Réduire le temps de calcul"
 
 # ╔═╡ 81c6f074-d947-49f7-97aa-85a2ffdc649d
-md""" 
-	1. Activer les optimisations du compilateur
-		- Multiplication de matrices (1000x1000):
-		- gcc mat.c -> exécution en 6.3 secondes
-		- gcc –Ofast mat.c -> exécution en 1.6 secondes
-	2. Utiliser le plus efficacement les quatre cœurs
-		- Réduire les lock/wait au strict nécessaire, sans risquer de violation de section critique
-		- Vos threads doivent être les plus indépendants possibles pour être efficaces
-		- Vous avez quatre cœurs, ce n’est probablement pas utile de lancer 32 threads, mais peut-être que 6 ou 8 pourraient vous donner de bons résultats
-	3. Utiliser le plus efficacement la mémoire cache
-		- Un code est plus efficace si il utilise travaille sur des zones de mémoire proches
-		- Les éléments d’une structure sont stockés à des adresses proches en mémoire
+md"""
+1. Activer les optimisations du compilateur
+    - Multiplication de matrices (1000x1000):
+    - `gcc mat.c` -> exécution en 6.3 secondes
+    - `gcc –Ofast mat.c` -> exécution en 1.6 secondes
+2. Utiliser le plus efficacement les quatre cœurs
+    - Réduire les lock/wait au strict nécessaire, sans risquer de violation de section critique
+    - Vos threads doivent être les plus indépendants possibles pour être efficaces
+    - Vous avez quatre cœurs, ce n’est probablement pas utile de lancer 32 threads, mais peut-être que 6 ou 8 pourraient vous donner de bons résultats
+3. Utiliser le plus efficacement la mémoire cache
+    - Un code est plus efficace si il utilise travaille sur des zones de mémoire proches
+    - Les éléments d’une structure sont stockés à des adresses proches en mémoire
 """
 
 # ╔═╡ 40025646-a342-4573-995e-8192e853f686
@@ -596,14 +637,16 @@ md"## Optimisations possibles"
 
 # ╔═╡ 8610572e-e21d-4e24-ada3-8634dcf40d85
 md"""
-	1. Désactiver ce qui est inutile
-		- HDMI
-		- Réseau ?
-		- USB  ?
-		- Gardez l’accès à la machine!
-	2. Ajuster la fréquence du CPU
-		- Un CPU moins rapide peut consommer moins d’énergie qu’un CPU rapide
-	3.Désactiver un ou plusieurs coeurs
+1. Désactiver ce qui est inutile
+    - HDMI
+    - Réseau ?
+    - USB  ?
+    - Gardez l’accès à la machine!
+
+2. Ajuster la fréquence du CPU
+    - Un CPU moins rapide peut consommer moins d’énergie qu’un CPU rapide
+
+3. Désactiver un ou plusieurs coeurs
 [source](https://forums.raspberrypi.com/viewtopic.php?f=29&t=99372)
 """
 
@@ -612,14 +655,14 @@ md"## Réduire la consommation de mémoire"
 
 # ╔═╡ 836deb6f-e1f3-4766-b5e7-6c5bf788e0f9
 md"""
-	1. Compacter les structures de données utilisées
-	2. Stocker intelligemment les matrices creuses
-		- Si une matrice a 90% de zéros, inutile de stocker tous ces zéros en mémoire
-		- Vous devez avoir le même résultat numérique !
-	3. Réduire la taille du programme
-		- Différentes stratégies possibles, optimisation du compilateur, retirer une partie des librairies
-		- https://interrupt.memfault.com/blog/code-size-optimization-gcc-flags
-	4. Allouer la mémoire par blocs plutôt que globalement au début du programme
+1. Compacter les structures de données utilisées
+2. Stocker intelligemment les matrices creuses
+    - Si une matrice a 90% de zéros, inutile de stocker tous ces zéros en mémoire
+    - Vous devez avoir le même résultat numérique !
+3. Réduire la taille du programme
+    - Différentes stratégies possibles, optimisation du compilateur, retirer une partie des librairies
+    - https://interrupt.memfault.com/blog/code-size-optimization-gcc-flags
+4. Allouer la mémoire par blocs plutôt que globalement au début du programme
 """
 
 # ╔═╡ 9b05d5b4-edbf-4702-9b67-ced9130bf36e
@@ -636,17 +679,15 @@ end
 # ╔═╡ dd5a283e-d1c3-42f2-a961-4b078fa0b2af
 tutor(c"""
 #include <stdio.h>
-int mul(int a, int b)
-{
-  return a*b;
+int mul(int a, int b) {
+  return a * b;
 }
 
-int sum(int a, int b)
-{
-  return a+b;
+int sum(int a, int b) {
+  return a + b;
 }
 
-int main(int argc, char **argv){
+int main(int argc, char **argv) {
   int (*f) (int, int);
   f = &sum;
   printf("%d, %p\\n", f(4, 5), f);
@@ -758,10 +799,10 @@ img("map", :width => "650px")
 # ╔═╡ cda42027-df22-436f-b1bd-6c854334008e
 hbox([
 	md"""
-		- Plusieurs processus tournent en même temps sur un ordinateur
-		- Exécution OS
-		- Hardware génère une interruption toutes t millisecondes, horloge appel système
-		- Un processus peut être interrompu à tout instant par le kernel !
+	- Plusieurs processus tournent en même temps sur un ordinateur
+	- Exécution OS
+	- Hardware génère une interruption toutes t millisecondes, horloge appel système
+	- Un processus peut être interrompu à tout instant par le kernel !
 	""",
 	img("partage_cpu", :width => "350px")
 ])
@@ -773,9 +814,10 @@ img("thread_state", :width => "650px")
 hbox([
 	img("stack_threads", :width => "450px"),
 	md"""
-		En utilisant les zones mémoires accessibles aux deux threads
-			- variables globales
-			- heap
+	En utilisant les zones mémoires accessibles aux deux threads
+
+	- variables globales
+	- heap
 	"""
 ])
 
@@ -784,8 +826,7 @@ hbox([
 md"""
 ## Deadlock
 
-L’ensemble du programme est bloqué 
-en attente sur des mutex ou des sémaphore
+L’ensemble du programme est bloqué en attente sur des mutex ou des sémaphore
 """,
 img("hellgrind", :width => "350px")
 ])
@@ -799,11 +840,12 @@ img("mutex", :width => "650px")
 # ╔═╡ 254eb375-41e0-40b2-8fc6-f99491fac0b2
 hbox([
 md"""
-	N philosophes doivent se partager un repas dans une salle de méditation
-		- La table contient N fourchettes et N assiettes
-		- Chaque philosophe a une place réservée et a besoin pour manger de
-			- La fourchette à sa gauche
-			- La fourchette à sa droite
+N philosophes doivent se partager un repas dans une salle de méditation
+
+- La table contient N fourchettes et N assiettes
+- Chaque philosophe a une place réservée et a besoin pour manger de :
+  - La fourchette à sa gauche
+  - La fourchette à sa droite
 """,
 img("diner_philosophes", :width => "400px")
 ])
@@ -922,27 +964,27 @@ end
 qa(md"Un des codes est-il plus rapide ?",
 	hbox([
 		md"""
-			- 6 secondes sans optimisation gcc
-			- 2.3 avec optimisation gcc
+		- 6 secondes sans optimisation gcc
+		- 2.3 avec optimisation gcc
 		""",
 		md"""
-			- 4.2 secondes sans optimisation gcc
-			- 1.63 avec optimisation gcc
+		- 4.2 secondes sans optimisation gcc
+		- 1.63 avec optimisation gcc
 		"""
 	])
 )
 
 # ╔═╡ 4cf4d300-b057-40c0-a667-e737e0d0c2f6
 qa(md"Quel 2ème argument pour ouvrir un fichier en écriture, le créer si il n'existe pas et se mettre à la fin pour rajouter du contenu ?",
-md"""
-  O\_WRONLY|O\_CREAT|0\_APPEND
+c"""
+O_WRONLY | O_CREAT | 0_APPEND
 """
 )
 
 # ╔═╡ e4fea1d9-cbbf-43ba-8942-17bdb90a7f93
 qa(md"Quel 3ème argument pour donner les permissions rw-r--r-- à un fichier",
-md"""
-  S\_IRUSR|S\_IWUSR|S\_IRGRP|S\_IROTH
+c"""
+S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH
 """
 )
 
@@ -954,38 +996,39 @@ qa(md"Laquelle des fonctions suivantes",md"""
 # ╔═╡ 4b2b6b79-21f1-4a2c-be2d-cf02467b6a13
 qa(md"Le code est-il correct ?",
 c""" int arg[NTHREADS];
-		pthread_t threads[NTHREADS];
-		void *neg (void * param) {
-		int *l;
-		l=(int *) param;
-		int *r=(int *)malloc(sizeof(int));
-		*r=-*l;
-		return ((void *) r);
-		}
-		int main (int argc, char *argv[])  {
-		int err;
-		for(long i=0;i<NTHREADS;i++) {
-		arg[i]=i;
-		err=pthread_create(&(threads[i]),NULL,&neg,(void *) &(arg[i]));
-		if(err!=0)
-			error(err,"pthread_create");
-			
-			int *r;
-			err=pthread_join(threads[i],(void **)&r);
-			printf("Resultat[%d]=%d\n",i,*r);
-			free(r);
-			if(err!=0)
-			error(err,"pthread_join");
-		}
-	 """
+pthread_t threads[NTHREADS];
+void *neg(void *param) {
+       int *l;
+       l = (int *)param;
+       int *r = (int *)malloc(sizeof(int));
+       *r =- *l;
+       return ((void *)r);
+}
+
+int main (int argc, char *argv[]) {
+       int err;
+       for (long i = 0; i < NTHREADS; i++) {
+               arg[i] = i;
+       err = pthread_create(&(threads[i]), NULL, &neg, (void *)&(arg[i]));
+       if (err != 0)
+               error(err, "pthread_create");
+
+       int *r;
+       err = pthread_join(threads[i], (void **)&r);
+       printf("Resultat[%d]=%d\n", i, *r);
+       free(r);
+       if(err != 0)
+               error(err, "pthread_join");
+       }
+"""
 )
 
 # ╔═╡ d5965023-ff2f-4147-8441-f9ef1b14528c
 qa(md"Lequel ou lesquels des appels a pthread_create est correct",
 c"""
-	pthread_create(&t1,NULL,&f, v);
-	pthread_create(t3,NULL,&f, v);
-	"""
+pthread_create(&t1, NULL, &f, v);
+pthread_create(t3, NULL, &f, v);
+"""
 )
 
 # ╔═╡ 1f8f5bc3-94e9-4a2a-949f-50470c3801c9
@@ -994,8 +1037,8 @@ md"Les deux threads ont accès au fichier, mais chacun avec le même pointeur de
 
 # ╔═╡ 6efa874a-a030-4475-882a-c25b232ca06b
 qa(md"""Lesquelles de ces fonctions pourraient bloquer le thread qui les exécute ?""",
-md"""
-	pthread_mutex_lock(…)
+c"""
+pthread_mutex_lock(…)
 """ )
 
 # ╔═╡ 05467069-852c-4548-9a36-352111723ea5
@@ -1184,7 +1227,7 @@ uuid = "c87230d0-a227-11e9-1b43-d7ebe4e7570a"
 version = "0.4.5"
 
 [[deps.FFMPEG_jll]]
-deps = ["Artifacts", "Bzip2_jll", "FreeType2_jll", "FriBidi_jll", "JLLWrappers", "LAME_jll", "Libdl", "Ogg_jll", "OpenSSL_jll", "Opus_jll", "PCRE2_jll", "Zlib_jll", "libaom_jll", "libass_jll", "libfdk_aac_jll", "libvorbis_jll", "x264_jll", "x265_jll"]
+deps = ["Artifacts", "Bzip2_jll", "FreeType2_jll", "FriBidi_jll", "JLLWrappers", "LAME_jll", "Libdl", "Ogg_jll", "OpenSSL_jll", "Opus_jll", "PCRE2_jll", "Zlib_jll", "libaom_jll", "libass_jll", "libfdk_aac_jll", "libva_jll", "libvorbis_jll", "x264_jll", "x265_jll"]
 git-tree-sha1 = "01ba9d15e9eae375dc1eb9589df76b3572acd3f2"
 uuid = "b22a6f82-2f65-5046-a5b2-351ab43fb4e5"
 version = "8.0.1+0"
@@ -1738,11 +1781,23 @@ git-tree-sha1 = "1a4a26870bf1e5d26cd585e38038d399d7e65706"
 uuid = "1082639a-0dae-5f34-9b06-72781eeb8cb3"
 version = "1.3.8+0"
 
+[[deps.Xorg_libXfixes_jll]]
+deps = ["Artifacts", "JLLWrappers", "Libdl", "Xorg_libX11_jll"]
+git-tree-sha1 = "75e00946e43621e09d431d9b95818ee751e6b2ef"
+uuid = "d091e8ba-531a-589c-9de9-94069b037ed8"
+version = "6.0.2+0"
+
 [[deps.Xorg_libXrender_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Xorg_libX11_jll"]
 git-tree-sha1 = "7ed9347888fac59a618302ee38216dd0379c480d"
 uuid = "ea2f1a96-1ddc-540d-b46f-429655e07cfa"
 version = "0.9.12+0"
+
+[[deps.Xorg_libpciaccess_jll]]
+deps = ["Artifacts", "JLLWrappers", "Libdl", "Zlib_jll"]
+git-tree-sha1 = "4909eb8f1cbf6bd4b1c30dd18b2ead9019ef2fad"
+uuid = "a65dc6b1-eb27-53a1-bb3e-dea574b5389e"
+version = "0.18.1+0"
 
 [[deps.Xorg_libxcb_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Xorg_libXau_jll", "Xorg_libXdmcp_jll"]
@@ -1795,6 +1850,12 @@ deps = ["Artifacts", "Libdl"]
 uuid = "8e850b90-86db-534c-a0d3-1478176c7d93"
 version = "5.15.0+0"
 
+[[deps.libdrm_jll]]
+deps = ["Artifacts", "JLLWrappers", "Libdl", "Xorg_libpciaccess_jll"]
+git-tree-sha1 = "63aac0bcb0b582e11bad965cef4a689905456c03"
+uuid = "8e53e030-5e6c-5a89-a30b-be5b7263a166"
+version = "2.4.125+1"
+
 [[deps.libfdk_aac_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
 git-tree-sha1 = "646634dd19587a56ee2f1199563ec056c5f228df"
@@ -1806,6 +1867,12 @@ deps = ["Artifacts", "JLLWrappers", "Libdl", "Zlib_jll"]
 git-tree-sha1 = "e015f211ebb898c8180887012b938f3851e719ac"
 uuid = "b53b4c65-9356-5827-b1ea-8c7a1a84506f"
 version = "1.6.55+0"
+
+[[deps.libva_jll]]
+deps = ["Artifacts", "JLLWrappers", "Libdl", "Xorg_libX11_jll", "Xorg_libXext_jll", "Xorg_libXfixes_jll", "libdrm_jll"]
+git-tree-sha1 = "7dbf96baae3310fe2fa0df0ccbb3c6288d5816c9"
+uuid = "9a156e7d-b971-5f62-b2c9-67348b8fb97c"
+version = "2.23.0+0"
 
 [[deps.libvorbis_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Ogg_jll"]
@@ -1970,7 +2037,7 @@ version = "4.1.0+0"
 # ╟─8610572e-e21d-4e24-ada3-8634dcf40d85
 # ╟─68da5624-1bc8-4527-b4d2-081e33171e0c
 # ╟─e7d69964-de82-4883-a39c-66f0d606a3e6
-# ╟─836deb6f-e1f3-4766-b5e7-6c5bf788e0f9
+# ╠═836deb6f-e1f3-4766-b5e7-6c5bf788e0f9
 # ╠═c212b18e-c7ab-46da-9492-f8ba6e4a08bd
 # ╠═9b05d5b4-edbf-4702-9b67-ced9130bf36e
 # ╟─c642977a-56e8-4a6a-b7b1-27caae9b2427
