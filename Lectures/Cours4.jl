@@ -576,7 +576,7 @@ md"## Les sémaphores"
 md"""
 3 opérations possibles sur un mutex :
 
-1. `Init(s)` A une valeur entière non-négative
+1. `Init(s)` initialisation à une valeur entière non-négative
 2. `Down(s)` parfois appelé `wait(s)` ou `P(s)`
 3. `Up(s)` parfois appelé `signal(s)`, `post(s)` ou `V(s)`
 """
