@@ -205,7 +205,7 @@ void *mmap(void *addr, size_t length, int prot, int flags, int fd, off_t offset)
 ```
 
 Descriptions des arguments :
-1. L'addresse où le le fichier a été mappé. Quand il est à `NULL`, le noyau choisit l'addresse
+1. L'adresse où le le fichier a été mappé. Quand il est à `NULL`, le noyau choisit l'adresse
 2. La taille du fichier en octets
 3. La protection appliquée à l'emplacement en mémoire
 ```
