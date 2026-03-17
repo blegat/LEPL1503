@@ -1,3 +1,7 @@
+[🏆 Classement du projet](championship)
+
+## Lectures
+
 This page contains the html and pdf versions of the notebooks of the course that are accessible [here](https://github.com/blegat/LEPL1503).
 The html versions accessible here are static, see [here](Lectures) for details on how to get interactive versions.
 
