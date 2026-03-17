@@ -1,4 +1,4 @@
-[🏆 Classement du projet](championship)
+[🏆![](https://img.shields.io/badge/Classement-Projet-blue.svg)🏆](championship)
 
 ## Lectures
 
