@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Évolution</title>
+    <link rel="icon" type="image/x-icon" href="chart.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="index.css">
+    <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+</head>
+
+<body class="bg-gray-50 p-6">
+    <div class="flex justify-center mb-6 border-b pb-6 border-gray-300">
+        <p class="text-4xl font-bold">📈 Évolution</p>
+    </div>
+
+    <!-- Parameter selectors -->
+    <div class="flex flex-wrap justify-center gap-6 mb-6 border-b pb-6 border-gray-300">
+        <!-- Threads -->
+        <div class="bg-white shadow rounded-2xl p-4">
+            <div class="text-lg font-semibold mb-2 text-center">Nombres de thread</div>
+            <div id="thread-selector" class="flex">
+                <button class="thread-btn px-4 py-2 rounded-l-lg bg-gray-100 hover:bg-gray-200">1</button>
+                <button class="thread-btn px-4 py-2 bg-gray-100 hover:bg-gray-200">2</button>
+                <button class="thread-btn px-4 py-2 bg-gray-100 hover:bg-gray-200">4</button>
+                <button class="thread-btn px-4 py-2 bg-gray-100 hover:bg-gray-200">8</button>
+                <button class="thread-btn px-4 py-2 rounded-r-lg bg-gray-100 hover:bg-gray-200">16</button>
+            </div>
+        </div>
+
+        <!-- Mode -->
+        <div class="bg-white shadow rounded-2xl p-4">
+            <div class="text-lg font-semibold mb-2 text-center">Mode</div>
+            <div id="mode-selector" class="flex">
+                <button class="mode-btn px-4 py-2 rounded-l-lg bg-gray-100 hover:bg-gray-200"
+                    value="detection">Détection</button>
+                <button class="mode-btn px-4 py-2 rounded-r-lg bg-gray-100 hover:bg-gray-200"
+                    value="correction">Correction</button>
+            </div>
+        </div>
+
+        <!-- Metric -->
+        <div class="bg-white shadow rounded-2xl p-4">
+            <div class="text-lg font-semibold mb-2 text-center">Métrique</div>
+            <div id="metric-selector" class="flex flex-wrap">
+                <button class="metric-btn px-4 py-2 rounded-l-lg bg-gray-100 hover:bg-gray-200" value="lines">Lignes</button>
+                <button class="metric-btn px-4 py-2 bg-gray-100 hover:bg-gray-200" value="detection_accuracy">Précision détection</button>
+                <button class="metric-btn px-4 py-2 bg-gray-100 hover:bg-gray-200" value="correction_accuracy">Précision correction</button>
+                <button class="metric-btn px-4 py-2 bg-gray-100 hover:bg-gray-200" value="memory">Mémoire</button>
+                <button class="metric-btn px-4 py-2 rounded-r-lg bg-gray-100 hover:bg-gray-200" value="timings">Vitesse traitement</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex flex-col md:flex-row gap-6">
+        <!-- Groups list -->
+        <div class="bg-white p-4 rounded shadow">
+            <h2 class="text-lg font-semibold mb-2">Groupes</h2>
+            <input type="text" id="groupFilter" placeholder="Filtrer les groupes"
+                class="border border-gray-300 rounded p-1 w-full mb-2">
+            <div id="groupList" class="w-full h-96 border border-gray-300 rounded p-2 overflow-y-auto"></div>
+            <button id="selectAll" class="mt-2 w-full border border-gray-300 p-2 rounded">Tout sélectionner</button>
+            <button id="deselectAll" class="mt-2 w-full border border-gray-300 p-2 rounded">Tout désélectionner</button>
+        </div>
+
+        <!-- Chart -->
+        <div class="bg-white p-4 rounded shadow flex-grow">
+            <div class="flex items-center mb-2">
+                <input type="checkbox" id="logScale" class="mr-2">
+                <label for="logScale" class="text-sm">Échelle logarithmique</label>
+            </div>
+            <div id="plot" style="width: 100%; height: 600px;"></div>
+        </div>
+    </div>
+
+    <a href="index.html" class="block text-center text-blue-600 hover:underline mt-6">← Retour au classement</a>
+
+    <script type="module">
+        // Load data
+        const importURL = window.location.hostname === "hokkaydo.github.io" ? "https://hokkaydo.github.io/LEPL1503-2026/data/importer.js" : "/data/importer.js";
+        const module = await import(importURL);
+        const data = module.default;
+
+        const TIMESTAMPED_LINE_AMOUNT = 10; // ! CHANGE IN THE tester.py FILE TOO IF YOU CHANGE THIS !
+        const TIMEOUTS = [1, 10];           // ! CHANGE IN THE tester.py FILE TOO IF YOU CHANGE THIS !
+
+        // Hash function for grouping
+        function hashCode(str) {
+            let hash = 0;
+            for (let i = 0; i < str.length; i++) {
+                hash = str.charCodeAt(i) + ((hash << 5) - hash);
+            }
+            return hash;
+        }
+
+        // Organize data
+        const groups = {};
+        let groupNames = new Set();
+        const latestTimings = {};
+
+        data.flat().forEach(element => {
+            if (element.comments !== "OK") return;
+
+            groupNames.add(element.group);
+            element.detection_accuracy = +element.detection_accuracy.toPrecision(4);
+            element.correction_accuracy = +element.correction_accuracy.toPrecision(4);
+            element.memory = +(element.memory / 1024).toPrecision(4); // convert to MB
+
+            const hash = hashCode(element.threads + element.mode);
+            if (!groups[hash]) groups[hash] = {};
+            if (!groups[hash][element.group]) groups[hash][element.group] = [];
+            groups[hash][element.group].push(element);
+
+            if (!element.timings) return;
+
+            const el = {group: element.group, date: element.date, timings: element.timings};
+            // group not yet registered
+            if (!latestTimings[hash] || !latestTimings[hash][element.group]) {
+                if (!latestTimings[hash]) latestTimings[hash] = {};
+                latestTimings[hash][element.group] = el;
+
+            // newer date for this group
+            } else if (element.date > latestTimings[hash][element.group].date) {
+                latestTimings[hash][element.group] = el;
+
+            // same date for this group 
+            } else {
+                latestTimings[hash][element.group] = el;
+            }
+        });
+
+        groupNames = [...groupNames].sort((a, b) => a.localeCompare(b));
+
+        // Get selected group from url params if any
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlGroup = urlParams.get("group");
+
+        // State
+        let selectedGroups = new Set(urlGroup && groupNames.includes(urlGroup) ? [urlGroup] : JSON.parse(localStorage.getItem("selectedGroups")) || []);
+        let threads = localStorage.getItem("threads") || 1;
+        let mode = localStorage.getItem("mode") || "detection";
+        let metric = localStorage.getItem("graph_metric") || "lines";
+
+        selectedGroups = [...selectedGroups].filter(g => groupNames.includes(g));
+
+        localStorage.setItem("selectedGroups", JSON.stringify([...selectedGroups]));
+        localStorage.setItem("threads", threads);
+        localStorage.setItem("mode", mode);
+        localStorage.setItem("graph_metric", metric);
+
+        // DOM elements
+        const groupList = document.getElementById("groupList");
+        const logScaleCheckbox = document.getElementById("logScale");
+
+        // Render groups
+        groupNames.forEach(g => {
+            const container = document.createElement("div");
+            container.className = "flex justify-between items-center py-1 cursor-pointer";
+            const label = document.createElement("span");
+            label.textContent = g;
+            const check = document.createElement("img");
+            check.classList = "ml-2 h-2" + (selectedGroups.includes(g) ? "" : " hidden");
+            check.src = "bullet.svg";
+            container.append(label, check);
+            container.onclick = () => {
+                if (selectedGroups.includes(g)) {
+                    selectedGroups = selectedGroups.filter(s => s !== g);
+                    check.classList.add("hidden");
+                } else {
+                    selectedGroups.push(g);
+                    check.classList.remove("hidden");
+                }
+                localStorage.setItem("selectedGroups", JSON.stringify(selectedGroups));
+                updateChart();
+            };
+            groupList.appendChild(container);
+        });
+
+        // Group filter
+        document.getElementById("groupFilter").oninput = e => {
+            const filter = e.target.value.toLowerCase();
+            [...groupList.children].forEach(div => {
+                div.style.display = div.textContent.toLowerCase().includes(filter) ? "flex" : "none";
+            });
+        };
+
+        // Select / deselect all
+        document.getElementById("selectAll").onclick = () => {
+            selectedGroups = [...groupNames];
+            [...groupList.children].forEach(div => div.lastChild.classList.remove("hidden"));
+            localStorage.setItem("selectedGroups", JSON.stringify(selectedGroups));
+            updateChart();
+        };
+        document.getElementById("deselectAll").onclick = () => {
+            selectedGroups = [];
+            [...groupList.children].forEach(div => div.lastChild.classList.add("hidden"));
+            localStorage.setItem("selectedGroups", JSON.stringify(selectedGroups));
+            updateChart();
+        };
+
+        // Colors
+        function colorForGroup(str) {
+            let h = 0;
+            for (let i = 0; i < str.length; i++) h = str.charCodeAt(i) + ((h << 5) - h);
+            return `hsl(${(h * 44) % 360},70%,50%)`;
+        }
+
+        function updateChart() {
+            const hash = hashCode(threads + mode);
+            const chartData = groups[hash];
+            if (!chartData || (metric === "timings" && !latestTimings[hash])) {
+                Plotly.newPlot("plot", [], { title: "Aucune donnée disponible" });
+                return;
+            }
+            const stride = TIMEOUTS[mode === "correction" ? 1 : 0]/TIMESTAMPED_LINE_AMOUNT;
+            const timings = Array.from({length: TIMESTAMPED_LINE_AMOUNT}, (_, k) => (k * stride).toPrecision(1));
+
+            const traces = selectedGroups.map(group => {
+                const data = [...chartData[group] || []];
+                data.sort((a, b) => new Date(a.date) - new Date(b.date));
+                return {
+                    x: metric === "timings" ? timings : data.map(d => d.date),
+                    y: metric === "timings" ? latestTimings[hash][group].timings : data.map(d => +d[metric]),
+                    mode: "lines+markers",
+                    name: group,
+                    line: { color: colorForGroup(group) }
+                };
+            });
+
+            let yTitle = 
+            metric === "memory" ? "Mémoire (MB)" : 
+            metric == "lines" ? "#Lignes (" + TIMEOUTS[mode === "correction" ? 1 : 0] + "s timeout)" :
+            metric == "timings" ? "Lignes traitées (" + TIMEOUTS[mode === "correction" ? 1 : 0] + "s timeout)" :
+            "Précision (%)";
+
+            Plotly.newPlot("plot", traces, {
+                xaxis: { title: metric === "timings" ? "Temps (s)": "Date" },
+                yaxis: {
+                    title: yTitle,
+                    type: logScaleCheckbox.checked ? "log" : "linear",
+                    range: (metric.includes("accuracy")) ? [0, 100] : undefined
+                },
+                legend: { orientation: "h" }
+            });
+        }
+
+        // Setup buttons (threads, mode, metric)
+        const selectedClasses = ["bg-cyan-300", "text-white"];
+        const unselectedClasses = ["bg-gray-100", "hover:bg-gray-200"];
+        function setupButtons(selector, stateKey, updateFn) {
+            document.querySelectorAll(selector).forEach(btn => {
+                if (btn.value ? btn.value == localStorage.getItem(stateKey) : btn.textContent == localStorage.getItem(stateKey)) {
+                    btn.classList.remove(...unselectedClasses);
+                    btn.classList.add(...selectedClasses);
+                }
+                btn.addEventListener("click", () => {
+                    document.querySelectorAll(selector).forEach(b => {
+                        b.classList.remove(...selectedClasses);
+                        b.classList.add(...unselectedClasses);
+                    });
+                    btn.classList.remove(...unselectedClasses);
+                    btn.classList.add(...selectedClasses);
+                    localStorage.setItem(stateKey, btn.value || parseInt(btn.textContent));
+                    updateFn(btn.value || parseInt(btn.textContent));
+                    updateChart();
+                });
+            });
+        }
+
+        setupButtons(".thread-btn", "threads", val => threads = val);
+        setupButtons(".mode-btn", "mode", val => mode = val);
+        setupButtons(".metric-btn", "graph_metric", val => metric = val);
+
+        logScaleCheckbox.onchange = updateChart;
+
+        updateChart();
+    </script>
+</body>
+
+</html>

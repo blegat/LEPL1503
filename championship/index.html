@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Classement</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body class="bg-gray-50 p-6">
+
+    <div class="flex justify-center items-center mb-6 pb-6 border-b border-gray-300">
+        <p class="text-5xl font-bold">LEPL1503</p>
+    </div>
+    <div class="flex flex-wrap justify-center items-center gap-6 mb-6 border-b border-gray-300 pb-6 w-full">
+        <div class="bg-white shadow rounded-2xl p-6 ">
+            <div class="text-lg font-semibold mb-4 text-center">Nombres de thread</div>
+            <div id="thread-selector" class="flex">
+                <button class="thread-btn px-4 py-2 rounded-l-lg bg-gray-100 hover:bg-gray-200 transition duration-100">1</button>
+                <button class="thread-btn px-4 py-2 bg-gray-100 hover:bg-gray-200 transition duration-100">2</button>
+                <button class="thread-btn px-4 py-2 bg-gray-100 hover:bg-gray-200 transition duration-100">4</button>
+                <button class="thread-btn px-4 py-2 bg-gray-100 hover:bg-gray-200 transition duration-100">8</button>
+                <button class="thread-btn px-4 py-2 rounded-r-lg bg-gray-100 hover:bg-gray-200 transition duration-100">16</button>
+            </div>
+        </div>
+
+        <div class="bg-white shadow rounded-2xl p-6 w-max">
+            <div class="text-lg font-semibold mb-4 text-center">Mode</div>
+            <div id="mode-selector" class="flex">
+                <button class="mode-btn px-4 py-2 rounded-l-lg bg-gray-100 hover:bg-gray-200 transition duration-100" value="detection">Détection</button>
+                <button class="mode-btn px-4 py-2 rounded-r-lg bg-gray-100 hover:bg-gray-200 transition duration-100" value="correction">Correction</button>
+            </div>
+        </div>
+
+        <div class="bg-white shadow rounded-2xl p-6 w-max">
+            <div class="text-lg font-semibold mb-4 text-center">Métrique</div>
+            <div id="metric-selector" class="flex">
+                <button class="metric-btn px-4 py-2 rounded-l-lg bg-gray-100 hover:bg-gray-200 transition duration-100" value="lines">Lignes traitées</button>
+                <button class="metric-btn px-4 py-2 bg-gray-100 hover:bg-gray-200 transition duration-100" value="detection_accuracy">Précision de détection</button>
+                <button class="metric-btn px-4 py-2 bg-gray-100 hover:bg-gray-200 transition duration-100" value="correction_accuracy">Précision de correction</button>
+                <button class="metric-btn px-4 py-2 rounded-r-lg bg-gray-100 hover:bg-gray-200 transition duration-100" value="memory">Mémoire</button>
+            </div>
+        </div>
+    </div>
+    <div class="max-w-2xl mx-auto">
+        <h1 class="text-4xl font-bold mb-4 text-center">🏆 Classement</h1>
+        <div id="ranking" class="space-y-2"></div>
+        <div class="text-center text-gray-500 text-4xl hidden" id="no-data-message">
+            Aucune donnée disponible pour cette configuration
+        </div>
+    </div>
+
+    <!-- Footer with a thin line on the whole page -->
+    <footer class="border-t border-gray-300 mt-6 lg:px-48 pt-6 text-center text-gray-500 text-sm">
+        <p>
+            Chaque code est testé 5 fois et les résultats sont moyennés pour éviter les fluctuations dues au hasard. 
+            Un test consiste en une exécution complète du programme sur des fichiers de tests de taille croissante. 
+            Tant que le programme n'atteint pas la limite de temps ou de mémoire, il est executé sur un fichier de test plus grand.
+        </p>
+        &copy; 2026 LEPL1503
+    </footer>
+
+    <script type="module">
+        // Load data
+        const importURL = window.location.hostname === "hokkaydo.github.io" ? "https://hokkaydo.github.io/LEPL1503-2026/data/importer.js" : "/data/importer.js";
+        const module = await import(importURL);
+        const data = module.default;
+
+        let latestData = {};
+
+        data.flat().forEach(entry => {
+            if (entry.comments !== "OK") return; // only consider successful runs
+
+            entry.date = new Date(entry.date);
+            entry.memory = (parseFloat(entry.memory)/1024).toPrecision(4); // convert to MB
+
+            // group not yet registered
+            if (!latestData[entry.group]) {
+                latestData[entry.group] = [entry];
+
+            // newer date for this group
+            } else if (entry.date > latestData[entry.group][0].date) {
+                latestData[entry.group] = [entry];
+
+            // same date for this group 
+            } else {
+                latestData[entry.group].push(entry);
+            }
+        });
+        latestData = Object.values(latestData).flat();
+
+        let ranking = [];
+
+        // Parameters
+        let threads = localStorage.getItem("threads") || 1;
+        let mode = localStorage.getItem("mode") || "detection";
+        let metric = localStorage.getItem("leaderboard_metric") || "lines";
+
+        localStorage.setItem("threads", threads);
+        localStorage.setItem("mode", mode);
+        localStorage.setItem("leaderboard_metric", metric);
+
+        const noDataMessage = document.getElementById("no-data-message");
+
+        function updateData() {
+            let ranking = latestData.filter(entry => entry.mode === mode && entry.threads == threads);
+            if (metric === "memory") {
+                ranking = ranking.sort((a, b) => a[metric] - b[metric]);
+            } else {
+                ranking = ranking.sort((a, b) => b[metric] - a[metric]);
+            }
+            return ranking;
+        }
+
+        const rankingContainer = document.getElementById("ranking");
+
+        function renderLeaderboard() {
+            const medals = ["🥇", "🥈", "🥉"];
+            const unit = (metric === "lines" || metric === "memory") ? (metric === "lines" ? "l" : "MB") : "%";
+            if (ranking.length === 0) {
+                noDataMessage.classList.remove("hidden");
+                return;
+            } else {
+                noDataMessage.classList.add("hidden");
+            }
+            ranking.forEach((entry, i) => {
+                const el = document.createElement("a");
+                el.href = `group.html?group=${entry.group}`;
+                el.className = "block p-4 bg-white shadow rounded-lg hover:bg-gray-100 transition";
+                const label = i < 3 ? medals[i] : "#" + (i + 1);
+                el.innerHTML = 
+                `
+                    <div class="flex justify-between items-center">
+                        <p class="font-semibold">${label} ${entry.group}</p>
+                        <p class="text-sm text-gray-600">${entry[metric]}${unit}</p>
+                    </div>
+                `;
+                rankingContainer.appendChild(el);
+            });
+        }
+        ranking = updateData();
+        renderLeaderboard();
+
+        const selectedClasses = ["bg-cyan-300", "text-white"];
+        const unselectedClasses = ["bg-gray-100", "hover:bg-gray-200"];
+
+        function setupButtons(selector, stateKey, updateFn) {
+            document.querySelectorAll(selector).forEach(btn => {
+                if (btn.value ? btn.value == localStorage.getItem(stateKey) : btn.textContent == localStorage.getItem(stateKey)) {
+                    btn.classList.remove(...unselectedClasses);
+                    btn.classList.add(...selectedClasses);
+                }
+                btn.addEventListener("click", () => {
+                    document.querySelectorAll(selector).forEach(b => {
+                        b.classList.remove(...selectedClasses);
+                        b.classList.add(...unselectedClasses);
+                    });
+                    btn.classList.remove(...unselectedClasses);
+                    btn.classList.add(...selectedClasses);
+                    updateFn(btn.value || parseInt(btn.textContent));
+                    localStorage.setItem(stateKey, btn.value || parseInt(btn.textContent));
+                    ranking = updateData();
+                    rankingContainer.innerHTML = "";
+                    renderLeaderboard();
+                });
+            });
+        }
+
+        setupButtons(".thread-btn", "threads", val => threads = val);
+        setupButtons(".mode-btn", "mode", val => mode = val);
+        setupButtons(".metric-btn", "metric", val => metric = val);
+    </script>
+</body>
+
+</html>
