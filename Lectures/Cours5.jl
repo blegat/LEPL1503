@@ -35,9 +35,6 @@ md"## Clarifications projet"
 md"""
 * Il est important de lire [la partie multithread du syllabus](https://lepl1503.info.ucl.ac.be/syllabus/theorie/index.html#systemes-multiprocesseurs) pour savoir faire la deuxième partie
 * Amenez le Raspberry aux séances de TP pour que votre tuteur puissent vérifier que vous savez l'utiliser et que votre code fonctionne dessus. Les mesures devront être faites sur le Raspeberry pour être valable. On ne considère pas les mesures sur une autre plateforme.
-* "obligatoire" ne veut pas dire que vous aurez tous les points si vous n'implémentez pas le reste!
-
-> Cette partie est obligatoire ! Vous trouverez dans l’annexe A des schémas expliquant ces neuf opérations ;
 """
 
 # ╔═╡ d87d73d9-d9d8-46e9-9599-0daa7fa95e9c
@@ -83,13 +80,13 @@ md"## Interface par fichiers"
 md"""
 On ne partage normalement pas de `.o` par `git` car ce n'est pas portable (e.g., ce `.o` ne marche pas sur Mac OS ni sur le Raspberry). Lorsque vous avez implémenté ces fonctions, supprimez ce fichier du git et ajoutez `objects/file.o` dans le `.gitignore`
 
-> Comme vous n'aurez pas vu les fichiers au moment de commencer le projet, nous vous fournissons un fichier objet `file.o` dans le dossier objects. ... Cependant, vous devrez coder ces fonctions plus tard et ceci sera vérifié !
+C'est une bonne chose d'écrire des unit tests, mais comme les signatures des fonctions sont libres, nous utiliserons l'interface uniformisée en ligne de commande pour testez votre code. Assurez-vous qu'elle fonctionne comme demandée.
 
-C'est une bonne chose d'écrire des unit tests mais comme les signatures des fonctions sont libres, nous utiliseront l'interface uniformisée par fichier pour testez votre code.
-
-> Le Makefile génère un exécutable main. Vous pouvez l’utiliser de la façon suivante :
+> Le Makefile génère un exécutable. Vous pouvez l'utiliser de la façon suivante :
 >
-> `./main name_op input_file_A [-v] [-n n_threads] [-f output_stream] [-d degree] [input_file_B]`
+> ```
+> ./<nom du fichier> [arguments]
+> ```
 """
 
 # ╔═╡ 9e9a0b57-30ce-4c9c-b0f5-a111f692d13f
