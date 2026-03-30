@@ -80,7 +80,7 @@ md"## Interface par fichiers"
 
 # ╔═╡ 5892921c-b019-418c-ba01-3d7a4e4697b3
 md"""
-On ne partage normalement pas de `.o` par `git` car ce n'est pas portable (e.g., ce `.o` ne marche pas sur Mac OS ni sur le Raspberry). Lorsque vous avez implémenté ces fonctions, supprimez ce fichier du git et ajoutez `objects/file.o` dans le `.gitignore`
+On ne partage normalement pas de fichiers binaire (ex : `.o`) par `git` car ce n'est pas portable (ex : ce `.o` ne marche pas sur Mac OS si compilé sur un Raspberry). Lorsque des fichiers auto-générés apparaissent dans la sortie de `git status`, ajoutez-les dans le `.gitignore`. Supprimez-les de git avec `git rm` s'ils ont été ajouté précédemment par accident, ce qui ne devrait pas arriver si `git add -p` est toujours utilisé au lieu de `git add .`.
 
 C'est une bonne chose d'écrire des unit tests, mais comme les signatures des fonctions sont libres, nous utiliserons l'interface uniformisée en ligne de commande pour testez votre code. Assurez-vous qu'elle fonctionne comme demandée.
 
