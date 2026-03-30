@@ -35,6 +35,7 @@ md"## Clarifications projet"
 md"""
 * Il est important de lire [la partie multithread du syllabus](https://lepl1503.info.ucl.ac.be/syllabus/theorie/index.html#systemes-multiprocesseurs) pour savoir faire la deuxième partie
 * Amenez le Raspberry aux séances de TP pour que votre tuteur puissent vérifier que vous savez l'utiliser et que votre code fonctionne dessus. Les mesures devront être faites sur le Raspeberry pour être valable. On ne considère pas les mesures sur une autre plateforme.
+* N'oubliez de régulièrement récupérer les modifications réalisées sur le dépôt parent.
 """
 
 # ╔═╡ d87d73d9-d9d8-46e9-9599-0daa7fa95e9c
