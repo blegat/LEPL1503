@@ -97,8 +97,10 @@ md"## Debugging"
 # ╔═╡ 9afe0855-162f-4234-8001-610e08e39bb0
 md"""
 * Ne pas oublier d'utiliser `-g` lors de la compilation
-* `lldb` : développé par LLVM comme `clang` mais marche aussi avec des binaires compilés avec `gcc`, plus facile à installer sur Mac OS
-* `gdb` : développé par GNU comme `gcc` mais marche auss avec des binaires compilés avec `clang`
+* `lldb` : développé par LLVM comme `clang` mais fonctionne aussi avec des binaires compilés avec `gcc`, plus facile à installer sur Mac OS
+* `gdb` : développé par GNU comme `gcc` mais fonctionne aussi avec des binaires compilés avec `clang`
+* Il existe des interfaces graphiques pour ces débogueur, ex : [Seer](https://github.com/epasveer/seer) (`apt install seergdb`), [VSCode](https://code.visualstudio.com/docs/cpp/cpp-debug), [lldbg](https://github.com/zmeadows/lldbg), [gdbgui](https://www.gdbgui.com), etc.
+* Utiliser un débogueur, c'est un bon réflex !
 * Utilisez `-fsanitize=address` à la compilation pour que les bornes soient vérifiées.
   - Le code est peut-être un peu moins rapide donc c'est à désactiver pour les mesures
   - mais il n'y a pas de bonne raison de ne pas l'utiliser dans la phase de développement!
