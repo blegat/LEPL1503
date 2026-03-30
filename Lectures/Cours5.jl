@@ -36,6 +36,7 @@ md"""
 * Il est important de lire [la partie multithread du syllabus](https://lepl1503.info.ucl.ac.be/syllabus/theorie/index.html#systemes-multiprocesseurs) pour savoir faire la deuxième partie
 * Amenez le Raspberry aux séances de TP pour que votre tuteur puissent vérifier que vous savez l'utiliser et que votre code fonctionne dessus. Les mesures devront être faites sur le Raspeberry pour être valable. On ne considère pas les mesures sur une autre plateforme.
 * N'oubliez de régulièrement récupérer les modifications réalisées sur le dépôt parent.
+* Rappel : l'utilisation de logiciels d'IA générative tels que chatGPT, GitHub copilot, ... est interdite pour l'écriture de code source en langage C et les reviews. Par ailleurs, les sources d'information externes doivent être systématiquement citées en respectant les normes de référencement bibliographique.
 """
 
 # ╔═╡ d87d73d9-d9d8-46e9-9599-0daa7fa95e9c
