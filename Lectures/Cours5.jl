@@ -35,9 +35,8 @@ md"## Clarifications projet"
 md"""
 * Il est important de lire [la partie multithread du syllabus](https://lepl1503.info.ucl.ac.be/syllabus/theorie/index.html#systemes-multiprocesseurs) pour savoir faire la deuxième partie
 * Amenez le Raspberry aux séances de TP pour que votre tuteur puissent vérifier que vous savez l'utiliser et que votre code fonctionne dessus. Les mesures devront être faites sur le Raspeberry pour être valable. On ne considère pas les mesures sur une autre plateforme.
-* "obligatoire" ne veut pas dire que vous aurez tous les points si vous n'implémentez pas le reste!
-
-> Cette partie est obligatoire ! Vous trouverez dans l’annexe A des schémas expliquant ces neuf opérations ;
+* N'oubliez de régulièrement récupérer les modifications réalisées sur le dépôt parent.
+* Rappel : l'utilisation de logiciels d'IA générative tels que chatGPT, GitHub copilot, ... est interdite pour l'écriture de code source en langage C et les reviews. Par ailleurs, les sources d'information externes doivent être systématiquement citées en respectant les normes de référencement bibliographique.
 """
 
 # ╔═╡ d87d73d9-d9d8-46e9-9599-0daa7fa95e9c
@@ -81,15 +80,15 @@ md"## Interface par fichiers"
 
 # ╔═╡ 5892921c-b019-418c-ba01-3d7a4e4697b3
 md"""
-On ne partage normalement pas de `.o` par `git` car ce n'est pas portable (e.g., ce `.o` ne marche pas sur Mac OS ni sur le Raspberry). Lorsque vous avez implémenté ces fonctions, supprimez ce fichier du git et ajoutez `objects/file.o` dans le `.gitignore`
+On ne partage normalement pas de fichiers binaire (ex : `.o`) par `git` car ce n'est pas portable (ex : ce `.o` ne marche pas sur Mac OS si compilé sur un Raspberry). Lorsque des fichiers auto-générés apparaissent dans la sortie de `git status`, ajoutez-les dans le `.gitignore`. Supprimez-les de git avec `git rm` s'ils ont été ajouté précédemment par accident, ce qui ne devrait pas arriver si `git add -p` est toujours utilisé au lieu de `git add .`.
 
-> Comme vous n'aurez pas vu les fichiers au moment de commencer le projet, nous vous fournissons un fichier objet `file.o` dans le dossier objects. ... Cependant, vous devrez coder ces fonctions plus tard et ceci sera vérifié !
+C'est une bonne chose d'écrire des unit tests, mais comme les signatures des fonctions sont libres, nous utiliserons l'interface uniformisée en ligne de commande pour testez votre code. Assurez-vous qu'elle fonctionne comme demandée.
 
-C'est une bonne chose d'écrire des unit tests mais comme les signatures des fonctions sont libres, nous utiliseront l'interface uniformisée par fichier pour testez votre code.
-
-> Le Makefile génère un exécutable main. Vous pouvez l’utiliser de la façon suivante :
+> Le Makefile génère un exécutable. Vous pouvez l'utiliser de la façon suivante :
 >
-> `./main name_op input_file_A [-v] [-n n_threads] [-f output_stream] [-d degree] [input_file_B]`
+> ```
+> ./<nom du fichier> [arguments]
+> ```
 """
 
 # ╔═╡ 9e9a0b57-30ce-4c9c-b0f5-a111f692d13f
@@ -98,8 +97,10 @@ md"## Debugging"
 # ╔═╡ 9afe0855-162f-4234-8001-610e08e39bb0
 md"""
 * Ne pas oublier d'utiliser `-g` lors de la compilation
-* `lldb` : développé par LLVM comme `clang` mais marche aussi avec des binaires compilés avec `gcc`, plus facile à installer sur Mac OS
-* `gdb` : développé par GNU comme `gcc` mais marche auss avec des binaires compilés avec `clang`
+* `lldb` : développé par LLVM comme `clang` mais fonctionne aussi avec des binaires compilés avec `gcc`, plus facile à installer sur Mac OS
+* `gdb` : développé par GNU comme `gcc` mais fonctionne aussi avec des binaires compilés avec `clang`
+* Il existe des interfaces graphiques pour ces débogueur, ex : [Seer](https://github.com/epasveer/seer) (`apt install seergdb`), [VSCode](https://code.visualstudio.com/docs/cpp/cpp-debug), [lldbg](https://github.com/zmeadows/lldbg), [gdbgui](https://www.gdbgui.com), etc.
+* Utiliser un débogueur, c'est un bon réflex !
 * Utilisez `-fsanitize=address` à la compilation pour que les bornes soient vérifiées.
   - Le code est peut-être un peu moins rapide donc c'est à désactiver pour les mesures
   - mais il n'y a pas de bonne raison de ne pas l'utiliser dans la phase de développement!
