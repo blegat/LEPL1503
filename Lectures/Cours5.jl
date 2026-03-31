@@ -118,51 +118,6 @@ compile_and_run(out_of_bounds, valgrind = false, verbose = true, cflags = ["-Wno
 # ╔═╡ e3053cb5-186d-4c98-86c7-609be4a7c8dc
 compile_and_run(out_of_bounds, valgrind = false, verbose = true, cflags = ["-Wno-array-bounds", "-fsanitize=address", "-g"])
 
-# ╔═╡ 0221a56e-c279-4ca4-b211-dd61b95a23bd
-md"## Matrices creuses"
-
-# ╔═╡ ee19532c-e2fd-466f-9830-62ba94870a51
-md"""
-Deux format efficaces en taille mémoire, calcul et localité de la mémoire:
-* Compressed Sparse Row (CSR)
-* Compressed Sparse Column (CSC)
-"""
-
-# ╔═╡ eef6b843-6f92-4ce1-bf33-154bd814e915
-hbox([
-md"""
-```math
-\begin{pmatrix}
-5 & 0 & 0 & 0 \\
-0 & 8 & 0 & 0 \\
-0 & 7 & 3 & 0 \\
-0 & 6 & 0 & 0 \\
-\end{pmatrix}
-```
-""",
-Div(html" "; style = Dict("flex-grow" => "1")),
-md"""
-CSR (0-indexed)
-```math
-\begin{align}
- \texttt{nzval} &= \begin{bmatrix} 5 & 8 & 7 & 3 & 6 \end{bmatrix}\\
- \texttt{colval} &= \begin{bmatrix} 0 & 1 & 1 & 2 & 1 \end{bmatrix}\\
- \texttt{rowptr} &= \begin{bmatrix} 0 & 1 & 2 & 4 & 5 \end{bmatrix}
-\end{align}
-```
-""",
-Div(html" "; style = Dict("margin-left" => "50px")),
-md"""
-CSC (0-indexed)
-```math
-\begin{align}
- \texttt{nzval} &= \begin{bmatrix} 5 & 8 & 7 & 6 & 3 \end{bmatrix}\\
- \texttt{colptr} &= \begin{bmatrix} 0 & 1 & 4 & 5 & 5 \end{bmatrix}\\
- \texttt{rowval} &= \begin{bmatrix} 0 & 1 & 2 & 3 & 2 \end{bmatrix}
-\end{align}
-```
-"""])
-
 # ╔═╡ a843fc18-5290-414a-a5db-dacd4ac88f1d
 Pkg.instantiate()
 
@@ -185,10 +140,7 @@ Pkg.instantiate()
 # ╟─ff911f08-d9a3-41f3-8e8d-c8e94fecacf0
 # ╟─e3053cb5-186d-4c98-86c7-609be4a7c8dc
 # ╠═d50aa7f3-9c15-412e-82c2-f870aab8ffb0
-# ╟─0221a56e-c279-4ca4-b211-dd61b95a23bd
-# ╟─ee19532c-e2fd-466f-9830-62ba94870a51
-# ╟─eef6b843-6f92-4ce1-bf33-154bd814e915
-# ╟─47f92d66-0834-4f8d-9bdf-172c55e93cce
-# ╟─35ad233c-a500-461a-af82-855d56792841
+# ╠═47f92d66-0834-4f8d-9bdf-172c55e93cce
+# ╠═35ad233c-a500-461a-af82-855d56792841
 # ╟─a843fc18-5290-414a-a5db-dacd4ac88f1d
 # ╟─10e3b9fb-fe77-4106-a512-74f4d7d0cfbb
