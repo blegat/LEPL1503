@@ -20,7 +20,7 @@ S5      | 02/03   | Détection des mots incorrects | [Cours2](Lectures/Cours2.ht
 S6      | 09/03   | Correction mots incorrects |
 S7      | 16/03   | Détection de la langue | [Cours4](Lectures/Cours4.html) | Vendredi 18h: Projet (partie 1)
 S8      | 23/03   | TP5 Lecture/Écriture des fichiers | [Cours3](Lectures/Cours3.html) | Vendredi 18h: Peer Reviews + Evaluation de la dynamique de groupe (Dynamo)
-S9      | 30/03   | TP6 Parallélisation |
+S9      | 30/03   | TP6 Parallélisation | Entretiens Dynamo
 S10     | 06/04   | Parallélisation | [Cours5](Lectures/Cours5.html) |
 S11     | 13/04   | Optimisations |
 🥚      | 🥚      | 🐰 |
