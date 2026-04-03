@@ -10,23 +10,23 @@ You can visualize the slide through [this link](https://blegat.github.io/LEPL150
 
 ## Schedule
 
-Semaine | Lundi | Objectif | Deadlines
-------- | ------- | ------- | ---------
-S1      | 02/02   | TP1 |
-S2      | 09/02   | TP2 |
+Semaine | Lundi | Objectif | Cours Vendredi | Deadlines
+------- | ------- | ------- | ----------- | ---------
+S1      | 02/02   | TP1 | [Cours1](Lectures/Cours1.html)
+S2      | 09/02   | TP2 | [Cours1](Lectures/Cours1.html)/[Cours2](Lectures/Cours2.html)
 S3      | 16/02   | TP3 |
 S4      | 23/02   | TP4 |
-S5      | 02/03   | Détection des mots incorrects |
+S5      | 02/03   | Détection des mots incorrects | [Cours2](Lectures/Cours2.html)/[Cours3](Lectures/Cours3.html)
 S6      | 09/03   | Correction mots incorrects |
-S7      | 16/03   | Détection de la langue | Vendredi 18h: Projet (partie 1)
-S8      | 23/03   | TP5 Lecture/Écriture des fichiers | Vendredi 18h: Peer Reviews + Evaluation de la dynamique de groupe (Dynamo)
+S7      | 16/03   | Détection de la langue | [Cours4](Lectures/Cours4.html) | Vendredi 18h: Projet (partie 1)
+S8      | 23/03   | TP5 Lecture/Écriture des fichiers | [Cours3](Lectures/Cours3.html) | Vendredi 18h: Peer Reviews + Evaluation de la dynamique de groupe (Dynamo)
 S9      | 30/03   | TP6 Parallélisation |
-S10     | 06/04   | Parallélisation |
+S10     | 06/04   | Parallélisation | [Cours5](Lectures/Cours5.html) |
 S11     | 13/04   | Optimisations |
 🥚      | 🥚      | 🐰 |
 🥚      | 🥚      | 🐰 |
-S12     | 04/05   | Dernières modifications | Vendredi 18h: Projet (code et README)
-S13     | 11/05   | Présentation orale | Slides à rendre pour la veille de l'oral à 18h
+S12     | 04/05   | Dernières modifications | | Vendredi 18h: Projet (code et README)
+S13     | 11/05   | Présentation orale | | Slides à rendre pour la veille de l'oral à 18h
 
 ## Run the slides locally
 
