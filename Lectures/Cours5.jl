@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.20.21
+# v0.20.24
 
 using Markdown
 using InteractiveUtils
@@ -107,6 +107,9 @@ md"""
 """
 
 # ╔═╡ 3b928e29-a281-4dc2-9429-41e7d98dad54
+md"## Exemple sans sanitize"
+
+# ╔═╡ b3f5afd5-3bcc-44ed-8e35-104a3a7c3378
 md"## Exemple avec sanitize"
 
 # ╔═╡ d50aa7f3-9c15-412e-82c2-f870aab8ffb0
@@ -117,6 +120,9 @@ compile_and_run(out_of_bounds, valgrind = false, verbose = true, cflags = ["-Wno
 
 # ╔═╡ e3053cb5-186d-4c98-86c7-609be4a7c8dc
 compile_and_run(out_of_bounds, valgrind = false, verbose = true, cflags = ["-Wno-array-bounds", "-fsanitize=address", "-g"])
+
+# ╔═╡ 18e1147f-ef60-4368-819b-4e41c1b904df
+html"<p align=center style=\"font-size: 20px; margin-bottom: 5cm; margin-top: 5cm;\">The End</p>"
 
 # ╔═╡ a843fc18-5290-414a-a5db-dacd4ac88f1d
 Pkg.instantiate()
@@ -138,8 +144,10 @@ Pkg.instantiate()
 # ╟─9afe0855-162f-4234-8001-610e08e39bb0
 # ╟─3b928e29-a281-4dc2-9429-41e7d98dad54
 # ╟─ff911f08-d9a3-41f3-8e8d-c8e94fecacf0
+# ╟─b3f5afd5-3bcc-44ed-8e35-104a3a7c3378
 # ╟─e3053cb5-186d-4c98-86c7-609be4a7c8dc
-# ╠═d50aa7f3-9c15-412e-82c2-f870aab8ffb0
+# ╟─d50aa7f3-9c15-412e-82c2-f870aab8ffb0
+# ╟─18e1147f-ef60-4368-819b-4e41c1b904df
 # ╠═47f92d66-0834-4f8d-9bdf-172c55e93cce
 # ╠═35ad233c-a500-461a-af82-855d56792841
 # ╟─a843fc18-5290-414a-a5db-dacd4ac88f1d
