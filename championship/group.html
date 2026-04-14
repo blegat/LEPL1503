@@ -103,9 +103,9 @@
             if (element.comments !== "OK") return;
 
             groupNames.add(element.group);
-            element.detection_accuracy = +element.detection_accuracy.toPrecision(4);
-            element.correction_accuracy = +element.correction_accuracy.toPrecision(4);
-            element.memory = +(element.memory / 1024).toPrecision(4); // convert to MB
+            element.detection_accuracy = +parseFloat(element.detection_accuracy).toPrecision(4);
+            element.correction_accuracy = +parseFloat(element.correction_accuracy).toPrecision(4);
+            element.memory = +parseFloat(element.memory / 1024).toPrecision(4); // convert to MB
 
             const hash = hashCode(element.threads + element.mode);
             if (!groups[hash]) groups[hash] = {};
