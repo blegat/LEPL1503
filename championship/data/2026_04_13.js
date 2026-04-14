@@ -1,34 +1,34 @@
 const results = [
   {
     "group":"k2",
-    "threads":"4",
+    "threads":"1",
     "mode":"detection",
-    "lines":"47000.33",
-    "memory":"30110.67",
+    "lines":"20368.67",
+    "memory":"31545.33",
     "detection_accuracy":"99.99",
     "correction_accuracy":"0.00",
     "date":"2026-04-13",
     "timings":[
-      24203.3333333333,
-      13583.6666666667,
-      21844.3333333333,
-      29386.0,
-      36700.6666666667,
-      43774.6666666667,
-      47000.3333333333,
-      47000.3333333333,
-      47000.3333333333,
-      47000.3333333333,
-      47000.3333333333,
-      47000.3333333333,
-      47000.3333333333,
-      47000.3333333333,
-      47000.3333333333,
-      47000.3333333333,
-      47000.3333333333,
-      47000.3333333333,
-      47000.3333333333,
-      47000.3333333333
+      1109.3333333333,
+      2075.3333333333,
+      3057.3333333333,
+      4054.0,
+      5053.3333333333,
+      6055.6666666667,
+      7129.0,
+      8250.3333333333,
+      9403.0,
+      10550.6666666667,
+      11768.3333333333,
+      13050.3333333333,
+      14413.3333333333,
+      15443.3333333333,
+      16451.6666666667,
+      17633.3333333333,
+      18982.3333333333,
+      20003.3333333333,
+      20368.6666666667,
+      20368.6666666667
     ],
     "comments":"OK"
   },
@@ -36,65 +36,111 @@ const results = [
     "group":"k2",
     "threads":"8",
     "mode":"detection",
-    "lines":"39094.33",
-    "memory":"26605.33",
+    "lines":"20341.67",
+    "memory":"18330.67",
     "detection_accuracy":"99.99",
     "correction_accuracy":"0.00",
     "date":"2026-04-13",
     "timings":[
-      9433.3333333333,
-      10836.0,
-      17864.6666666667,
-      25276.3333333333,
-      27931.0,
-      30120.3333333333,
-      32377.3333333333,
-      34965.3333333333,
-      39094.3333333333,
-      39094.3333333333,
-      39094.3333333333,
-      39094.3333333333,
-      39094.3333333333,
-      39094.3333333333,
-      39094.3333333333,
-      39094.3333333333,
-      39094.3333333333,
-      39094.3333333333,
-      39094.3333333333,
-      39094.3333333333
+      18114.6666666667
+    ],
+    "comments":"OK"
+  },
+  {
+    "group":"f1",
+    "threads":"4",
+    "mode":"detection",
+    "lines":"4059.67",
+    "memory":"23290.67",
+    "detection_accuracy":"99.98",
+    "correction_accuracy":"0.00",
+    "date":"2026-04-13",
+    "timings":[
+      4059.6666666667
+    ],
+    "comments":"OK"
+  },
+  {
+    "group":"f1",
+    "threads":"2",
+    "mode":"detection",
+    "lines":"3710.00",
+    "memory":"24264.00",
+    "detection_accuracy":"99.98",
+    "correction_accuracy":"0.00",
+    "date":"2026-04-13",
+    "timings":[
+      3710.0
+    ],
+    "comments":"OK"
+  },
+  {
+    "group":"f1",
+    "threads":"8",
+    "mode":"detection",
+    "lines":"3134.67",
+    "memory":"14264.00",
+    "detection_accuracy":"99.98",
+    "correction_accuracy":"0.00",
+    "date":"2026-04-13",
+    "timings":[
+      2801.3333333333
     ],
     "comments":"OK"
   },
   {
     "group":"k2",
-    "threads":"16",
+    "threads":"2",
     "mode":"detection",
-    "lines":"32796.33",
-    "memory":"21164.00",
-    "detection_accuracy":"99.99",
+    "lines":"24323.00",
+    "memory":"8954.67",
+    "detection_accuracy":"99.98",
     "correction_accuracy":"0.00",
     "date":"2026-04-13",
     "timings":[
-      2865.6666666667,
-      9846.0,
-      13226.0,
-      15012.6666666667,
-      19435.3333333333,
-      25366.0,
-      29299.3333333333,
-      32381.3333333333,
-      32796.3333333333,
-      32796.3333333333,
-      32796.3333333333,
-      32796.3333333333,
-      32796.3333333333,
-      32796.3333333333,
-      32796.3333333333,
-      32796.3333333333,
-      32796.3333333333,
-      32796.3333333333,
-      32796.3333333333,
-      32796.3333333333
+      18666.6666666667
+    ],
+    "comments":"OK"
+  },
+  {
+    "group":"n5",
+    "threads":"4",
+    "mode":"detection",
+    "lines":"23474.67",
+    "memory":"30753.33",
+    "detection_accuracy":"99.98",
+    "correction_accuracy":"0.00",
+    "date":"2026-04-13",
+    "timings":[
+      15621.3333333333
+    ],
+    "comments":"OK"
+  },
+  {
+    "group":"n5",
+    "threads":"2",
+    "mode":"detection",
+    "lines":"22136.33",
+    "memory":"36220.00",
+    "detection_accuracy":"99.98",
+    "correction_accuracy":"0.00",
+    "date":"2026-04-13",
+    "timings":[
+      11497.0
+    ],
+    "comments":"OK"
+  },
+  {
+    "group":"n5",
+    "threads":"1",
+    "mode":"detection",
+    "lines":"11040.67",
+    "memory":"40914.67",
+    "detection_accuracy":"99.98",
+    "correction_accuracy":"0.00",
+    "date":"2026-04-13",
+    "timings":[
+      7279.3333333333
     ],
     "comments":"OK"
   },
@@ -102,90 +148,239 @@ const results = [
     "group":"m2",
     "threads":"1",
     "mode":"detection",
-    "lines":"43632.00",
-    "memory":"35654.67",
+    "lines":"35421.33",
+    "memory":"35602.67",
+    "detection_accuracy":"99.97",
+    "correction_accuracy":"0.00",
+    "date":"2026-04-13",
+    "timings":[
+      1239.0,
+      3857.3333333333,
+      6446.6666666667,
+      9077.6666666667,
+      11647.0,
+      14238.3333333333,
+      16128.3333333333,
+      17762.6666666667,
+      19350.0,
+      20938.6666666667,
+      22599.6666666667,
+      24262.6666666667,
+      25926.3333333333,
+      27600.6666666667,
+      29292.0,
+      30995.0,
+      32725.0,
+      34457.0,
+      35421.3333333333,
+      35421.3333333333
+    ],
+    "comments":"OK"
+  },
+  {
+    "group":"f1",
+    "threads":"16",
+    "mode":"detection",
+    "lines":"2567.33",
+    "memory":"21373.33",
+    "detection_accuracy":"99.97",
+    "correction_accuracy":"0.00",
+    "date":"2026-04-13",
+    "timings":[
+      2567.3333333333
+    ],
+    "comments":"OK"
+  },
+  {
+    "group":"m2",
+    "threads":"8",
+    "mode":"detection",
+    "lines":"22711.33",
+    "memory":"28694.67",
+    "detection_accuracy":"99.97",
+    "correction_accuracy":"0.00",
+    "date":"2026-04-13",
+    "timings":[
+      22711.3333333333
+    ],
+    "comments":"OK"
+  },
+  {
+    "group":"f1",
+    "threads":"1",
+    "mode":"detection",
+    "lines":"2622.33",
+    "memory":"21258.67",
+    "detection_accuracy":"99.95",
+    "correction_accuracy":"0.00",
+    "date":"2026-04-13",
+    "timings":[
+      2622.3333333333
+    ],
+    "comments":"OK"
+  },
+  {
+    "group":"m2",
+    "threads":"2",
+    "mode":"detection",
+    "lines":"20406.00",
+    "memory":"32932.00",
+    "detection_accuracy":"99.95",
+    "correction_accuracy":"0.00",
+    "date":"2026-04-13",
+    "timings":[
+      18582.6666666667
+    ],
+    "comments":"OK"
+  },
+  {
+    "group":"m2",
+    "threads":"16",
+    "mode":"detection",
+    "lines":"14170.67",
+    "memory":"30113.33",
     "detection_accuracy":"99.93",
     "correction_accuracy":"0.00",
     "date":"2026-04-13",
     "timings":[
-      2829.6666666667,
-      5932.3333333333,
-      9019.6666666667,
-      12069.0,
-      15032.0,
-      17018.6666666667,
-      19101.6666666667,
-      21179.6666666667,
-      23331.0,
-      25469.0,
-      27660.0,
-      29808.0,
-      31934.0,
-      34056.3333333333,
-      36246.6666666667,
-      38294.3333333333,
-      40467.6666666667,
-      42649.0,
-      43632.0,
-      43632.0
+      11504.0
     ],
     "comments":"OK"
   },
   {
     "group":"m2",
-    "threads":"16",
+    "threads":"4",
     "mode":"detection",
-    "lines":"25158.33",
-    "memory":"35700.00",
-    "detection_accuracy":"67.89",
+    "lines":"21173.33",
+    "memory":"15026.67",
+    "detection_accuracy":"99.83",
     "correction_accuracy":"0.00",
     "date":"2026-04-13",
     "timings":[
-      13616.3333333333,
-      6331.0
+      18506.6666666667
     ],
     "comments":"OK"
   },
   {
-    "group":"b2",
-    "threads":"1",
+    "group":"g4",
+    "threads":"4",
     "mode":"detection",
-    "lines":"13.00",
-    "memory":"99676.00",
-    "detection_accuracy":"4.88",
+    "lines":"26666.67",
+    "memory":"46181.33",
+    "detection_accuracy":"65.08",
     "correction_accuracy":"0.00",
     "date":"2026-04-13",
     "timings":[
-      0.0,
-      1.0,
-      2.0,
-      2.0,
-      3.0,
-      4.0,
-      4.0,
-      5.0,
-      6.0,
-      6.3333333333,
-      7.0,
-      8.0,
-      8.3333333333,
-      9.0,
-      10.0,
-      10.3333333333,
-      12.0,
-      13.0,
-      13.0,
-      13.0
+      26666.6666666667
     ],
     "comments":"OK"
   },
   {
     "group":"d5",
+    "threads":"16",
+    "mode":"detection",
+    "lines":"50.00",
+    "memory":"0.00",
+    "detection_accuracy":"5.94",
+    "correction_accuracy":"0.00",
+    "date":"2026-04-13",
+    "timings":[
+      50.0
+    ],
+    "comments":"OK"
+  },
+  {
+    "group":"b2",
+    "threads":"2",
+    "mode":"detection",
+    "lines":"50.00",
+    "memory":"0.00",
+    "detection_accuracy":"5.19",
+    "correction_accuracy":"0.00",
+    "date":"2026-04-13",
+    "timings":[
+      50.0
+    ],
+    "comments":"OK"
+  },
+  {
+    "group":"b2",
+    "threads":"8",
+    "mode":"detection",
+    "lines":"50.00",
+    "memory":"0.00",
+    "detection_accuracy":"4.90",
+    "correction_accuracy":"0.00",
+    "date":"2026-04-13",
+    "timings":[
+      50.0
+    ],
+    "comments":"OK"
+  },
+  {
+    "group":"h5",
+    "threads":"2",
+    "mode":"detection",
+    "lines":"2817.00",
+    "memory":"70046.67",
+    "detection_accuracy":"4.30",
+    "correction_accuracy":"0.00",
+    "date":"2026-04-13",
+    "timings":[
+      2817.0
+    ],
+    "comments":"OK"
+  },
+  {
+    "group":"d5",
+    "threads":"2",
+    "mode":"detection",
+    "lines":"50.00",
+    "memory":"0.00",
+    "detection_accuracy":"4.08",
+    "correction_accuracy":"0.00",
+    "date":"2026-04-13",
+    "timings":[
+      50.0
+    ],
+    "comments":"OK"
+  },
+  {
+    "group":"g4",
+    "threads":"1",
+    "mode":"detection",
+    "lines":"5333.33",
+    "memory":"23213.33",
+    "detection_accuracy":"33.33",
+    "correction_accuracy":"0.00",
+    "date":"2026-04-13",
+    "timings":[
+      16000.0,
+      0.0
+    ],
+    "comments":"OK"
+  },
+  {
+    "group":"g4",
+    "threads":"2",
+    "mode":"detection",
+    "lines":"5333.33",
+    "memory":"30069.33",
+    "detection_accuracy":"33.33",
+    "correction_accuracy":"0.00",
+    "date":"2026-04-13",
+    "timings":[
+      13333.3333333333
+    ],
+    "comments":"OK"
+  },
+  {
+    "group":"c2",
     "threads":"1",
     "mode":"detection",
     "lines":"50.00",
     "memory":"0.00",
-    "detection_accuracy":"3.72",
+    "detection_accuracy":"3.79",
     "correction_accuracy":"0.00",
     "date":"2026-04-13",
     "timings":[
@@ -209,6 +404,179 @@ const results = [
       50.0,
       50.0,
       50.0
+    ],
+    "comments":"OK"
+  },
+  {
+    "group":"c2",
+    "threads":"16",
+    "mode":"detection",
+    "lines":"50.00",
+    "memory":"0.00",
+    "detection_accuracy":"3.76",
+    "correction_accuracy":"0.00",
+    "date":"2026-04-13",
+    "timings":[
+      50.0
+    ],
+    "comments":"OK"
+  },
+  {
+    "group":"b2",
+    "threads":"4",
+    "mode":"detection",
+    "lines":"50.00",
+    "memory":"0.00",
+    "detection_accuracy":"3.37",
+    "correction_accuracy":"0.00",
+    "date":"2026-04-13",
+    "timings":[
+      50.0
+    ],
+    "comments":"OK"
+  },
+  {
+    "group":"c2",
+    "threads":"8",
+    "mode":"detection",
+    "lines":"50.00",
+    "memory":"0.00",
+    "detection_accuracy":"3.31",
+    "correction_accuracy":"0.00",
+    "date":"2026-04-13",
+    "timings":[
+      50.0
+    ],
+    "comments":"OK"
+  },
+  {
+    "group":"d5",
+    "threads":"1",
+    "mode":"detection",
+    "lines":"50.00",
+    "memory":"0.00",
+    "detection_accuracy":"3.30",
+    "correction_accuracy":"0.00",
+    "date":"2026-04-13",
+    "timings":[
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0
+    ],
+    "comments":"OK"
+  },
+  {
+    "group":"c2",
+    "threads":"2",
+    "mode":"detection",
+    "lines":"50.00",
+    "memory":"0.00",
+    "detection_accuracy":"3.14",
+    "correction_accuracy":"0.00",
+    "date":"2026-04-13",
+    "timings":[
+      50.0
+    ],
+    "comments":"OK"
+  },
+  {
+    "group":"b2",
+    "threads":"1",
+    "mode":"detection",
+    "lines":"50.00",
+    "memory":"0.00",
+    "detection_accuracy":"3.12",
+    "correction_accuracy":"0.00",
+    "date":"2026-04-13",
+    "timings":[
+      33.3333333333
+    ],
+    "comments":"OK"
+  },
+  {
+    "group":"g4",
+    "threads":"8",
+    "mode":"detection",
+    "lines":"5333.33",
+    "memory":"62497.33",
+    "detection_accuracy":"27.63",
+    "correction_accuracy":"0.00",
+    "date":"2026-04-13",
+    "timings":[
+      2666.6666666667
+    ],
+    "comments":"OK"
+  },
+  {
+    "group":"d5",
+    "threads":"8",
+    "mode":"detection",
+    "lines":"50.00",
+    "memory":"0.00",
+    "detection_accuracy":"2.84",
+    "correction_accuracy":"0.00",
+    "date":"2026-04-13",
+    "timings":[
+      50.0
+    ],
+    "comments":"OK"
+  },
+  {
+    "group":"c2",
+    "threads":"4",
+    "mode":"detection",
+    "lines":"50.00",
+    "memory":"0.00",
+    "detection_accuracy":"2.72",
+    "correction_accuracy":"0.00",
+    "date":"2026-04-13",
+    "timings":[
+      50.0
+    ],
+    "comments":"OK"
+  },
+  {
+    "group":"h5",
+    "threads":"1",
+    "mode":"detection",
+    "lines":"4999.00",
+    "memory":"67409.33",
+    "detection_accuracy":"2.72",
+    "correction_accuracy":"0.00",
+    "date":"2026-04-13",
+    "timings":[
+      4999.0
+    ],
+    "comments":"OK"
+  },
+  {
+    "group":"h5",
+    "threads":"4",
+    "mode":"detection",
+    "lines":"6408.67",
+    "memory":"49049.33",
+    "detection_accuracy":"2.71",
+    "correction_accuracy":"0.00",
+    "date":"2026-04-13",
+    "timings":[
+      11532.6666666667
     ],
     "comments":"OK"
   },
@@ -218,227 +586,111 @@ const results = [
     "mode":"detection",
     "lines":"50.00",
     "memory":"0.00",
-    "detection_accuracy":"2.86",
+    "detection_accuracy":"2.66",
     "correction_accuracy":"0.00",
     "date":"2026-04-13",
     "timings":[
-      50.0,
-      50.0,
-      50.0,
-      50.0,
-      50.0,
-      50.0,
-      50.0,
-      50.0,
-      50.0,
-      50.0,
-      50.0,
-      50.0,
-      50.0,
-      50.0,
-      50.0,
-      50.0,
-      50.0,
-      50.0,
-      50.0,
       50.0
     ],
     "comments":"OK"
   },
   {
-    "group":"d5",
-    "threads":"8",
-    "mode":"detection",
-    "lines":"50.00",
-    "memory":"0.00",
-    "detection_accuracy":"2.61",
-    "correction_accuracy":"0.00",
-    "date":"2026-04-13",
-    "timings":[
-      50.0,
-      50.0,
-      50.0,
-      50.0,
-      50.0,
-      50.0,
-      50.0,
-      50.0,
-      50.0,
-      50.0,
-      50.0,
-      50.0,
-      50.0,
-      50.0,
-      50.0,
-      50.0,
-      50.0,
-      50.0,
-      50.0,
-      50.0
-    ],
-    "comments":"OK"
-  },
-  {
-    "group":"d5",
+    "group":"b2",
     "threads":"16",
     "mode":"detection",
     "lines":"50.00",
     "memory":"0.00",
-    "detection_accuracy":"2.52",
+    "detection_accuracy":"2.51",
     "correction_accuracy":"0.00",
     "date":"2026-04-13",
     "timings":[
-      50.0,
-      50.0,
-      50.0,
-      50.0,
-      50.0,
-      50.0,
-      50.0,
-      50.0,
-      50.0,
-      50.0,
-      50.0,
-      50.0,
-      50.0,
-      50.0,
-      50.0,
-      50.0,
-      50.0,
-      50.0,
-      50.0,
-      50.0
+      33.3333333333
     ],
     "comments":"OK"
   },
   {
-    "group":"b2",
-    "threads":"8",
+    "group":"g4",
+    "threads":"16",
     "mode":"detection",
-    "lines":"14.33",
-    "memory":"93482.67",
-    "detection_accuracy":"1.68",
+    "lines":"5333.33",
+    "memory":"74582.67",
+    "detection_accuracy":"17.35",
     "correction_accuracy":"0.00",
     "date":"2026-04-13",
     "timings":[
-      0.0,
-      1.0,
-      2.6666666667,
-      5.0,
-      6.0,
-      8.6666666667,
-      10.3333333333,
-      11.6666666667,
-      14.3333333333,
-      14.3333333333,
-      14.3333333333,
-      14.3333333333,
-      14.3333333333,
-      14.3333333333,
-      14.3333333333,
-      14.3333333333,
-      14.3333333333,
-      14.3333333333,
-      14.3333333333,
-      14.3333333333
+      5333.3333333333
     ],
     "comments":"OK"
   },
   {
-    "group":"b2",
+    "group":"k2",
     "threads":"4",
     "mode":"detection",
-    "lines":"13.67",
-    "memory":"77974.67",
-    "detection_accuracy":"1.17",
+    "lines":"24528.67",
+    "memory":"24052.00",
+    "detection_accuracy":"100.00",
     "correction_accuracy":"0.00",
     "date":"2026-04-13",
     "timings":[
-      0.3333333333,
-      1.0,
-      2.6666666667,
-      4.0,
-      6.0,
-      10.0,
-      13.6666666667,
-      13.6666666667,
-      13.6666666667,
-      13.6666666667,
-      13.6666666667,
-      13.6666666667,
-      13.6666666667,
-      13.6666666667,
-      13.6666666667,
-      13.6666666667,
-      13.6666666667,
-      13.6666666667,
-      13.6666666667,
-      13.6666666667
+      17604.6666666667,
+      20840.3333333333,
+      22380.6666666667,
+      24528.6666666667
     ],
     "comments":"OK"
   },
   {
-    "group":"k4",
+    "group":"k2",
+    "threads":"16",
+    "mode":"detection",
+    "lines":"13097.33",
+    "memory":"23136.00",
+    "detection_accuracy":"100.00",
+    "correction_accuracy":"0.00",
+    "date":"2026-04-13",
+    "timings":[
+      13097.3333333333
+    ],
+    "comments":"OK"
+  },
+  {
+    "group":"i3",
+    "threads":"1",
+    "mode":"detection",
+    "lines":"0.00",
+    "memory":"142566.67",
+    "detection_accuracy":"0.00",
+    "correction_accuracy":"0.00",
+    "date":"2026-04-13",
+    "timings":[
+      0.0
+    ],
+    "comments":"OK"
+  },
+  {
+    "group":"i3",
+    "threads":"8",
+    "mode":"detection",
+    "lines":"0.00",
+    "memory":"142817.33",
+    "detection_accuracy":"0.00",
+    "correction_accuracy":"0.00",
+    "date":"2026-04-13",
+    "timings":[
+      0.0
+    ],
+    "comments":"OK"
+  },
+  {
+    "group":"i3",
     "threads":"2",
     "mode":"detection",
     "lines":"0.00",
-    "memory":"30549.33",
+    "memory":"142894.67",
     "detection_accuracy":"0.00",
     "correction_accuracy":"0.00",
     "date":"2026-04-13",
     "timings":[
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0
-    ],
-    "comments":"OK"
-  },
-  {
-    "group":"k4",
-    "threads":"1",
-    "mode":"detection",
-    "lines":"0.00",
-    "memory":"36222.67",
-    "detection_accuracy":"0.00",
-    "correction_accuracy":"0.00",
-    "date":"2026-04-13",
-    "timings":[
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
       0.0
     ],
     "comments":"OK"
@@ -448,96 +700,11 @@ const results = [
     "threads":"16",
     "mode":"detection",
     "lines":"0.00",
-    "memory":"36346.67",
+    "memory":"25476.00",
     "detection_accuracy":"0.00",
     "correction_accuracy":"0.00",
     "date":"2026-04-13",
     "timings":[
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0
-    ],
-    "comments":"OK"
-  },
-  {
-    "group":"l4",
-    "threads":"1",
-    "mode":"detection",
-    "lines":"0.00",
-    "memory":"76404.00",
-    "detection_accuracy":"0.00",
-    "correction_accuracy":"0.00",
-    "date":"2026-04-13",
-    "timings":[
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0
-    ],
-    "comments":"OK"
-  },
-  {
-    "group":"l4",
-    "threads":"16",
-    "mode":"detection",
-    "lines":"0.00",
-    "memory":"76924.00",
-    "detection_accuracy":"0.00",
-    "correction_accuracy":"0.00",
-    "date":"2026-04-13",
-    "timings":[
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
       0.0
     ],
     "comments":"OK"
@@ -547,7 +714,49 @@ const results = [
     "threads":"8",
     "mode":"detection",
     "lines":"0.00",
-    "memory":"77064.00",
+    "memory":"25833.33",
+    "detection_accuracy":"0.00",
+    "correction_accuracy":"0.00",
+    "date":"2026-04-13",
+    "timings":[
+      0.0
+    ],
+    "comments":"OK"
+  },
+  {
+    "group":"k4",
+    "threads":"2",
+    "mode":"detection",
+    "lines":"0.00",
+    "memory":"28368.00",
+    "detection_accuracy":"0.00",
+    "correction_accuracy":"0.00",
+    "date":"2026-04-13",
+    "timings":[
+      0.0
+    ],
+    "comments":"OK"
+  },
+  {
+    "group":"k4",
+    "threads":"8",
+    "mode":"detection",
+    "lines":"0.00",
+    "memory":"32397.33",
+    "detection_accuracy":"0.00",
+    "correction_accuracy":"0.00",
+    "date":"2026-04-13",
+    "timings":[
+      0.0
+    ],
+    "comments":"OK"
+  },
+  {
+    "group":"k4",
+    "threads":"1",
+    "mode":"detection",
+    "lines":"0.00",
+    "memory":"33242.67",
     "detection_accuracy":"0.00",
     "correction_accuracy":"0.00",
     "date":"2026-04-13",
@@ -576,11 +785,67 @@ const results = [
     "comments":"OK"
   },
   {
+    "group":"k4",
+    "threads":"4",
+    "mode":"detection",
+    "lines":"0.00",
+    "memory":"35264.00",
+    "detection_accuracy":"0.00",
+    "correction_accuracy":"0.00",
+    "date":"2026-04-13",
+    "timings":[
+      0.0
+    ],
+    "comments":"OK"
+  },
+  {
+    "group":"l4",
+    "threads":"16",
+    "mode":"detection",
+    "lines":"0.00",
+    "memory":"74932.00",
+    "detection_accuracy":"0.00",
+    "correction_accuracy":"0.00",
+    "date":"2026-04-13",
+    "timings":[
+      0.0
+    ],
+    "comments":"OK"
+  },
+  {
+    "group":"l4",
+    "threads":"4",
+    "mode":"detection",
+    "lines":"0.00",
+    "memory":"75342.67",
+    "detection_accuracy":"0.00",
+    "correction_accuracy":"0.00",
+    "date":"2026-04-13",
+    "timings":[
+      0.0
+    ],
+    "comments":"OK"
+  },
+  {
     "group":"l4",
     "threads":"2",
     "mode":"detection",
     "lines":"0.00",
-    "memory":"77184.00",
+    "memory":"76884.00",
+    "detection_accuracy":"0.00",
+    "correction_accuracy":"0.00",
+    "date":"2026-04-13",
+    "timings":[
+      0.0
+    ],
+    "comments":"OK"
+  },
+  {
+    "group":"l4",
+    "threads":"1",
+    "mode":"detection",
+    "lines":"0.00",
+    "memory":"77069.33",
     "detection_accuracy":"0.00",
     "correction_accuracy":"0.00",
     "date":"2026-04-13",
