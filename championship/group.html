@@ -219,9 +219,10 @@
             const traces = selectedGroups.map(group => {
                 const data = [...chartData[group] || []];
                 data.sort((a, b) => new Date(a.date) - new Date(b.date));
+                const groupTimings = latestTimings[hash] && latestTimings[hash][group] ? latestTimings[hash][group].timings : [];
                 return {
                     x: metric === "timings" ? timings : data.map(d => d.date),
-                    y: metric === "timings" ? latestTimings[hash][group].timings : data.map(d => +d[metric]),
+                    y: metric === "timings" ? groupTimings : data.map(d => +d[metric]),
                     mode: "lines+markers",
                     name: group,
                     line: { color: colorForGroup(group) }
