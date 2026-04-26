@@ -11,5 +11,6 @@ import results9 from "./2026_04_22.js";
 import results10 from "./2026_04_23.js";
 import results11 from "./2026_04_24.js";
 import results12 from "./2026_04_25.js";
+import results13 from "./2026_04_26.js";
 
-export default [ results0, results1, results2, results3, results4, results5, results6, results7, results8, results9, results10, results11, results12 ];
+export default [ results0, results1, results2, results3, results4, results5, results6, results7, results8, results9, results10, results11, results12, results13 ];
