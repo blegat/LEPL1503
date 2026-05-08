@@ -23,5 +23,6 @@ import results21 from "./2026_05_04.js";
 import results22 from "./2026_05_05.js";
 import results23 from "./2026_05_06.js";
 import results24 from "./2026_05_07.js";
+import results25 from "./2026_05_08.js";
 
-export default [ results0, results1, results2, results3, results4, results5, results6, results7, results8, results9, results10, results11, results12, results13, results14, results15, results16, results17, results18, results19, results20, results21, results22, results23, results24 ];
+export default [ results0, results1, results2, results3, results4, results5, results6, results7, results8, results9, results10, results11, results12, results13, results14, results15, results16, results17, results18, results19, results20, results21, results22, results23, results24, results25 ];
