@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.20.23
+# v1.0.3
 
 using Markdown
 using InteractiveUtils
@@ -232,6 +232,42 @@ $ git reset HEAD~1 # Annule le dernier commit, en supposant qu'il y en ai qu'un
 $ git restore . # Dangereux, ça écrase aussi les changements qui n'ont pas été commit
 ```
 """)
+
+# ╔═╡ 150fc10b-f92b-4bfb-a5cc-74cecaead424
+md"## Upstream branches"
+
+# ╔═╡ c981d4ab-717e-4027-9b75-a8a4eeebceda
+md"""
+Supposons que vous créez une branche avec:
+```
+$ git switch -c new_branch
+$ git push origin new_branch
+```
+Votre collègue push un commit sur `my_branch`, vous voulez l'obtenir avec:
+```
+$ git pull
+There is no tracking information for the current branch.
+Please specify which branch you want to merge with.
+See git-pull(1) for details.
+
+    git pull <remote> <branch>
+
+If you wish to set tracking information for this branch you can do so with:
+
+    git branch --set-upstream-to=origin/<branch> new_branch
+```
+"""
+
+# ╔═╡ ffd95277-9c7f-4ee6-94a7-26c87e9017a7
+md"""
+Pour résoudre ça, 2 manières:
+1. Faire `git pull origin my_branch` à chaque fois.
+2. Faire `git branch -u origin/new_branch new_branch`.
+
+Pour éviter ce problème dans le futures, 2 manières
+1. Faire `git push -u origin new_branch` quand on push un nouvelle branche.
+2. Faire `git config --global --type bool push.autoSetupRemote true` pour que le `-u` soit automatique.
+"""
 
 # ╔═╡ 296818cf-7598-46d8-8c7d-c91fd41fa9d0
 md"## Stash changes"
@@ -578,7 +614,7 @@ SimpleClang = "~0.1.0"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.12.5"
+julia_version = "1.12.6"
 manifest_format = "2.0"
 project_hash = "181c1d445014f30b0850c5c3b69cdd1a2ec88ce3"
 
@@ -1448,6 +1484,9 @@ version = "4.1.0+0"
 # ╟─b379b723-d3e4-45d3-b5e8-9958c6f5dd9b
 # ╟─d55c4b86-88f9-423c-8def-3c4de83ad3bb
 # ╟─23067943-d07f-4f2a-a3f1-e49f2e2fc21e
+# ╟─150fc10b-f92b-4bfb-a5cc-74cecaead424
+# ╟─c981d4ab-717e-4027-9b75-a8a4eeebceda
+# ╟─ffd95277-9c7f-4ee6-94a7-26c87e9017a7
 # ╟─296818cf-7598-46d8-8c7d-c91fd41fa9d0
 # ╟─b58456cf-b417-4f40-a854-c04b6db744db
 # ╟─00837930-704a-44eb-84c2-bece8894ef0f
