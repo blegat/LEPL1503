@@ -233,6 +233,26 @@ $ git restore . # Dangereux, ça écrase aussi les changements qui n'ont pas ét
 ```
 """)
 
+# ╔═╡ 296818cf-7598-46d8-8c7d-c91fd41fa9d0
+md"## Stash changes"
+
+# ╔═╡ b58456cf-b417-4f40-a854-c04b6db744db
+md"""
+On est parfois dans la mauvaise branche et on veut appliquer nos changement dans une autre ou nouvelle branche.
+On doit alors faire `git switch` mais `git` ne voudra pas si on a changé des fichiers qui différent (même si c'est à des lignes différentes).
+On `stash` alors les changements.
+Conceptuellement la même chose que `cherry-pick` 🚁 mais sans faire de commit.
+"""
+
+# ╔═╡ 00837930-704a-44eb-84c2-bece8894ef0f
+md"""
+```
+$ git stash
+$ git switch main
+$ git stash apply
+```
+"""
+
 # ╔═╡ 150fc10b-f92b-4bfb-a5cc-74cecaead424
 md"## Upstream branches"
 
@@ -269,25 +289,10 @@ Pour éviter ce problème dans le futures, 2 manières
 2. Faire `git config --global --type bool push.autoSetupRemote true` pour que le `-u` soit automatique.
 """
 
-# ╔═╡ 296818cf-7598-46d8-8c7d-c91fd41fa9d0
-md"## Stash changes"
-
-# ╔═╡ b58456cf-b417-4f40-a854-c04b6db744db
-md"""
-On est parfois dans la mauvaise branche et on veut appliquer nos changement dans une autre ou nouvelle branche.
-On doit alors faire `git switch` mais `git` ne voudra pas si on a changé des fichiers qui différent (même si c'est à des lignes différentes).
-On `stash` alors les changements.
-Conceptuellement la même chose que `cherry-pick` 🚁 mais sans faire de commit.
-"""
-
-# ╔═╡ 00837930-704a-44eb-84c2-bece8894ef0f
-md"""
-```
-$ git stash
-$ git switch main
-$ git stash apply
-```
-"""
+# ╔═╡ ea91870b-6389-4207-b10e-7561ad6999b4
+aside(tip(md"""
+Vous pouvez voir la liste des branches avec les remote upstream branches associées avec `git branch -vv`.
+"""), v_offset = -300)
 
 # ╔═╡ 27e4de24-a81c-4437-a566-05da736f6e9d
 md"# Markdown"
@@ -1484,12 +1489,13 @@ version = "4.1.0+0"
 # ╟─b379b723-d3e4-45d3-b5e8-9958c6f5dd9b
 # ╟─d55c4b86-88f9-423c-8def-3c4de83ad3bb
 # ╟─23067943-d07f-4f2a-a3f1-e49f2e2fc21e
-# ╟─150fc10b-f92b-4bfb-a5cc-74cecaead424
-# ╟─c981d4ab-717e-4027-9b75-a8a4eeebceda
-# ╟─ffd95277-9c7f-4ee6-94a7-26c87e9017a7
 # ╟─296818cf-7598-46d8-8c7d-c91fd41fa9d0
 # ╟─b58456cf-b417-4f40-a854-c04b6db744db
 # ╟─00837930-704a-44eb-84c2-bece8894ef0f
+# ╟─150fc10b-f92b-4bfb-a5cc-74cecaead424
+# ╟─c981d4ab-717e-4027-9b75-a8a4eeebceda
+# ╟─ffd95277-9c7f-4ee6-94a7-26c87e9017a7
+# ╟─ea91870b-6389-4207-b10e-7561ad6999b4
 # ╟─27e4de24-a81c-4437-a566-05da736f6e9d
 # ╟─50acf567-a72a-4ada-af79-876b782e85c4
 # ╟─006977f7-c420-4562-b193-7fa7053c3397
